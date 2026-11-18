@@ -54,7 +54,7 @@
         <div class="input-wrap"><input class="input" id="exclude" type="text" inputmode="numeric" placeholder="예: 13, 38"><span class="unit">1~45</span></div>
       </div>
     </div>
-    <p class="hint" id="condHint">쉼표나 띄어쓰기로 구분해 입력하세요. 포함 5개 + 제외 39개까지 가능해요.</p>
+    <p class="hint" id="condHint">쉼표나 띄어쓰기로 구분해 입력하세요. 포함 5개 + 제외 38개까지 가능해요.</p>
 
     <button class="btn btn-primary" id="genBtn" type="button" style="width:100%;margin-top:6px">🎲 번호 뽑기</button>
   </div>
@@ -239,8 +239,14 @@
 
   function generate() {
     var include = parseNumbers($("#include").value).filter(function (v, i, a) { return a.indexOf(v) === i; });
-    var exclude = parseNumbers($("#exclude").value);
     if (include.length > 5) include = include.slice(0, 5);
+
+    // 제외 번호는 중복·포함 번호를 걸러내고, 6개+보너스가 남도록 최대 38개까지만 적용
+    var exclude = parseNumbers($("#exclude").value).filter(function (v, i, a) {
+      return a.indexOf(v) === i && include.indexOf(v) === -1;
+    });
+    var dropped = 0;
+    while (exclude.length > 38) { exclude.pop(); dropped++; }
 
     var pool = [];
     for (var i = 1; i <= 45; i++) {
@@ -252,6 +258,11 @@
     for (var j = 1; j <= 45; j++) {
       if (picked.indexOf(j) === -1 && exclude.indexOf(j) === -1) bonusPool.push(j);
     }
+    if (!bonusPool.length) {
+      for (var b = 1; b <= 45; b++) {
+        if (picked.indexOf(b) === -1) bonusPool.push(b);
+      }
+    }
     var bonus = pick(bonusPool, 1)[0];
 
     last = { numbers: picked, bonus: bonus };
@@ -261,10 +272,14 @@
     $("#genSub").textContent = picked.join(", ") + " + 보너스 " + bonus + " · " + new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" });
     $("#resultText").textContent = "로또 번호: " + picked.join(", ") + " / 보너스 " + bonus;
 
-    var conflict = include.filter(function (n) { return exclude.indexOf(n) !== -1; });
-    $("#condHint").textContent = conflict.length
-      ? "포함과 제외에 동시에 들어간 번호(" + conflict.join(", ") + ")는 포함으로 처리했어요."
-      : "쉼표나 띄어쓰기로 구분해 입력하세요. 포함 5개 + 제외 39개까지 가능해요.";
+    var notes = [];
+    var conflict = parseNumbers($("#include").value).filter(function (n) { return parseNumbers($("#exclude").value).indexOf(n) !== -1; });
+    if (conflict.length) notes.push("포함과 제외에 함께 넣은 " + conflict.join(", ") + "은(는) 포함으로 처리했어요.");
+    if (dropped) notes.push("제외 번호가 너무 많아 " + dropped + "개는 제외에서 뺐어요.");
+    if (include.length === 5) notes.push("포함 번호 5개에 자동 1개를 더해 6개를 만들었어요.");
+    $("#condHint").textContent = notes.length
+      ? notes.join(" ")
+      : "쉼표나 띄어쓰기로 구분해 입력하세요. 포함 5개 + 제외 38개까지 가능해요.";
   }
 
   $("#genBtn").addEventListener("click", generate);
