@@ -15,11 +15,14 @@
     return isFinite(n) ? n : 0;
   }
 
-  /* 1,234,567 형태 */
+  /* 1,234,567 형태 (Intl 지원 여부와 무관하게 동작) */
   function comma(v) {
     var n = Number(v);
     if (!isFinite(n)) n = 0;
-    return Math.round(n).toLocaleString("ko-KR");
+    n = Math.round(n);
+    var neg = n < 0;
+    var s = String(Math.abs(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return (neg ? "-" : "") + s;
   }
 
   /* 1,234,567원 */

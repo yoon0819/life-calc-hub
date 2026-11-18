@@ -7,4 +7,4 @@ Thumbs.db
 *.swp
 
 # dev check script
-_check.py
+# dev scripts live in ../calc-hub-tests

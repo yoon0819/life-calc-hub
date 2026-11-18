@@ -202,7 +202,9 @@
   };
 
   function fmt(n, d) {
-    return Number(n).toLocaleString("ko-KR", { minimumFractionDigits: d, maximumFractionDigits: d });
+    var parts = Number(n).toFixed(d).split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
   }
 
   function calc() {

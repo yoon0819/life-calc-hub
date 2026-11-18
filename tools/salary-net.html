@@ -212,6 +212,10 @@
     "2025": { pension: 0.045, health: 0.03545, ltcRatio: 0.1295, emp: 0.009, cap: 6370000, floor: 390000 }
   };
 
+  function rateText(v) {
+    return (v * 100).toFixed(3).replace(/0+$/, "").replace(/\.$/, "") + "%";
+  }
+
   function workDeduction(total) {
     if (total <= 5000000) return total * 0.7;
     if (total <= 15000000) return 3500000 + (total - 5000000) * 0.4;
@@ -271,8 +275,8 @@
     var deduction = insurance + monthlyTax + monthlyLocal;
     var net = monthlyGross - deduction;
 
-    out.lPension.textContent = "국민연금 (" + CH.pct(r.pension * 100, 3).replace("0%", "%").replace(/0$/, "") + ")";
-    out.lHealth.textContent = "건강보험 (" + CH.pct(r.health * 100, 3).replace(/0$/, "") + ")";
+    out.lPension.textContent = "국민연금 (" + rateText(r.pension) + ")";
+    out.lHealth.textContent = "건강보험 (" + rateText(r.health) + ")";
     out.gross.textContent = CH.won(monthlyGross);
     out.pension.textContent = "-" + CH.won(pension);
     out.health.textContent = "-" + CH.won(health);
