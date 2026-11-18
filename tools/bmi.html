@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BMI 계산기 — 비만도 판정과 기초대사량(BMR) 계산</title>
+<meta name="description" content="키와 체중을 넣으면 BMI와 아시아-태평양 기준 비만도 판정, 표준체중, 기초대사량(BMR), 하루 소비 열량이 바로 계산됩니다. 성별·나이·활동량 반영.">
+<meta name="keywords" content="BMI 계산기, 비만도 계산, 기초대사량, BMR 계산, 표준체중, 다이어트 칼로리, 아시아 태평양 비만 기준">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://yoon0819.github.io/life-calc-hub/tools/bmi.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="계산기 허브">
+<meta property="og:title" content="BMI 계산기 — 비만도·기초대사량">
+<meta property="og:description" content="BMI와 비만도 판정, 표준체중, 기초대사량, 하루 소비 열량을 계산합니다.">
+<meta property="og:url" content="https://yoon0819.github.io/life-calc-hub/tools/bmi.html">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#3182F6">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<!-- AdSense 승인 후 주석 해제: <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html" aria-label="계산기 허브 홈"><span class="brand-mark" aria-hidden="true">계</span><span class="brand-name">계산기 허브</span></a>
+    <a class="topbar-link" href="../index.html">전체 계산기</a>
+  </div>
+</header>
+
+<main id="main" class="app">
+  <nav class="crumb" aria-label="위치">
+    <a href="../index.html">홈</a><span>/</span><a href="../index.html#catHealth">건강·변환</a><span>/</span><span>BMI</span>
+  </nav>
+
+  <div class="page-head">
+    <h1>BMI·비만도·기초대사량 계산기</h1>
+    <p>숫자 하나로 끝내지 말고, 표준체중과 하루 소비 열량까지 함께 확인하세요.</p>
+  </div>
+
+  <form class="card" id="calcForm" onsubmit="return false">
+    <h2 class="card-title">신체 정보</h2>
+    <p class="card-desc">아시아-태평양 기준으로 비만도를 판정합니다.</p>
+
+    <div class="grid-2">
+      <div class="field">
+        <label for="sex">성별</label>
+        <div class="input-wrap">
+          <select class="input" id="sex" name="sex">
+            <option value="male">남성</option>
+            <option value="female">여성</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="age">나이</label>
+        <div class="input-wrap"><input class="input" id="age" name="age" type="number" inputmode="numeric" min="10" max="100" step="1" value="25"><span class="unit">세</span></div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="field">
+        <label for="height">키</label>
+        <div class="input-wrap"><input class="input" id="height" name="height" type="number" inputmode="decimal" min="100" max="230" step="0.1" value="175"><span class="unit">cm</span></div>
+      </div>
+      <div class="field">
+        <label for="weight">체중</label>
+        <div class="input-wrap"><input class="input" id="weight" name="weight" type="number" inputmode="decimal" min="20" max="250" step="0.1" value="72"><span class="unit">kg</span></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="activity">활동량</label>
+      <div class="input-wrap">
+        <select class="input" id="activity" name="activity">
+          <option value="1.2">거의 앉아서 지내요 (사무직·운동 없음)</option>
+          <option value="1.375" selected>가벼운 활동 (주 1~3회 운동)</option>
+          <option value="1.55">보통 활동 (주 3~5회 운동)</option>
+          <option value="1.725">활발한 활동 (주 6~7회 운동)</option>
+          <option value="1.9">매우 활발 (운동선수·육체노동)</option>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <section class="result-card" aria-live="polite" aria-atomic="true">
+    <div class="result-head">
+      <span class="result-label">BMI (체질량지수)</span>
+      <span class="badge green" id="rBadge">정상</span>
+    </div>
+    <p class="result-value"><span id="rBmi">23.5</span></p>
+    <p class="result-sub" id="rSub">아시아-태평양 기준 · 정상 범위 18.5~22.9</p>
+
+    <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="40" aria-valuenow="0" aria-label="BMI 위치">
+      <span id="rBar"></span>
+    </div>
+
+    <dl class="result-rows">
+      <div class="result-row"><dt>비만도 판정</dt><dd id="rJudge">과체중</dd></div>
+      <div class="result-row"><dt>표준체중 (BMI 22)</dt><dd id="rStandard">67.4kg</dd></div>
+      <div class="result-row"><dt>정상 체중 범위</dt><dd id="rRange">56.7~70.1kg</dd></div>
+      <div class="result-row"><dt>기초대사량 (BMR)</dt><dd id="rBmr">1,650kcal</dd></div>
+      <div class="result-row total"><dt>하루 소비 열량 (TDEE)</dt><dd id="rTdee">2,270kcal</dd></div>
+    </dl>
+    <p class="hint" id="rGoal">표준체중까지 4.6kg 감량이 필요해요.</p>
+    <div id="resultText" hidden></div>
+  </section>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="copyBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
+      결과 복사
+    </button>
+    <button class="btn btn-ghost" id="shareBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg>
+      링크 공유
+    </button>
+  </div>
+
+  <div class="ad-slot" aria-hidden="true"><span>AD</span></div>
+
+  <article class="article">
+    <h2>BMI는 어떻게 계산하나요</h2>
+    <p>BMI(체질량지수, Body Mass Index)는 체중을 키의 제곱으로 나눈 값입니다. 키가 175cm이고 체중이 72kg이라면 72 ÷ (1.75 × 1.75) = 23.5가 됩니다. 단위를 m로 바꾸는 것을 잊으면 결과가 엉뚱하게 나오므로 주의하세요.</p>
+    <p class="formula">BMI = 체중(kg) ÷ 키(m)²<br>표준체중 = 22 × 키(m)²</p>
+    <p>세계보건기구(WHO)는 BMI 25 이상을 비만으로 보지만, 아시아인은 같은 BMI에서도 체지방률이 높고 당뇨·심혈관 질환 위험이 더 크게 나타나 아시아-태평양 기준을 따로 씁니다. 이 계산기도 그 기준을 적용합니다.</p>
+
+    <h2>아시아-태평양 기준 판정표</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>BMI</th><th>판정</th><th>설명</th></tr></thead>
+        <tbody>
+          <tr><td>18.5 미만</td><td>저체중</td><td>영양 부족·면역력 저하 주의</td></tr>
+          <tr><td>18.5 ~ 22.9</td><td>정상</td><td>건강에 가장 유리한 구간</td></tr>
+          <tr><td>23 ~ 24.9</td><td>과체중(위험체중)</td><td>대사증후군 위험 증가 시작</td></tr>
+          <tr><td>25 ~ 29.9</td><td>1단계 비만</td><td>생활습관 교정이 필요한 단계</td></tr>
+          <tr><td>30 이상</td><td>2단계 비만</td><td>전문의 상담을 권장</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>대한비만학회는 BMI 23 이상부터 건강 위험이 높아진다고 보고, 25 이상을 비만으로 분류합니다. 같은 BMI라도 허리둘레가 남성 90cm, 여성 85cm를 넘으면 복부비만으로 따로 평가합니다.</p>
+
+    <h2>BMI만 믿으면 안 되는 이유</h2>
+    <p>BMI는 키와 체중만으로 계산하므로 근육량과 체지방을 구분하지 못합니다. 근육이 많은 운동선수는 BMI가 25를 넘어도 체지방률이 낮아 건강할 수 있고, 반대로 마른 체형이어도 체지방률이 높은 '마른 비만'은 BMI로 잡히지 않습니다. 체성분 검사(InBody 등)와 허리둘레, 혈압·혈당·중성지방 수치를 함께 보는 것이 정확합니다.</p>
+    <p>또한 성장기 청소년, 임신부, 65세 이상 고령자에게는 일반 성인 기준을 그대로 적용하기 어렵습니다. 청소년은 성장도표의 백분위수를, 고령자는 근감소증 여부를 함께 고려해야 합니다.</p>
+
+    <h2>기초대사량과 하루 소비 열량</h2>
+    <p>기초대사량(BMR)은 아무것도 하지 않아도 생명 유지에 쓰이는 최소 열량입니다. 이 계산기는 Mifflin-St Jeor 공식을 사용합니다. 남성은 10×체중 + 6.25×키 − 5×나이 + 5, 여성은 같은 식에서 마지막 항이 −161입니다.</p>
+    <p>여기에 활동량 계수를 곱하면 하루 총 소비 열량(TDEE)이 됩니다. 이 값보다 적게 먹으면 체중이 줄고, 많으면 늘어납니다. 다만 실제 소비량은 개인차가 커서 계산값은 출발점으로 삼고 2~4주간 체중 변화를 보며 조정하는 것이 현실적입니다.</p>
+    <p>체중 1kg을 줄이려면 약 7,700kcal의 적자가 필요합니다. 하루 500kcal씩 줄이면 이론상 주당 0.45kg 정도 감량됩니다. 너무 급격한 감량은 근손실과 요요로 이어질 수 있어, 주당 체중의 0.5~1% 범위를 권장합니다.</p>
+
+    <h2>자주 묻는 질문</h2>
+    <details class="faq" open>
+      <summary>BMI 23이면 비만인가요?</summary>
+      <div class="faq-body"><p>아시아-태평양 기준으로 23~24.9는 '과체중(위험체중)'이고, 25 이상부터 비만입니다. WHO 기준(25 이상 비만)과 다르니 어느 기준으로 이야기하는지 확인하세요.</p></div>
+    </details>
+    <details class="faq">
+      <summary>표준체중과 정상 체중 범위는 무엇이 다른가요?</summary>
+      <div class="faq-body"><p>표준체중은 BMI 22일 때의 체중으로 건강에 가장 좋은 목표치입니다. 정상 체중 범위는 BMI 18.5~22.9에 해당하는 체중 구간으로, 이 안에 있으면 정상으로 봅니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>기초대사량보다 적게 먹으면 살이 빠지나요?</summary>
+      <div class="faq-body"><p>단기적으로는 빠지지만, 근손실과 대사 저하로 오래 유지되기 어렵습니다. 기초대사량 이하로 먹는 극단적 감량은 피하고, TDEE에서 300~500kcal 정도 줄이는 방식이 안전합니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>운동을 많이 하면 BMI가 높게 나오나요?</summary>
+      <div class="faq-body"><p>네. 근육은 지방보다 밀도가 높아 같은 부피로 무게가 더 나갑니다. 근력 운동을 많이 하는 사람은 BMI가 25를 넘어도 건강할 수 있으므로 체지방률과 함께 판단하세요.</p></div>
+    </details>
+
+    <p class="note">이 계산기는 일반 성인을 위한 참고용 도구이며 의학적 진단이 아닙니다. 비만·저체중이 걱정된다면 병원에서 체성분 검사와 상담을 받으세요.</p>
+  </article>
+
+  <div class="ad-slot" aria-hidden="true"><span>AD</span></div>
+
+  <section class="related">
+    <h2>함께 보면 좋은 계산기</h2>
+    <div class="related-list">
+      <a href="pyeong.html">평수 계산기</a>
+      <a href="due-date.html">출산예정일 계산기</a>
+      <a href="age.html">만 나이 계산기</a>
+      <a href="../index.html">전체 계산기</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <a class="promo" href="https://cshop.naver.com/mydailyselect" target="_blank" rel="noopener sponsored">
+      <span class="promo-label">데일리셀렉트</span>
+      <span class="promo-text">생활에 필요한 물건, 매일 골라 담은 셀렉트샵</span>
+      <span class="promo-arrow" aria-hidden="true">↗</span>
+    </a>
+    <nav class="footer-nav" aria-label="사이트 정보">
+      <a href="../index.html">전체 계산기</a>
+      <a href="../about.html">사이트 소개</a>
+      <a href="../privacy.html">개인정보처리방침</a>
+    </nav>
+    <p class="footer-note">이 사이트의 계산 결과는 참고용이며, 법적·재무적 판단의 근거가 될 수 없습니다.</p>
+    <p class="copy">© 2026 계산기 허브</p>
+  </div>
+</footer>
+
+<script src="../assets/js/common.js"></script>
+<script>
+(function () {
+  var CH = window.CalcHub, $ = CH.$;
+  var form = $("#calcForm");
+  var out = {
+    bmi: $("#rBmi"), sub: $("#rSub"), badge: $("#rBadge"), judge: $("#rJudge"), standard: $("#rStandard"),
+    range: $("#rRange"), bmr: $("#rBmr"), tdee: $("#rTdee"), goal: $("#rGoal"), bar: $("#rBar"), raw: $("#resultText")
+  };
+
+  function judge(bmi) {
+    if (bmi < 18.5) return ["저체중", "badge red", "red"];
+    if (bmi < 23) return ["정상", "badge green", "green"];
+    if (bmi < 25) return ["과체중 (위험체중)", "badge", ""];
+    if (bmi < 30) return ["1단계 비만", "badge red", "red"];
+    return ["2단계 비만", "badge red", "red"];
+  }
+
+  function calc() {
+    var sex = $("#sex").value;
+    var age = CH.num($("#age").value) || 25;
+    var h = CH.num($("#height").value);
+    var w = CH.num($("#weight").value);
+    var act = CH.num($("#activity").value) || 1.375;
+
+    if (h < 100 || w <= 0) {
+      out.bmi.textContent = "-";
+      out.sub.textContent = "키와 체중을 입력해 주세요.";
+      out.raw.textContent = "";
+      return;
+    }
+
+    var m = h / 100;
+    var bmi = w / (m * m);
+    var std = 22 * m * m;
+    var low = 18.5 * m * m;
+    var high = 22.9 * m * m;
+    var bmr = sex === "male" ? 10 * w + 6.25 * h - 5 * age + 5 : 10 * w + 6.25 * h - 5 * age - 161;
+    var tdee = bmr * act;
+    var j = judge(bmi);
+
+    out.bmi.textContent = bmi.toFixed(1);
+    out.judge.textContent = j[0];
+    out.badge.textContent = j[0];
+    out.badge.className = j[1];
+    out.sub.textContent = "아시아-태평양 기준 · 정상 범위 18.5~22.9 · " + (sex === "male" ? "남성" : "여성") + " " + age + "세";
+    out.standard.textContent = std.toFixed(1) + "kg";
+    out.range.textContent = low.toFixed(1) + "~" + high.toFixed(1) + "kg";
+    out.bmr.textContent = CH.comma(bmr) + "kcal";
+    out.tdee.textContent = CH.comma(tdee) + "kcal";
+
+    var diff = w - std;
+    if (Math.abs(diff) < 0.5) out.goal.textContent = "표준체중과 거의 같아요. 지금 체중을 유지해 보세요.";
+    else if (diff > 0) out.goal.textContent = "표준체중까지 " + diff.toFixed(1) + "kg 감량이 필요해요. 하루 " + CH.comma(tdee - 500) + "kcal 정도가 감량 목표예요.";
+    else out.goal.textContent = "표준체중까지 " + Math.abs(diff).toFixed(1) + "kg 증량이 필요해요. 하루 " + CH.comma(tdee + 300) + "kcal 정도를 목표로 하세요.";
+
+    out.bar.style.width = Math.max(0, Math.min(100, (bmi / 35) * 100)) + "%";
+    out.bar.parentNode.setAttribute("aria-valuenow", bmi.toFixed(1));
+
+    out.raw.textContent =
+      "BMI 계산 결과\n" +
+      "· 키 " + h + "cm / 체중 " + w + "kg / " + (sex === "male" ? "남성" : "여성") + " " + age + "세\n" +
+      "· BMI: " + bmi.toFixed(1) + " (" + j[0] + ")\n" +
+      "· 표준체중: " + std.toFixed(1) + "kg / 정상 범위: " + low.toFixed(1) + "~" + high.toFixed(1) + "kg\n" +
+      "· 기초대사량: " + CH.comma(bmr) + "kcal\n" +
+      "· 하루 소비 열량(TDEE): " + CH.comma(tdee) + "kcal";
+  }
+
+  CH.live(form, calc);
+
+  $("#copyBtn").addEventListener("click", function () {
+    CH.copy(out.raw.textContent).then(function (ok) { CH.toast(ok ? "결과를 복사했어요" : "복사에 실패했어요"); });
+  });
+  $("#shareBtn").addEventListener("click", function () {
+    CH.share({ title: "BMI 계산기", text: "BMI " + out.bmi.textContent + " · " + out.judge.textContent, url: CH.buildShareUrl(form) });
+  });
+})();
+</script>
+</body>
+</html>

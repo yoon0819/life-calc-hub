@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>대출 이자 계산기 — 원리금균등·원금균등·만기일시 상환액 비교</title>
+<meta name="description" content="대출 원금과 금리, 기간을 넣으면 원리금균등·원금균등·만기일시 상환 방식별 월 상환액과 총 이자를 비교해 줍니다. 상환 스케줄도 확인하세요.">
+<meta name="keywords" content="대출 이자 계산기, 원리금균등, 원금균등, 만기일시, 월 상환액, 총 이자, 주택담보대출 계산">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://yoon0819.github.io/life-calc-hub/tools/loan-interest.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="계산기 허브">
+<meta property="og:title" content="대출 이자 계산기 — 상환 방식별 비교">
+<meta property="og:description" content="원리금균등·원금균등·만기일시 상환의 월 상환액과 총 이자를 계산합니다.">
+<meta property="og:url" content="https://yoon0819.github.io/life-calc-hub/tools/loan-interest.html">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#3182F6">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<!-- AdSense 승인 후 주석 해제: <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html" aria-label="계산기 허브 홈"><span class="brand-mark" aria-hidden="true">계</span><span class="brand-name">계산기 허브</span></a>
+    <a class="topbar-link" href="../index.html">전체 계산기</a>
+  </div>
+</header>
+
+<main id="main" class="app">
+  <nav class="crumb" aria-label="위치">
+    <a href="../index.html">홈</a><span>/</span><a href="../index.html#catFinance">금융·대출</a><span>/</span><span>대출 이자</span>
+  </nav>
+
+  <div class="page-head">
+    <h1>대출 이자 계산기</h1>
+    <p>같은 금리라도 상환 방식을 어떻게 고르느냐에 따라 매달 나가는 돈과 총이자가 달라져요.</p>
+  </div>
+
+  <form class="card" id="calcForm" onsubmit="return false">
+    <h2 class="card-title">대출 조건</h2>
+    <p class="card-desc">실제 적용 금리는 은행의 우대금리·변동금리에 따라 달라질 수 있어요.</p>
+
+    <div class="field">
+      <label for="principal">대출 원금</label>
+      <div class="input-wrap"><input class="input" id="principal" name="amount" type="number" inputmode="numeric" min="0" step="1000000" value="300000000"><span class="unit">원</span></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="field">
+        <label for="rate">연 이자율</label>
+        <div class="input-wrap"><input class="input" id="rate" name="rate" type="number" inputmode="decimal" min="0" max="30" step="0.01" value="4.2"><span class="unit">%</span></div>
+      </div>
+      <div class="field">
+        <label for="months">기간</label>
+        <div class="input-wrap"><input class="input" id="months" name="months" type="number" inputmode="numeric" min="1" max="480" step="1" value="360"><span class="unit">개월</span></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="method">상환 방식</label>
+      <div class="input-wrap">
+        <select class="input" id="method" name="method">
+          <option value="equal-payment">원리금균등분할 (매달 같은 금액)</option>
+          <option value="equal-principal">원금균등분할 (원금은 같게, 이자는 줄어듦)</option>
+          <option value="bullet">만기일시 (이자만 내다 만기에 원금)</option>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <section class="result-card" aria-live="polite" aria-atomic="true">
+    <div class="result-head">
+      <span class="result-label">월 상환액 (첫 달)</span>
+      <span class="badge" id="rBadge">원리금균등</span>
+    </div>
+    <p class="result-value"><span id="rMonthly">0</span><span class="won">원</span></p>
+    <p class="result-sub" id="rSub">총 이자 0원 · 총 상환액 0원</p>
+
+    <dl class="result-rows">
+      <div class="result-row"><dt>월 이자 (첫 달)</dt><dd id="rFirstInterest">0원</dd></div>
+      <div class="result-row"><dt>마지막 달 상환액</dt><dd id="rLast">0원</dd></div>
+      <div class="result-row"><dt>총 이자</dt><dd id="rTotalInterest">0원</dd></div>
+      <div class="result-row total"><dt>총 상환액</dt><dd id="rTotal">0원</dd></div>
+    </dl>
+    <p class="hint" id="rCompare">다른 상환 방식과 비교해 보세요.</p>
+    <div id="resultText" hidden></div>
+  </section>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="copyBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
+      결과 복사
+    </button>
+    <button class="btn btn-ghost" id="shareBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg>
+      링크 공유
+    </button>
+  </div>
+
+  <details class="card">
+    <summary style="cursor:pointer;font-weight:700;font-size:16px">월별 상환 스케줄 보기</summary>
+    <div class="table-wrap" style="max-height:380px;overflow:auto;margin-top:14px">
+      <table id="scheduleTable">
+        <thead><tr><th>회차</th><th class="num">상환액</th><th class="num">원금</th><th class="num">이자</th><th class="num">잔액</th></tr></thead>
+        <tbody id="scheduleBody"></tbody>
+      </table>
+    </div>
+    <p class="hint">원 단위 반올림으로 합계와 1~2원 차이가 날 수 있어요.</p>
+  </details>
+
+  <div class="ad-slot" aria-hidden="true"><span>AD</span></div>
+
+  <article class="article">
+    <h2>상환 방식에 따라 이자가 이렇게 달라집니다</h2>
+    <p>대출 상환 방식은 크게 세 가지입니다. <strong>원리금균등분할</strong>은 매달 갚는 총액이 같은 방식이고, <strong>원금균등분할</strong>은 매달 갚는 원금이 같아 총액이 점점 줄어드는 방식입니다. <strong>만기일시</strong>는 만기까지 이자만 내다가 마지막에 원금을 한꺼번에 갚습니다.</p>
+    <p>총이자는 원금균등이 가장 적고, 만기일시가 가장 많습니다. 원리금균등은 그 중간입니다. 하지만 첫 달 상환액은 만기일시가 가장 적고 원금균등이 가장 많습니다. 즉 "매달 얼마를 낼 수 있는가"와 "총 얼마를 더 내고 싶지 않은가" 사이에서 고르는 문제입니다.</p>
+
+    <h2>각 방식의 계산식</h2>
+    <p class="formula">원리금균등 월 상환액 = 원금 × 월이율 ÷ (1 − (1 + 월이율)^−개월수)<br>원금균등 월 상환액 = 원금 ÷ 개월수 + 남은 원금 × 월이율<br>만기일시 월 상환액 = 원금 × 월이율</p>
+    <p>월이율은 연이율을 12로 나눈 값입니다. 예를 들어 연 4.2%라면 월이율은 0.35%입니다. 원리금균등은 초기 상환액 중 이자 비중이 크고 원금 비중이 작다가, 시간이 지나면서 원금 비중이 커집니다. 이 계산기의 스케줄 표에서 회차별 원금과 이자를 확인할 수 있습니다.</p>
+
+    <h2>예를 들어 비교해 보면</h2>
+    <p>3억원을 연 4.2%로 30년(360개월) 빌린다고 가정해 봅시다. 원리금균등은 매달 약 147만원씩 360번 내고 총이자는 약 2억 2,800만원입니다. 원금균등은 첫 달 약 188만원에서 시작해 매달 조금씩 줄어들고, 총이자는 약 1억 9,000만원으로 3,800만원가량 적습니다. 만기일시는 매달 이자 약 105만원만 내다가 30년 뒤 3억원을 한꺼번에 갚아야 하며, 총이자는 약 3억 7,800만원으로 가장 많습니다.</p>
+    <p>숫자만 보면 원금균등이 유리하지만, 초반 상환 부담이 크기 때문에 소득이 일정하지 않은 사회초년생에게는 원리금균등이 현실적입니다. 여유가 생기면 중도상환수수료가 없는 시점에 일부를 갚는 방법도 있습니다.</p>
+
+    <h2>중도상환과 금리 변동도 고려하세요</h2>
+    <p>대출을 중간에 갚으면 남은 원금에 대한 이자를 아낄 수 있습니다. 다만 중도상환수수료가 남은 기간에 따라 부과되므로, 수수료가 면제되는 시점(보통 3년 후)을 확인하는 것이 좋습니다. 변동금리 대출이라면 금리가 오를 때 월 상환액이 늘어날 수 있어, 스트레스 DSR 기준으로 여유를 두고 계획하는 편이 안전합니다.</p>
+    <p>또한 이 계산기는 원리금 균등 상환액을 반올림 없이 계산하므로 실제 은행의 원 단위 처리와 몇천 원 차이가 날 수 있습니다. 정확한 상환액은 은행의 대출 계산기나 상담을 통해 확인하세요.</p>
+
+    <h2>자주 묻는 질문</h2>
+    <details class="faq" open>
+      <summary>원리금균등과 원금균등 중 무엇이 유리한가요?</summary>
+      <div class="faq-body"><p>총이자는 원금균등이 적습니다. 다만 초반 상환액이 커서 현금 흐름이 빠듯해질 수 있습니다. 매달 부담을 일정하게 유지하고 싶다면 원리금균등, 총이자를 줄이고 싶고 초반 여유가 있다면 원금균등이 적합합니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>만기일시는 어떤 경우에 쓰나요?</summary>
+      <div class="faq-body"><p>전세자금대출이나 기업 운전자금처럼 만기에 목돈이 들어오는 상황에 맞는 방식입니다. 매달 이자 부담은 적지만 만기에 원금을 한꺼번에 갚아야 하므로, 만기 연장 가능성과 상환 재원을 미리 확인해야 합니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>금리가 오르면 월 상환액이 얼마나 늘어나나요?</summary>
+      <div class="faq-body"><p>변동금리라면 금리 1%p 상승 시 원금 3억원 기준으로 연간 이자가 약 300만원 늘어납니다. 월로는 약 25만원입니다. 이 계산기의 금리를 1%p 올려 다시 계산해 보면 대략적인 차이를 확인할 수 있습니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>중도상환수수료는 얼마인가요?</summary>
+      <div class="faq-body"><p>보통 상환금액의 0.5~1.2% 수준이고, 대출 실행 후 3년이 지나면 면제되는 경우가 많습니다. 은행별로 조건이 다르므로 대출 약정서를 확인하세요.</p></div>
+    </details>
+
+    <p class="note">이 계산기는 원리금 균등 공식을 단순 적용한 참고용 도구입니다. 실제 상환액은 은행의 일수 계산, 우대금리, 인지세·보증료 등 부대비용에 따라 달라질 수 있습니다.</p>
+  </article>
+
+  <div class="ad-slot" aria-hidden="true"><span>AD</span></div>
+
+  <section class="related">
+    <h2>함께 보면 좋은 계산기</h2>
+    <div class="related-list">
+      <a href="savings-interest.html">예금·적금 이자</a>
+      <a href="pyeong.html">평수 계산기</a>
+      <a href="salary-net.html">연봉 실수령액</a>
+      <a href="../index.html">전체 계산기</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <a class="promo" href="https://cshop.naver.com/mydailyselect" target="_blank" rel="noopener sponsored">
+      <span class="promo-label">데일리셀렉트</span>
+      <span class="promo-text">생활에 필요한 물건, 매일 골라 담은 셀렉트샵</span>
+      <span class="promo-arrow" aria-hidden="true">↗</span>
+    </a>
+    <nav class="footer-nav" aria-label="사이트 정보">
+      <a href="../index.html">전체 계산기</a>
+      <a href="../about.html">사이트 소개</a>
+      <a href="../privacy.html">개인정보처리방침</a>
+    </nav>
+    <p class="footer-note">이 사이트의 계산 결과는 참고용이며, 법적·재무적 판단의 근거가 될 수 없습니다.</p>
+    <p class="copy">© 2026 계산기 허브</p>
+  </div>
+</footer>
+
+<script src="../assets/js/common.js"></script>
+<script>
+(function () {
+  var CH = window.CalcHub, $ = CH.$;
+  var form = $("#calcForm");
+  var out = {
+    monthly: $("#rMonthly"), sub: $("#rSub"), badge: $("#rBadge"), firstInterest: $("#rFirstInterest"),
+    last: $("#rLast"), totalInterest: $("#rTotalInterest"), total: $("#rTotal"), compare: $("#rCompare"), raw: $("#resultText")
+  };
+  var NAMES = { "equal-payment": "원리금균등", "equal-principal": "원금균등", "bullet": "만기일시" };
+
+  function simulate(principal, rate, months, method) {
+    var r = rate / 12;
+    var rows = [];
+    var totalInterest = 0;
+    var firstPayment = 0, lastPayment = 0;
+
+    if (method === "equal-payment") {
+      var m = r === 0 ? principal / months : principal * r / (1 - Math.pow(1 + r, -months));
+      var remain = principal;
+      for (var i = 1; i <= months; i++) {
+        var int = remain * r;
+        var prin = (i === months) ? remain : m - int;
+        if (prin > remain) prin = remain;
+        var pay = prin + int;
+        remain -= prin;
+        if (remain < 0.5) remain = 0;
+        totalInterest += int;
+        if (i === 1) firstPayment = pay;
+        lastPayment = pay;
+        rows.push([i, pay, prin, int, remain]);
+      }
+    } else if (method === "equal-principal") {
+      var p = principal / months;
+      var rem = principal;
+      for (var j = 1; j <= months; j++) {
+        var it = rem * r;
+        var pr = (j === months) ? rem : p;
+        var pa = pr + it;
+        rem -= pr;
+        if (rem < 0.5) rem = 0;
+        totalInterest += it;
+        if (j === 1) firstPayment = pa;
+        lastPayment = pa;
+        rows.push([j, pa, pr, it, rem]);
+      }
+    } else {
+      var it2 = principal * r;
+      for (var k = 1; k <= months; k++) {
+        var pr2 = (k === months) ? principal : 0;
+        var pa2 = pr2 + it2;
+        totalInterest += it2;
+        if (k === 1) firstPayment = pa2;
+        lastPayment = pa2;
+        rows.push([k, pa2, pr2, it2, k === months ? 0 : principal]);
+      }
+    }
+    return { rows: rows, totalInterest: totalInterest, firstPayment: firstPayment, lastPayment: lastPayment };
+  }
+
+  function renderSchedule(rows) {
+    var body = $("#scheduleBody");
+    var html = "";
+    var limit = Math.min(rows.length, 480);
+    for (var i = 0; i < limit; i++) {
+      var r = rows[i];
+      html += "<tr><td>" + r[0] + "</td><td class='num'>" + CH.comma(r[1]) + "</td><td class='num'>" + CH.comma(r[2]) +
+        "</td><td class='num'>" + CH.comma(r[3]) + "</td><td class='num'>" + CH.comma(r[4]) + "</td></tr>";
+    }
+    body.innerHTML = html;
+  }
+
+  function calc() {
+    var principal = CH.num($("#principal").value);
+    var rate = CH.num($("#rate").value) / 100;
+    var months = Math.max(1, Math.round(CH.num($("#months").value)) || 1);
+    var method = $("#method").value;
+
+    if (principal <= 0) {
+      out.monthly.textContent = "0";
+      out.sub.textContent = "대출 원금을 입력해 주세요.";
+      return;
+    }
+
+    var res = simulate(principal, rate, months, method);
+    var total = principal + res.totalInterest;
+
+    out.monthly.textContent = CH.comma(res.firstPayment);
+    out.firstInterest.textContent = CH.won(principal * rate / 12);
+    out.last.textContent = CH.won(res.lastPayment);
+    out.totalInterest.textContent = CH.won(res.totalInterest);
+    out.total.textContent = CH.won(total);
+    out.sub.textContent = "총 이자 " + CH.won(res.totalInterest) + " · 총 상환액 " + CH.won(total);
+    out.badge.textContent = NAMES[method];
+    out.badge.className = "badge";
+
+    // 다른 방식과 비교
+    var cmp = ["equal-payment", "equal-principal", "bullet"].map(function (m) {
+      var s = simulate(principal, rate, months, m);
+      return { name: NAMES[m], interest: s.totalInterest };
+    }).sort(function (a, b) { return a.interest - b.interest; });
+    out.compare.textContent = "총이자 적은 순: " + cmp.map(function (c) { return c.name + " " + CH.comma(c.interest) + "원"; }).join(" · ");
+
+    renderSchedule(res.rows);
+
+    out.raw.textContent =
+      "대출 이자 계산 결과 (" + NAMES[method] + ")\n" +
+      "· 대출 원금: " + CH.won(principal) + " / 연 " + CH.pct(rate * 100, 2) + " / " + months + "개월\n" +
+      "· 첫 달 상환액: " + CH.won(res.firstPayment) + "\n" +
+      "· 마지막 달 상환액: " + CH.won(res.lastPayment) + "\n" +
+      "· 총 이자: " + CH.won(res.totalInterest) + "\n" +
+      "· 총 상환액: " + CH.won(total);
+  }
+
+  CH.live(form, calc);
+
+  $("#copyBtn").addEventListener("click", function () {
+    CH.copy(out.raw.textContent).then(function (ok) { CH.toast(ok ? "결과를 복사했어요" : "복사에 실패했어요"); });
+  });
+  $("#shareBtn").addEventListener("click", function () {
+    CH.share({ title: "대출 이자 계산기", text: "월 상환액 " + out.monthly.textContent + "원", url: CH.buildShareUrl(form) });
+  });
+})();
+</script>
+</body>
+</html>

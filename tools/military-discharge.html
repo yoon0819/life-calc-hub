@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>군 전역일 계산기 — 육군·해군·공군·해병대·사회복무 복무율 계산</title>
+<meta name="description" content="입대일과 군별 복무기간을 고르면 전역일과 남은 복무일, 복무율(%)이 바로 계산됩니다. 육군 18개월·해군 20개월·공군 21개월·해병 18개월·사회복무 21개월 기준.">
+<meta name="keywords" content="전역일 계산기, 군대 전역일, 복무율 계산, 육군 18개월, 공군 21개월, 사회복무 21개월, 제대일">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://yoon0819.github.io/life-calc-hub/tools/military-discharge.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="계산기 허브">
+<meta property="og:title" content="군 전역일 계산기 — 복무율 %까지">
+<meta property="og:description" content="입대일과 군별 복무기간으로 전역일, 남은 날, 복무율을 계산합니다.">
+<meta property="og:url" content="https://yoon0819.github.io/life-calc-hub/tools/military-discharge.html">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#3182F6">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<!-- AdSense 승인 후 주석 해제: <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html" aria-label="계산기 허브 홈"><span class="brand-mark" aria-hidden="true">계</span><span class="brand-name">계산기 허브</span></a>
+    <a class="topbar-link" href="../index.html">전체 계산기</a>
+  </div>
+</header>
+
+<main id="main" class="app">
+  <nav class="crumb" aria-label="위치">
+    <a href="../index.html">홈</a><span>/</span><a href="../index.html#catLife">날짜·생활</a><span>/</span><span>군 전역일</span>
+  </nav>
+
+  <div class="page-head">
+    <h1>군 전역일 계산기</h1>
+    <p>입대일만 넣으면 전역일과 남은 복무일, 복무율까지 한 번에 나와요.</p>
+  </div>
+
+  <form class="card" id="calcForm" onsubmit="return false">
+    <h2 class="card-title">복무 정보</h2>
+    <p class="card-desc">군별 복무기간은 2020년 6월 이후 기준이에요.</p>
+
+    <div class="field">
+      <label for="enlist">입대일 (복무 시작일)</label>
+      <div class="input-wrap"><input class="input" id="enlist" name="enlist" type="date" value="2026-03-10"></div>
+    </div>
+
+    <div class="field">
+      <label for="branch">군별</label>
+      <div class="input-wrap">
+        <select class="input" id="branch" name="branch">
+          <option value="army|18">육군 · 18개월</option>
+          <option value="katusa|18">카투사 · 18개월</option>
+          <option value="navy|20">해군 · 20개월</option>
+          <option value="airforce|21">공군 · 21개월</option>
+          <option value="marine|18">해병대 · 18개월</option>
+          <option value="social|21">사회복무요원 · 21개월</option>
+          <option value="reserve|18">상근예비역 · 18개월</option>
+        </select>
+      </div>
+    </div>
+    <p class="hint">실제 전역일은 부대·병과·말년휴가에 따라 달라질 수 있어요. 병무청 '나의 병역이력'에서 확인할 수 있습니다.</p>
+  </form>
+
+  <section class="result-card" aria-live="polite" aria-atomic="true">
+    <div class="result-head">
+      <span class="result-label">전역까지</span>
+      <span class="badge" id="rBadge">복무 중</span>
+    </div>
+    <p class="result-value" id="rMain">D-0</p>
+    <p class="result-sub" id="rSub">전역일 0년 0월 0일</p>
+
+    <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="복무율">
+      <span id="rBar"></span>
+    </div>
+    <p class="result-sub" id="rPercent">복무율 0%</p>
+
+    <dl class="result-rows">
+      <div class="result-row"><dt>전역일</dt><dd id="rOut">-</dd></div>
+      <div class="result-row"><dt>복무기간</dt><dd id="rTerm">18개월</dd></div>
+      <div class="result-row"><dt>총 복무일수</dt><dd id="rTotal">-</dd></div>
+      <div class="result-row"><dt>남은 복무일</dt><dd id="rLeft">-</dd></div>
+      <div class="result-row total"><dt>복무율</dt><dd id="rPct">0%</dd></div>
+    </dl>
+    <div id="resultText" hidden></div>
+  </section>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="copyBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
+      결과 복사
+    </button>
+    <button class="btn btn-ghost" id="shareBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg>
+      링크 공유
+    </button>
+  </div>
+
+  <div class="ad-slot" aria-hidden="true"><span>AD</span></div>
+
+  <article class="article">
+    <h2>전역일은 이렇게 계산합니다</h2>
+    <p>전역일은 입대일에서 복무기간만큼 달을 더한 뒤 하루를 빼서 구합니다. 예를 들어 2026년 3월 10일에 입대한 육군(18개월)은 2027년 9월 10일에서 하루를 뺀 <strong>2027년 9월 9일</strong>이 전역일이 됩니다.</p>
+    <p class="formula">전역일 = 입대일 + 복무기간(개월) − 1일<br>복무율 = (지난 복무일 ÷ 총 복무일) × 100</p>
+    <p>하루를 빼는 이유는 입대일을 복무 첫날로 세기 때문입니다. 입대일과 전역일을 모두 포함해 세면 18개월이 정확히 채워집니다. 복무율은 입대일부터 오늘까지 지난 날을 총 복무일수로 나눈 값으로, 50%를 넘으면 절반을 지난 셈입니다.</p>
+
+    <h2>군별 복무기간 (2020년 6월 이후)</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>구분</th><th class="num">복무기간</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td>육군</td><td class="num">18개월</td><td>카투사 포함</td></tr>
+          <tr><td>해군</td><td class="num">20개월</td><td>해군·해병 지원자 구분</td></tr>
+          <tr><td>공군</td><td class="num">21개월</td><td>가장 긴 복무기간</td></tr>
+          <tr><td>해병대</td><td class="num">18개월</td><td>육군과 동일</td></tr>
+          <tr><td>사회복무요원</td><td class="num">21개월</td><td>공익근무</td></tr>
+          <tr><td>상근예비역</td><td class="num">18개월</td><td>육군 기준</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>복무기간은 입대 시점의 병역법 시행령 기준을 따릅니다. 입대일이 2020년 6월 이전이라면 그 시점의 기간(육군 21개월 등)이 적용될 수 있으므로, 오래전에 입대한 경우에는 병무청 안내를 확인하세요.</p>
+
+    <h2>실제 전역일과 계산이 다른 이유</h2>
+    <p>계산상의 전역일은 복무기간을 달력 기준으로 계산한 값입니다. 실제 전역일은 부대의 작전 일정, 병과, 말년휴가·포상휴가 사용, 청원휴가 등에 따라 며칠에서 몇 주 차이가 날 수 있습니다. 특히 말년휴가를 전역 전에 미리 쓰면 실제로 부대에 있는 마지막 날이 앞당겨지지만, 전역일 자체가 바뀌는 것은 아닙니다.</p>
+    <p>정확한 전역일은 병무청 <strong>나의 병역이력</strong> 또는 소속 부대 행정반에서 확인하는 것이 가장 확실합니다. 이 계산기는 계획을 세우기 위한 예상값으로 활용하세요.</p>
+
+    <h2>복무율을 왜 확인하나요</h2>
+    <p>복무율은 남은 기간을 체감하는 데 도움이 됩니다. 1년 6개월 복무라면 9개월이 지났을 때 50%이고, 남은 9개월이 지난 9개월과 같다고 느껴지기 때문에 "절반 왔다"는 감각을 잡기 좋습니다. 전역일까지 남은 날을 세는 것보다 복무율이 마음의 여유를 주는 경우가 많습니다.</p>
+    <p>복무율이 100%가 되면 전역일 당일이고, 그 이후로는 복무가 끝난 상태로 표시됩니다. 입대일이 미래라면 복무율은 0%로 표시됩니다.</p>
+
+    <h2>자주 묻는 질문</h2>
+    <details class="faq" open>
+      <summary>전역일이 주말이나 공휴일이면 어떻게 되나요?</summary>
+      <div class="faq-body"><p>전역일이 주말·공휴일이면 실제 전역 처리는 다음 평일로 밀리는 경우가 많습니다. 계산 결과의 날짜는 달력 기준이므로, 부대 행정반에서 확인한 실제 전역일을 기준으로 계획을 세우는 것이 좋습니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>복무율은 입대일부터 세나요, 다음 날부터 세나요?</summary>
+      <div class="faq-body"><p>이 계산기는 입대일을 1일째로 보고 오늘까지의 날수를 셉니다. 입대일 당일은 복무율 0%에 가깝게 표시되며, 다음 날부터 하루씩 올라갑니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>공군이 21개월로 가장 긴가요?</summary>
+      <div class="faq-body"><p>2020년 6월 이후 입대자 기준으로 공군과 사회복무요원이 21개월로 가장 깁니다. 해군은 20개월, 육군·해병대·상근예비역은 18개월입니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>입대일을 모르면 어떻게 하나요?</summary>
+      <div class="faq-body"><p>병무청 '나의 병역이력'이나 입영통지서, 군 생활 기록에서 입대일을 확인할 수 있습니다. 입대일만 알면 복무기간을 더해 전역일을 계산할 수 있습니다.</p></div>
+    </details>
+
+    <p class="note">이 계산기는 병역법상 일반적인 복무기간을 기준으로 한 참고용 도구입니다. 실제 전역일은 병무청과 소속 부대의 안내를 우선 확인하세요.</p>
+  </article>
+
+  <div class="ad-slot" aria-hidden="true"><span>AD</span></div>
+
+  <section class="related">
+    <h2>함께 보면 좋은 계산기</h2>
+    <div class="related-list">
+      <a href="dday.html">디데이 계산기</a>
+      <a href="age.html">만 나이 계산기</a>
+      <a href="due-date.html">출산예정일 계산기</a>
+      <a href="../index.html">전체 계산기</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <a class="promo" href="https://cshop.naver.com/mydailyselect" target="_blank" rel="noopener sponsored">
+      <span class="promo-label">데일리셀렉트</span>
+      <span class="promo-text">생활에 필요한 물건, 매일 골라 담은 셀렉트샵</span>
+      <span class="promo-arrow" aria-hidden="true">↗</span>
+    </a>
+    <nav class="footer-nav" aria-label="사이트 정보">
+      <a href="../index.html">전체 계산기</a>
+      <a href="../about.html">사이트 소개</a>
+      <a href="../privacy.html">개인정보처리방침</a>
+    </nav>
+    <p class="footer-note">이 사이트의 계산 결과는 참고용이며, 법적·재무적 판단의 근거가 될 수 없습니다.</p>
+    <p class="copy">© 2026 계산기 허브</p>
+  </div>
+</footer>
+
+<script src="../assets/js/common.js"></script>
+<script>
+(function () {
+  var CH = window.CalcHub, $ = CH.$;
+  var form = $("#calcForm");
+  var weekNames = ["일", "월", "화", "수", "목", "금", "토"];
+  var out = {
+    main: $("#rMain"), sub: $("#rSub"), badge: $("#rBadge"), bar: $("#rBar"), percent: $("#rPercent"),
+    outDate: $("#rOut"), term: $("#rTerm"), total: $("#rTotal"), left: $("#rLeft"), pct: $("#rPct"), raw: $("#resultText")
+  };
+
+  function calc() {
+    var enlist = CH.parseYmd($("#enlist").value);
+    var branchParts = String($("#branch").value).split("|");
+    var months = CH.num(branchParts[1]) || 18;
+
+    if (!enlist) {
+      out.main.textContent = "날짜를 선택하세요";
+      out.sub.textContent = "입대일을 입력하면 전역일이 계산됩니다.";
+      out.raw.textContent = "";
+      return;
+    }
+
+    var discharge = CH.addDays(CH.addMonths(enlist, months), -1);
+    var totalDays = CH.diffDays(enlist, discharge) + 1;
+    var today = CH.today();
+    var elapsed = CH.diffDays(enlist, today) + 1;
+    if (elapsed < 0) elapsed = 0;
+    if (elapsed > totalDays) elapsed = totalDays;
+    var leftDays = Math.max(0, CH.diffDays(today, discharge));
+    var percent = totalDays > 0 ? (elapsed / totalDays) * 100 : 0;
+    if (percent > 100) percent = 100;
+
+    out.outDate.textContent = CH.ymd(discharge).replace(/-/g, ".") + " (" + weekNames[discharge.getDay()] + ")";
+    out.term.textContent = months + "개월";
+    out.total.textContent = CH.comma(totalDays) + "일";
+    out.left.textContent = CH.comma(leftDays) + "일";
+    out.pct.textContent = CH.pct(percent);
+    out.percent.textContent = "복무율 " + CH.pct(percent) + (leftDays > 0 ? " · " + CH.comma(leftDays) + "일 남음" : "");
+    out.bar.style.width = Math.min(100, percent) + "%";
+    out.bar.parentNode.setAttribute("aria-valuenow", Math.round(percent));
+
+    if (leftDays <= 0 && CH.diffDays(today, discharge) <= 0) {
+      out.main.textContent = "전역";
+      out.badge.textContent = "복무 완료";
+      out.badge.className = "badge green";
+      out.sub.textContent = CH.kdate(discharge) + " 전역 · 복무율 100%";
+    } else {
+      out.main.textContent = "D-" + leftDays;
+      out.badge.textContent = "복무 중";
+      out.badge.className = "badge";
+      out.sub.textContent = CH.kdate(discharge) + " 전역 예정 · 복무율 " + CH.pct(percent);
+    }
+
+    out.raw.textContent =
+      "군 전역일 계산 결과\n" +
+      "· 입대일: " + CH.kdate(enlist) + "\n" +
+      "· 복무기간: " + months + "개월 (총 " + CH.comma(totalDays) + "일)\n" +
+      "· 전역일: " + CH.kdate(discharge) + "\n" +
+      "· 남은 복무일: " + CH.comma(leftDays) + "일\n" +
+      "· 복무율: " + CH.pct(percent);
+  }
+
+  CH.live(form, calc);
+
+  $("#copyBtn").addEventListener("click", function () {
+    CH.copy(out.raw.textContent).then(function (ok) { CH.toast(ok ? "결과를 복사했어요" : "복사에 실패했어요"); });
+  });
+  $("#shareBtn").addEventListener("click", function () {
+    CH.share({ title: "군 전역일 계산기", text: "전역일 " + out.outDate.textContent + " · 복무율 " + out.pct.textContent, url: CH.buildShareUrl(form) });
+  });
+})();
+</script>
+</body>
+</html>

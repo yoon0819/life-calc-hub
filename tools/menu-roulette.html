@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>점심 메뉴 룰렛 — 오늘 뭐 먹지? 랜덤 메뉴 결정 도우미</title>
+<meta name="description" content="한식·중식·일식·양식·분식·카페 메뉴를 룰렛으로 돌려 오늘 먹을 메뉴를 3초 만에 정하세요. 원하는 메뉴를 직접 추가하고, 팀 회식·점심 메뉴 정할 때 공유하기 좋아요.">
+<meta name="keywords" content="메뉴 룰렛, 점심 메뉴 추천, 뭐 먹지, 메뉴 결정, 회식 메뉴, 랜덤 뽑기, 점심 룰렛">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://yoon0819.github.io/life-calc-hub/tools/menu-roulette.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="계산기 허브">
+<meta property="og:title" content="점심 메뉴 룰렛 — 랜덤 메뉴 결정">
+<meta property="og:description" content="카테고리를 고르고 룰렛을 돌리면 오늘 메뉴가 정해집니다. 직접 메뉴 추가도 가능.">
+<meta property="og:url" content="https://yoon0819.github.io/life-calc-hub/tools/menu-roulette.html">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#3182F6">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<!-- AdSense 승인 후 주석 해제: <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html" aria-label="계산기 허브 홈"><span class="brand-mark" aria-hidden="true">계</span><span class="brand-name">계산기 허브</span></a>
+    <a class="topbar-link" href="../index.html">전체 계산기</a>
+  </div>
+</header>
+
+<main id="main" class="app">
+  <nav class="crumb" aria-label="위치">
+    <a href="../index.html">홈</a><span>/</span><a href="../index.html#catTools">생활·업무 도구</a><span>/</span><span>메뉴 룰렛</span>
+  </nav>
+
+  <div class="page-head">
+    <h1>점심·저녁 메뉴 룰렛</h1>
+    <p>"아무거나"가 제일 어려울 때. 카테고리만 고르고 돌려 보세요.</p>
+  </div>
+
+  <div class="card">
+    <h2 class="card-title">카테고리</h2>
+    <div class="chips" id="catChips" style="margin-bottom:4px">
+      <button class="chip is-on" data-cat="all" type="button">전체</button>
+      <button class="chip" data-cat="korean" type="button">한식</button>
+      <button class="chip" data-cat="chinese" type="button">중식</button>
+      <button class="chip" data-cat="japanese" type="button">일식</button>
+      <button class="chip" data-cat="western" type="button">양식</button>
+      <button class="chip" data-cat="snack" type="button">분식</button>
+      <button class="chip" data-cat="cafe" type="button">카페</button>
+    </div>
+    <p class="hint" id="countHint">메뉴 42개로 룰렛을 돌려요.</p>
+  </div>
+
+  <div class="card" style="text-align:center">
+    <div class="wheel-wrap">
+      <canvas id="wheel" width="640" height="640" aria-label="메뉴 룰렛"></canvas>
+      <div class="wheel-pointer" aria-hidden="true"></div>
+      <div class="wheel-center" id="wheelCenter">GO</div>
+    </div>
+    <button class="btn btn-primary" id="spinBtn" type="button" style="width:100%;margin-top:16px">룰렛 돌리기</button>
+    <button class="btn btn-ghost" id="quickBtn" type="button" style="width:100%;margin-top:8px">바로 뽑기 (애니메이션 없이)</button>
+  </div>
+
+  <section class="result-card" aria-live="polite" aria-atomic="true">
+    <div class="result-head">
+      <span class="result-label">오늘의 메뉴</span>
+      <span class="badge" id="rBadge">대기 중</span>
+    </div>
+    <p class="result-value" id="rMain" style="font-size:30px">돌려 주세요</p>
+    <p class="result-sub" id="rSub">룰렛을 돌리면 결과가 여기에 표시돼요.</p>
+    <div id="resultText" hidden></div>
+  </section>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="copyBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
+      결과 복사
+    </button>
+    <button class="btn btn-ghost" id="shareBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg>
+      링크 공유
+    </button>
+  </div>
+
+  <div class="card">
+    <h2 class="card-title">내 메뉴 추가</h2>
+    <p class="card-desc">자주 먹는 메뉴나 회사 근처 식당을 넣어 두면 더 편해요. 이 기기에만 저장됩니다.</p>
+    <div class="field" style="display:flex;gap:8px;margin-bottom:10px">
+      <div class="input-wrap" style="flex:1"><input class="input" id="customInput" type="text" placeholder="예: 회사 앞 칼국수" maxlength="20"></div>
+      <button class="btn btn-primary" id="addBtn" type="button" style="white-space:nowrap;padding:0 18px">추가</button>
+    </div>
+    <div class="quick" id="customList"></div>
+  </div>
+
+  <div class="ad-slot" aria-hidden="true"><span>AD</span></div>
+
+  <article class="article">
+    <h2>메뉴 정하기가 어려운 이유</h2>
+    <p>선택지가 많을수록 결정을 내리기 어려워집니다. 심리학에서는 이를 <strong>선택 과부하</strong>라고 부릅니다. 점심 메뉴는 가격·거리·대기 시간·동료 취향까지 고려해야 해서, 선택지가 10개만 넘어도 결정에 쓰는 에너지가 커집니다.</p>
+    <p>룰렛은 이 과정을 단순하게 바꿔 줍니다. 후보를 미리 정해 두고 무작위로 하나를 고르면, "고르는 책임"에서 벗어나 빠르게 결정할 수 있습니다. 회식이나 팀 점심처럼 여러 사람이 모일 때 특히 유용합니다.</p>
+
+    <h2>사용 방법</h2>
+    <p>먼저 위에서 카테고리를 고릅니다. 한식·중식·일식·양식·분식·카페 중 하나를 누르면 그 카테고리의 메뉴만 룰렛에 올라갑니다. '전체'를 고르면 모든 메뉴가 한 번에 나옵니다.</p>
+    <p>그다음 '룰렛 돌리기'를 누르면 바늘이 회전하며 한 메뉴에 멈춥니다. 결과는 아래 카드에 크게 표시되고, '결과 복사'를 누르면 단톡방에 붙여 넣을 수 있는 문장이 복사됩니다. '바로 뽑기'는 애니메이션 없이 즉시 결과만 보여줍니다.</p>
+    <p>'내 메뉴 추가'에 회사 근처 식당이나 집밥 메뉴를 넣어 두면 다음 방문에도 그대로 남아 있습니다. 추가한 메뉴는 이 브라우저의 로컬 저장소에만 저장되며 서버로 전송되지 않습니다. 삭제하려면 메뉴 옆의 × 버튼을 누르세요.</p>
+
+    <h2>팀 점심·회식에서 쓰는 팁</h2>
+    <ul>
+      <li><strong>후보를 6~8개로 줄이세요.</strong> 너무 많으면 룰렛을 돌려도 "그건 별로"가 나와 다시 돌리게 됩니다.</li>
+      <li><strong>제외 조건을 먼저 정하세요.</strong> 알레르기, 못 먹는 음식, 예산(1만원 이하)을 먼저 공유하면 결과를 받아들이기 쉬워집니다.</li>
+      <li><strong>결과를 두 번까지 허용하세요.</strong> 두 번째 결과도 마음에 안 들면, 사실은 이미 먹고 싶은 게 정해진 것입니다.</li>
+      <li><strong>화면을 함께 보세요.</strong> 룰렛이 도는 동안 모두가 같은 화면을 보면 결정에 대한 불만이 줄어듭니다.</li>
+    </ul>
+
+    <h2>자주 묻는 질문</h2>
+    <details class="faq" open>
+      <summary>추가한 메뉴가 사라졌어요.</summary>
+      <div class="faq-body"><p>브라우저의 시크릿 모드나 저장 공간이 차단된 환경에서는 저장되지 않을 수 있습니다. 일반 모드에서 다시 추가해 보세요. 기기를 바꾸거나 브라우저 데이터를 삭제하면 목록도 함께 사라집니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>메뉴는 몇 개까지 넣을 수 있나요?</summary>
+      <div class="faq-body"><p>룰렛이 읽기 쉽도록 12개 이하를 권장합니다. 그보다 많으면 글자가 작아지고 결과를 확인하기 어려워집니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>결과가 공정한가요?</summary>
+      <div class="faq-body"><p>각 메뉴가 같은 면적을 차지하도록 그리고, 무작위로 한 칸을 선택한 뒤 그 칸이 바늘 위치에 오도록 회전시킵니다. 모든 메뉴의 확률이 같습니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>메뉴 추천을 더 받을 수 있나요?</summary>
+      <div class="faq-body"><p>카테고리를 바꿔 다시 돌리거나, 직접 메뉴를 추가해 보세요. 같은 카테고리에서도 매번 다른 결과가 나옵니다.</p></div>
+    </details>
+
+    <p class="note">이 도구는 재미와 빠른 결정을 위한 것이며, 추가한 메뉴는 사용자의 브라우저에만 저장됩니다.</p>
+  </article>
+
+  <div class="ad-slot" aria-hidden="true"><span>AD</span></div>
+
+  <section class="related">
+    <h2>함께 보면 좋은 도구</h2>
+    <div class="related-list">
+      <a href="lotto.html">로또 번호 생성기</a>
+      <a href="symbols.html">특수문자 복사기</a>
+      <a href="qr-generator.html">QR코드 생성기</a>
+      <a href="../index.html">전체 도구</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <a class="promo" href="https://cshop.naver.com/mydailyselect" target="_blank" rel="noopener sponsored">
+      <span class="promo-label">데일리셀렉트</span>
+      <span class="promo-text">생활에 필요한 물건, 매일 골라 담은 셀렉트샵</span>
+      <span class="promo-arrow" aria-hidden="true">↗</span>
+    </a>
+    <nav class="footer-nav" aria-label="사이트 정보">
+      <a href="../index.html">전체 도구</a>
+      <a href="../about.html">사이트 소개</a>
+      <a href="../privacy.html">개인정보처리방침</a>
+    </nav>
+    <p class="footer-note">이 사이트의 결과는 참고용이며, 법적·재무적 판단의 근거가 될 수 없습니다.</p>
+    <p class="copy">© 2026 계산기 허브</p>
+  </div>
+</footer>
+
+<script src="../assets/js/common.js"></script>
+<script>
+(function () {
+  var CH = window.CalcHub, $ = CH.$;
+  var MENU = {
+    korean: ["김치찌개", "된장찌개", "비빔밥", "불고기", "제육볶음", "냉면", "삼겹살", "국밥"],
+    chinese: ["짜장면", "짬뽕", "탕수육", "마라탕", "양꼬치", "볶음밥"],
+    japanese: ["초밥", "라멘", "돈카츠", "우동", "규동", "회"],
+    western: ["파스타", "스테이크", "햄버거", "피자", "샐러드", "리조또"],
+    snack: ["떡볶이", "김밥", "라면", "튀김", "순대", "쫄면"],
+    cafe: ["아메리카노", "라떼", "샌드위치", "브런치", "케이크", "베이글"]
+  };
+  var COLORS = ["#3182F6", "#00B86B", "#FF8A00", "#7C5CFC", "#F04452", "#00A5C9", "#F5A623", "#4EA1FF"];
+  var STORE_KEY = "calcHubMenuItems";
+  var cat = "all";
+  var custom = [];
+  var rotation = 0;
+  var spinning = false;
+  var lastResult = "";
+
+  var canvas = $("#wheel");
+  var ctx = canvas.getContext("2d");
+
+  try {
+    custom = JSON.parse(localStorage.getItem(STORE_KEY) || "[]");
+    if (!Array.isArray(custom)) custom = [];
+  } catch (e) { custom = []; }
+
+  function items() {
+    var list = [];
+    if (cat === "all") {
+      Object.keys(MENU).forEach(function (k) { list = list.concat(MENU[k]); });
+    } else {
+      list = MENU[cat].slice();
+    }
+    return list.concat(custom);
+  }
+
+  function draw() {
+    var list = items();
+    var n = list.length;
+    var size = canvas.width;
+    var c = size / 2;
+    var radius = c - 8;
+    ctx.clearRect(0, 0, size, size);
+
+    if (!n) {
+      ctx.fillStyle = "#f2f4f6";
+      ctx.beginPath(); ctx.arc(c, c, radius, 0, Math.PI * 2); ctx.fill();
+      return;
+    }
+
+    var seg = Math.PI * 2 / n;
+    for (var i = 0; i < n; i++) {
+      var start = i * seg + rotation;
+      var end = start + seg;
+      ctx.beginPath();
+      ctx.moveTo(c, c);
+      ctx.arc(c, c, radius, start, end);
+      ctx.closePath();
+      ctx.fillStyle = COLORS[i % COLORS.length];
+      ctx.fill();
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.save();
+      ctx.translate(c, c);
+      ctx.rotate(start + seg / 2);
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = "#ffffff";
+      var fs = n > 14 ? 18 : n > 9 ? 21 : 24;
+      ctx.font = "600 " + fs + "px -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif";
+      var label = list[i].length > 8 ? list[i].slice(0, 8) + "…" : list[i];
+      ctx.fillText(label, radius - 22, 0);
+      ctx.restore();
+    }
+
+    ctx.beginPath();
+    ctx.moveTo(c, c);
+    ctx.arc(c, c, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = 8;
+    ctx.stroke();
+  }
+
+  function cryptoRand(n) {
+    if (window.crypto && window.crypto.getRandomValues) {
+      var a = new Uint32Array(1);
+      var limit = Math.floor(4294967296 / n) * n;
+      var v;
+      do { window.crypto.getRandomValues(a); v = a[0]; } while (v >= limit);
+      return v % n;
+    }
+    return Math.floor(Math.random() * n);
+  }
+
+  function announce(name) {
+    lastResult = name;
+    $("#rMain").textContent = name;
+    $("#rBadge").textContent = "선택 완료";
+    $("#rBadge").className = "badge green";
+    $("#rSub").textContent = "오늘은 " + name + " 어때요?";
+    $("#resultText").textContent = "오늘의 메뉴: " + name;
+    $("#wheelCenter").textContent = "✓";
+  }
+
+  function spin() {
+    if (spinning) return;
+    var list = items();
+    if (list.length < 2) { CH.toast("메뉴를 2개 이상 넣어 주세요"); return; }
+    spinning = true;
+    $("#rBadge").textContent = "돌리는 중";
+    $("#rBadge").className = "badge";
+    $("#rSub").textContent = "잠시만 기다려 주세요...";
+
+    var n = list.length;
+    var seg = Math.PI * 2 / n;
+    var idx = cryptoRand(n);
+    var pointer = -Math.PI / 2;
+    var targetBase = pointer - (idx + 0.5) * seg;
+    var delta = ((targetBase - rotation) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+    var end = rotation + delta + Math.PI * 2 * (5 + cryptoRand(3));
+    var start = rotation;
+    var duration = 3200;
+    var t0 = performance.now();
+
+    function frame(now) {
+      var p = Math.min(1, (now - t0) / duration);
+      var eased = 1 - Math.pow(1 - p, 3);
+      rotation = start + (end - start) * eased;
+      draw();
+      if (p < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        spinning = false;
+        announce(list[idx]);
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function quickPick() {
+    if (spinning) return;
+    var list = items();
+    if (!list.length) return;
+    var idx = cryptoRand(list.length);
+    announce(list[idx]);
+    CH.toast("메뉴를 골랐어요");
+  }
+
+  function renderCustom() {
+    var box = $("#customList");
+    if (!custom.length) {
+      box.innerHTML = "<span class='hint' style='margin:0'>아직 추가한 메뉴가 없어요.</span>";
+      return;
+    }
+    box.innerHTML = custom.map(function (m, i) {
+      return "<button type='button' class='custom-chip' data-i='" + i + "'>" + m + " <span aria-hidden='true'>×</span></button>";
+    }).join("");
+    CH.$$(".custom-chip", box).forEach(function (b) {
+      b.addEventListener("click", function () {
+        var i = parseInt(b.dataset.i, 10);
+        custom.splice(i, 1);
+        try { localStorage.setItem(STORE_KEY, JSON.stringify(custom)); } catch (e) {}
+        renderCustom();
+        draw();
+        updateCount();
+      });
+    });
+  }
+
+  function updateCount() {
+    $("#countHint").textContent = "메뉴 " + items().length + "개로 룰렛을 돌려요.";
+  }
+
+  function refresh() {
+    updateCount();
+    draw();
+  }
+
+  $("#catChips").addEventListener("click", function (e) {
+    var b = e.target.closest(".chip");
+    if (!b) return;
+    CH.$$(".chip", $("#catChips")).forEach(function (c) { c.classList.toggle("is-on", c === b); });
+    cat = b.dataset.cat;
+    refresh();
+  });
+
+  $("#addBtn").addEventListener("click", function () {
+    var v = $("#customInput").value.trim();
+    if (!v) return;
+    if (custom.indexOf(v) !== -1) { CH.toast("이미 있는 메뉴예요"); return; }
+    if (custom.length >= 12) { CH.toast("메뉴는 12개까지 추가할 수 있어요"); return; }
+    custom.push(v);
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(custom)); } catch (e) {}
+    $("#customInput").value = "";
+    renderCustom();
+    refresh();
+    CH.toast("메뉴를 추가했어요");
+  });
+
+  $("#customInput").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") { e.preventDefault(); $("#addBtn").click(); }
+  });
+
+  $("#spinBtn").addEventListener("click", spin);
+  $("#quickBtn").addEventListener("click", quickPick);
+
+  $("#copyBtn").addEventListener("click", function () {
+    CH.copy(lastResult ? "오늘의 메뉴: " + lastResult + " (룰렛으로 정함)" : "아직 룰렛을 돌리지 않았어요").then(function (ok) {
+      CH.toast(ok ? "결과를 복사했어요" : "복사에 실패했어요");
+    });
+  });
+  $("#shareBtn").addEventListener("click", function () {
+    CH.share({ title: "점심 메뉴 룰렛", text: lastResult ? "오늘의 메뉴는 " + lastResult + "!" : "오늘 뭐 먹지? 룰렛으로 정해 보세요", url: window.location.href.split("?")[0] });
+  });
+
+  renderCustom();
+  refresh();
+})();
+</script>
+</body>
+</html>

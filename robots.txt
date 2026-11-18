@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# 검색 로봇 수집 허용. 광고 크롤러(Mediapartners-Google)도 전체 페이지를 읽을 수 있습니다.
+
+Sitemap: https://yoon0819.github.io/life-calc-hub/sitemap.xml

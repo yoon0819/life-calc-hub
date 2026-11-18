@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>디데이(D-Day) 계산기 — 목표일까지 남은 날짜·100일·1주년 계산</title>
+<meta name="description" content="목표일과 기준일을 넣으면 D-day, 남은 일수, 주 단위 환산과 100일·200일·1주년 날짜가 바로 계산됩니다. 시험일·기념일·여행일 관리에 쓰세요.">
+<meta name="keywords" content="디데이 계산기, D-day 계산, 100일 계산, 1주년 계산, 기념일 계산기, 날짜 계산">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://yoon0819.github.io/life-calc-hub/tools/dday.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="계산기 허브">
+<meta property="og:title" content="디데이 계산기 — D-day·100일·1주년">
+<meta property="og:description" content="목표일까지 남은 날짜와 100일·1주년 날짜를 한 번에 계산합니다.">
+<meta property="og:url" content="https://yoon0819.github.io/life-calc-hub/tools/dday.html">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#3182F6">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<!-- AdSense 승인 후 주석 해제: <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html" aria-label="계산기 허브 홈"><span class="brand-mark" aria-hidden="true">계</span><span class="brand-name">계산기 허브</span></a>
+    <a class="topbar-link" href="../index.html">전체 계산기</a>
+  </div>
+</header>
+
+<main id="main" class="app">
+  <nav class="crumb" aria-label="위치">
+    <a href="../index.html">홈</a><span>/</span><a href="../index.html#catLife">날짜·생활</a><span>/</span><span>디데이</span>
+  </nav>
+
+  <div class="page-head">
+    <h1>디데이(D-Day) 계산기</h1>
+    <p>시험일, 여행 출발일, 기념일까지 며칠 남았는지 바로 확인하세요.</p>
+  </div>
+
+  <form class="card" id="calcForm" onsubmit="return false">
+    <h2 class="card-title">날짜 선택</h2>
+    <p class="card-desc">기준일을 비워 두면 오늘로 계산합니다.</p>
+
+    <div class="grid-2">
+      <div class="field">
+        <label for="target">목표일</label>
+        <div class="input-wrap"><input class="input" id="target" name="target" type="date" value="2026-12-19"></div>
+      </div>
+      <div class="field">
+        <label for="base">기준일</label>
+        <div class="input-wrap"><input class="input" id="base" name="base" type="date"></div>
+      </div>
+    </div>
+    <p class="hint">기념일 기준으로 계산하려면 기준일을 처음 만난 날로 바꿔 보세요.</p>
+  </form>
+
+  <section class="result-card" aria-live="polite" aria-atomic="true">
+    <div class="result-head">
+      <span class="result-label">목표일까지</span>
+      <span class="badge" id="rBadge">D-30</span>
+    </div>
+    <p class="result-value" id="rMain">D-30</p>
+    <p class="result-sub" id="rSub">2026년 12월 19일 (토) · 30일 남음</p>
+
+    <dl class="result-rows">
+      <div class="result-row"><dt>남은 일수</dt><dd id="rDays">30일</dd></div>
+      <div class="result-row"><dt>주 단위</dt><dd id="rWeeks">4주 2일</dd></div>
+      <div class="result-row"><dt>기준일</dt><dd id="rBase">2026년 11월 19일 (목)</dd></div>
+      <div class="result-row total"><dt>목표일 요일</dt><dd id="rWeekday">토요일</dd></div>
+    </dl>
+    <div id="resultText" hidden></div>
+  </section>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="copyBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
+      결과 복사
+    </button>
+    <button class="btn btn-ghost" id="shareBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg>
+      링크 공유
+    </button>
+  </div>
+
+  <section class="card">
+    <h2 class="card-title">기념일 날짜 한눈에</h2>
+    <p class="card-desc">기준일부터 세는 날짜예요. 당일을 1일째로 계산합니다.</p>
+    <dl class="result-rows" id="milestones">
+      <div class="result-row"><dt>100일</dt><dd id="m100">-</dd></div>
+      <div class="result-row"><dt>200일</dt><dd id="m200">-</dd></div>
+      <div class="result-row"><dt>300일</dt><dd id="m300">-</dd></div>
+      <div class="result-row"><dt>1주년</dt><dd id="m365">-</dd></div>
+      <div class="result-row"><dt>1000일</dt><dd id="m1000">-</dd></div>
+    </dl>
+  </section>
+
+  <div class="ad-slot" aria-hidden="true"><span>AD</span></div>
+
+  <article class="article">
+    <h2>디데이는 어떻게 세나요</h2>
+    <p>디데이는 기준일과 목표일 사이의 날짜 차이로 계산합니다. 오늘이 11월 19일이고 목표일이 12월 19일이라면 남은 날은 30일이므로 <strong>D-30</strong>이 됩니다. 목표일 당일은 <strong>D-DAY</strong>, 목표일이 지난 뒤에는 <strong>D+1, D+2</strong>처럼 세는 방식이 일반적입니다.</p>
+    <p>흔히 "D-1"이라고 하면 "내일"을 뜻하고, "D+1"은 "어제"를 뜻합니다. 시험일이나 발표일처럼 하루 차이가 중요한 일정에서는 이 표기를 헷갈리지 않는 것이 중요합니다. 이 계산기는 목표일이 기준일보다 뒤면 D-로, 같으면 D-DAY, 앞이면 D+로 표시합니다.</p>
+
+    <h2>100일과 1주년, 당일 포함 여부</h2>
+    <p>한국에서 기념일을 셀 때는 보통 <strong>처음 만난 날을 1일째</strong>로 계산합니다. 1월 1일에 만났다면 1월 1일이 1일째, 1월 2일이 2일째이고, 100일째는 4월 10일이 됩니다. 이 계산기의 기념일 표도 같은 방식(당일 포함)으로 계산합니다.</p>
+    <p class="formula">100일째 = 기준일 + 99일<br>1주년 = 기준일 + 1년(다음 해 같은 월·일)</p>
+    <p>반대로 여행 출발일까지 남은 날을 셀 때는 당일을 포함하지 않는 경우가 많습니다. 오늘 출발한다면 D-DAY이고, 내일 출발이면 D-1입니다. 두 기준이 섞이면 하루씩 어긋나므로, 기념일인지 일정인지에 따라 어느 쪽 기준인지 확인해 두는 편이 좋습니다.</p>
+
+    <h2>이럴 때 쓰면 편해요</h2>
+    <ul>
+      <li><strong>시험·자격증</strong>: 원서 접수 마감일과 시험일까지 남은 날을 세어 공부 계획을 세울 수 있습니다.</li>
+      <li><strong>여행</strong>: 출발일까지 남은 날로 짐 싸는 날과 환전 시점을 정합니다.</li>
+      <li><strong>기념일</strong>: 100일, 200일, 1주년, 1000일 날짜를 미리 달력에 넣어 둘 수 있습니다.</li>
+      <li><strong>업무 마감</strong>: 프로젝트 납기까지 남은 영업일을 가늠할 때 유용합니다.</li>
+      <li><strong>군 입대·전역</strong>: 전역일까지 남은 날은 전용 계산기에서 복무율과 함께 볼 수 있습니다.</li>
+    </ul>
+
+    <h2>윤년과 시간대는 어떻게 처리하나요</h2>
+    <p>날짜 차이는 달력의 연·월·일만 비교해 계산하므로 윤년이 끼어 있어도 자동으로 반영됩니다. 예를 들어 2028년 2월 29일이 포함된 구간은 하루가 더 길게 계산됩니다. 시간대는 사용하는 기기의 한국 시간(KST)을 기준으로 하며, 자정을 넘기면 날짜가 하루 바뀝니다.</p>
+    <p>해외에 있거나 기기 시간대가 다른 경우에는 하루가 어긋날 수 있습니다. 정확한 일정은 해당 일정의 공식 안내를 기준으로 삼고, 이 계산 결과는 계획용으로 활용하세요.</p>
+
+    <h2>자주 묻는 질문</h2>
+    <details class="faq" open>
+      <summary>D-1이 오늘인가요, 내일인가요?</summary>
+      <div class="faq-body"><p>D-1은 목표일 하루 전, 즉 내일입니다. 오늘이 목표일이면 D-DAY로 표시됩니다. 이미 지난 날짜는 D+1처럼 플러스로 표시됩니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>100일 계산이 사이트마다 하루씩 다른 이유는 무엇인가요?</summary>
+      <div class="faq-body"><p>당일을 1일째로 세는지, 다음 날을 1일째로 세는지 차이입니다. 한국에서는 당일 포함이 관례이고, 이 계산기도 그 방식을 따릅니다. 기념일을 정할 때는 두 사람이 같은 기준을 쓰는 것이 가장 중요합니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>기준일을 미래로 바꾸면 어떻게 되나요?</summary>
+      <div class="faq-body"><p>기준일이 목표일보다 뒤에 있으면 남은 날이 음수로 계산되어 D+ 표기로 바뀝니다. 과거의 특정일로부터 며칠이 지났는지 확인할 때 유용합니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>음력 기념일도 계산할 수 있나요?</summary>
+      <div class="faq-body"><p>이 계산기는 양력 날짜 기준입니다. 음력 생일이나 제사 날짜는 음력 달력을 양력으로 변환한 뒤 그 날짜를 넣어 주세요. 매년 음력 날짜가 달라지므로 해마다 새로 계산해야 합니다.</p></div>
+    </details>
+
+    <p class="note">이 계산기는 달력 날짜 차이를 기준으로 한 참고용 도구입니다. 법적 기한이나 계약상 기일은 해당 기관의 안내를 우선 확인하세요.</p>
+  </article>
+
+  <div class="ad-slot" aria-hidden="true"><span>AD</span></div>
+
+  <section class="related">
+    <h2>함께 보면 좋은 계산기</h2>
+    <div class="related-list">
+      <a href="military-discharge.html">군 전역일 계산기</a>
+      <a href="due-date.html">출산예정일 계산기</a>
+      <a href="age.html">만 나이 계산기</a>
+      <a href="../index.html">전체 계산기</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <a class="promo" href="https://cshop.naver.com/mydailyselect" target="_blank" rel="noopener sponsored">
+      <span class="promo-label">데일리셀렉트</span>
+      <span class="promo-text">생활에 필요한 물건, 매일 골라 담은 셀렉트샵</span>
+      <span class="promo-arrow" aria-hidden="true">↗</span>
+    </a>
+    <nav class="footer-nav" aria-label="사이트 정보">
+      <a href="../index.html">전체 계산기</a>
+      <a href="../about.html">사이트 소개</a>
+      <a href="../privacy.html">개인정보처리방침</a>
+    </nav>
+    <p class="footer-note">이 사이트의 계산 결과는 참고용이며, 법적·재무적 판단의 근거가 될 수 없습니다.</p>
+    <p class="copy">© 2026 계산기 허브</p>
+  </div>
+</footer>
+
+<script src="../assets/js/common.js"></script>
+<script>
+(function () {
+  var CH = window.CalcHub, $ = CH.$;
+  var form = $("#calcForm");
+  var out = {
+    main: $("#rMain"), sub: $("#rSub"), badge: $("#rBadge"), days: $("#rDays"),
+    weeks: $("#rWeeks"), base: $("#rBase"), weekday: $("#rWeekday"), raw: $("#resultText")
+  };
+  var weekNames = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+
+  function calc() {
+    var target = CH.parseYmd($("#target").value);
+    var base = CH.parseYmd($("#base").value) || CH.today();
+
+    out.base.textContent = CH.kdate(base);
+
+    if (!target) {
+      out.main.textContent = "날짜를 선택하세요";
+      out.sub.textContent = "목표일을 입력하면 바로 계산됩니다.";
+      out.badge.textContent = "입력 대기";
+      out.badge.className = "badge";
+      out.days.textContent = "-";
+      out.weeks.textContent = "-";
+      out.weekday.textContent = "-";
+      ["m100", "m200", "m300", "m365", "m1000"].forEach(function (id) { $("#" + id).textContent = "-"; });
+      out.raw.textContent = "";
+      return;
+    }
+
+    var diff = CH.diffDays(base, target);
+    var label = diff > 0 ? "D-" + diff : diff === 0 ? "D-DAY" : "D+" + Math.abs(diff);
+
+    out.main.textContent = label;
+    out.badge.textContent = label;
+    out.badge.className = diff > 0 ? "badge" : diff === 0 ? "badge green" : "badge red";
+    out.sub.textContent = CH.kdate(target) + " · " +
+      (diff > 0 ? diff + "일 남음" : diff === 0 ? "오늘이 목표일이에요" : Math.abs(diff) + "일 지났어요");
+    out.days.textContent = (diff >= 0 ? diff : -diff) + "일" + (diff < 0 ? " 지남" : " 남음");
+    var abs = Math.abs(diff);
+    out.weeks.textContent = Math.floor(abs / 7) + "주 " + (abs % 7) + "일";
+    out.weekday.textContent = weekNames[target.getDay()];
+
+    [["m100", 100], ["m200", 200], ["m300", 300], ["m1000", 1000]].forEach(function (pair) {
+      var d = CH.addDays(base, pair[1] - 1);
+      $("#" + pair[0]).textContent = CH.ymd(d).replace(/-/g, ".") + " (" + weekNames[d.getDay()].charAt(0) + ")";
+    });
+    var anniv = CH.addMonths(base, 12);
+    $("#m365").textContent = CH.ymd(anniv).replace(/-/g, ".") + " (" + weekNames[anniv.getDay()].charAt(0) + ")";
+
+    var lines = ["디데이 계산 결과", "· 기준일: " + CH.kdate(base), "· 목표일: " + CH.kdate(target), "· 표시: " + label];
+    if (diff > 0) lines.push("· 남은 날: " + diff + "일 (" + Math.floor(diff / 7) + "주 " + (diff % 7) + "일)");
+    if (diff < 0) lines.push("· 지난 날: " + Math.abs(diff) + "일");
+    lines.push("· 100일: " + $("#m100").textContent, "· 1주년: " + $("#m365").textContent, "· 1000일: " + $("#m1000").textContent);
+    out.raw.textContent = lines.join("\n");
+  }
+
+  CH.live(form, calc);
+
+  $("#copyBtn").addEventListener("click", function () {
+    CH.copy(out.raw.textContent).then(function (ok) { CH.toast(ok ? "결과를 복사했어요" : "복사에 실패했어요"); });
+  });
+  $("#shareBtn").addEventListener("click", function () {
+    CH.share({ title: "디데이 계산기", text: out.main.textContent + " · " + CH.kdate(CH.parseYmd($("#target").value) || CH.today()), url: CH.buildShareUrl(form) });
+  });
+})();
+</script>
+</body>
+</html>

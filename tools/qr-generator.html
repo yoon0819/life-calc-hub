@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>무료 QR코드 생성기 — 링크·텍스트로 즉시 만들고 PNG 저장</title>
+<meta name="description" content="URL이나 텍스트를 넣으면 브라우저에서 바로 QR코드가 만들어집니다. 외부 API 없이 동작하고, 오류정정 레벨 선택과 PNG 저장을 지원합니다. 회원가입·워터마크 없음.">
+<meta name="keywords" content="QR코드 생성기, 큐알코드 만들기, 무료 QR, 링크 QR, QR PNG 저장, QR코드 인쇄">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://yoon0819.github.io/life-calc-hub/tools/qr-generator.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="계산기 허브">
+<meta property="og:title" content="무료 QR코드 생성기 — 즉시 생성·PNG 저장">
+<meta property="og:description" content="링크나 텍스트로 QR코드를 만들고 PNG로 저장하세요. 외부 전송 없이 브라우저에서 생성됩니다.">
+<meta property="og:url" content="https://yoon0819.github.io/life-calc-hub/tools/qr-generator.html">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#3182F6">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<!-- AdSense 승인 후 주석 해제: <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html" aria-label="계산기 허브 홈"><span class="brand-mark" aria-hidden="true">계</span><span class="brand-name">계산기 허브</span></a>
+    <a class="topbar-link" href="../index.html">전체 계산기</a>
+  </div>
+</header>
+
+<main id="main" class="app">
+  <nav class="crumb" aria-label="위치">
+    <a href="../index.html">홈</a><span>/</span><a href="../index.html#catTools">생활·업무 도구</a><span>/</span><span>QR코드</span>
+  </nav>
+
+  <div class="page-head">
+    <h1>무료 QR코드 생성기</h1>
+    <p>링크나 텍스트를 넣으면 바로 QR코드가 만들어져요. 이미지로 저장해 인쇄하세요.</p>
+  </div>
+
+  <div class="card">
+    <h2 class="card-title">내용 입력</h2>
+    <p class="card-desc">입력한 내용은 외부로 전송되지 않고 이 브라우저에서만 QR로 변환됩니다.</p>
+
+    <div class="field">
+      <label for="text">링크 또는 텍스트</label>
+      <textarea class="input" id="text" rows="4" placeholder="https://example.com" style="width:100%;min-height:100px;background:var(--bg);border-radius:12px;padding:14px;border:1.5px solid transparent;resize:vertical;line-height:1.6;font-weight:500;font-size:16px">https://yoon0819.github.io/life-calc-hub/</textarea>
+    </div>
+
+    <div class="grid-2">
+      <div class="field">
+        <label for="level">오류 정정</label>
+        <div class="input-wrap">
+          <select class="input" id="level">
+            <option value="L">L (7%)</option>
+            <option value="M" selected>M (15%)</option>
+            <option value="Q">Q (25%)</option>
+            <option value="H">H (30%)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="size">저장 크기</label>
+        <div class="input-wrap">
+          <select class="input" id="size">
+            <option value="4">작게 (400px)</option>
+            <option value="6" selected>보통 (600px)</option>
+            <option value="10">크게 (1000px)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <p class="hint" id="infoHint">QR코드를 만들고 있어요...</p>
+  </div>
+
+  <section class="result-card" aria-live="polite" aria-atomic="true" style="text-align:center">
+    <div class="result-head" style="text-align:left">
+      <span class="result-label">생성된 QR코드</span>
+      <span class="badge" id="rBadge">준비 완료</span>
+    </div>
+    <div id="qrBox" style="margin:12px auto 6px;max-width:260px;background:#fff">
+      <canvas id="qrCanvas" aria-label="생성된 QR코드 이미지"></canvas>
+    </div>
+    <p class="result-sub" id="rSub">스캔하면 링크로 이동합니다.</p>
+    <button class="btn btn-primary" id="saveBtn" type="button" style="width:100%;margin-top:14px">PNG 이미지로 저장</button>
+    <div id="resultText" hidden></div>
+  </section>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="copyBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
+      내용 복사
+    </button>
+    <button class="btn btn-ghost" id="shareBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg>
+      링크 공유
+    </button>
+  </div>
+
+  <div class="ad-slot" aria-hidden="true"><span>AD</span></div>
+
+  <article class="article">
+    <h2>QR코드는 어떻게 정보를 담나요</h2>
+    <p>QR코드는 가로·세로 격자에 검은 점과 흰 점을 배치해 정보를 담는 2차원 바코드입니다. 모서리의 세 개 큰 사각형(파인더 패턴)으로 위치와 방향을 잡고, 나머지 영역에 데이터와 오류 정정 정보를 담습니다. 스마트폰 카메라가 이 패턴을 인식하면 저장된 링크나 문자가 열립니다.</p>
+    <p>이 페이지는 인터넷 연결 없이 브라우저 안에서 QR코드를 만듭니다. 입력한 URL이나 텍스트가 서버로 전송되지 않으므로, 내부 문서 링크나 개인 연락처처럼 외부에 남기고 싶지 않은 내용도 안전하게 QR로 만들 수 있습니다.</p>
+
+    <h2>오류 정정 레벨은 무엇을 고르나요</h2>
+    <p>QR코드는 일부가 가려지거나 인쇄 상태가 나빠도 읽히도록 오류 정정 데이터를 함께 담습니다. 레벨이 높을수록 복원 능력이 좋아지지만, 같은 크기에 담을 수 있는 글자 수는 줄어듭니다.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>레벨</th><th class="num">복원 가능</th><th>추천 상황</th></tr></thead>
+        <tbody>
+          <tr><td>L</td><td class="num">약 7%</td><td>화면에 크게 띄울 때, 내용이 길 때</td></tr>
+          <tr><td>M</td><td class="num">약 15%</td><td>일반적인 인쇄·명함 (기본값)</td></tr>
+          <tr><td>Q</td><td class="num">약 25%</td><td>로고를 넣거나 작게 인쇄할 때</td></tr>
+          <tr><td>H</td><td class="num">약 30%</td><td>스티커·포장재처럼 손상이 잦은 곳</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>짧은 링크는 어떤 레벨이든 여유가 있으니 M을 쓰면 충분합니다. 아주 긴 텍스트를 넣을 때는 L이나 M으로 낮추고, 대신 이미지를 크게 인쇄하세요.</p>
+
+    <h2>인쇄할 때 주의할 점</h2>
+    <p>QR코드가 잘 읽히려면 주변에 <strong>여백(콰이어트 존)</strong>이 필요합니다. 이 생성기는 모듈 기준 4칸의 흰 여백을 넣어 만듭니다. 인쇄물에서 QR을 잘라 붙일 때 여백을 남기지 않으면 인식률이 크게 떨어집니다.</p>
+    <p>최소 인쇄 크기는 보통 2cm × 2cm 이상을 권장합니다. 내용이 길수록 격자가 촘촘해지므로, 긴 링크는 짧은 URL로 줄이거나 더 크게 인쇄하세요. 명함처럼 작은 매체에는 3cm 이상이 안전합니다.</p>
+    <p>저장한 PNG는 흰 배경에 검은 모듈로 만들어져 인쇄 품질이 좋습니다. 색을 바꾸고 싶다면 이미지 편집 도구에서 검은 부분만 원하는 색으로 바꿀 수 있지만, 배경과 대비가 충분해야 인식됩니다.</p>
+
+    <h2>이런 곳에 써 보세요</h2>
+    <ul>
+      <li><strong>매장·팝업</strong>: 메뉴판, 인스타그램, 예약 링크를 테이블에 붙여 두기</li>
+      <li><strong>명함·전단</strong>: 포트폴리오나 블로그 링크를 인쇄물에 담기</li>
+      <li><strong>수업·발표</strong>: 자료 링크를 슬라이드 마지막 장에 넣기</li>
+      <li><strong>중고거래</strong>: 판매 페이지 링크를 공유할 때</li>
+      <li><strong>행사 접수</strong>: 참가 신청 폼 링크를 안내문에 넣기</li>
+    </ul>
+
+    <h2>자주 묻는 질문</h2>
+    <details class="faq" open>
+      <summary>한글도 QR코드에 담을 수 있나요?</summary>
+      <div class="faq-body"><p>네. 이 생성기는 UTF-8로 변환해 담기 때문에 한글·이모지도 들어갑니다. 다만 한글은 영문보다 바이트가 커서 격자가 촘촘해지므로, 한글이 많다면 QR을 크게 인쇄하세요.</p></div>
+    </details>
+    <details class="faq">
+      <summary>만든 QR코드에 사용 기한이 있나요?</summary>
+      <div class="faq-body"><p>QR 자체에는 기한이 없습니다. 다만 담긴 링크의 주소가 바뀌거나 사이트가 사라지면 스캔해도 열리지 않습니다. 영구적으로 쓸 QR이라면 주소가 유지되는 링크를 넣으세요.</p></div>
+    </details>
+    <details class="faq">
+      <summary>스캔해도 인식이 안 됩니다.</summary>
+      <div class="faq-body"><p>인쇄 크기가 작거나, 여백이 잘렸거나, 화면 밝기가 낮을 때 생깁니다. QR을 크게 저장해 다시 인쇄하고, 스캔 시 카메라를 천천히 움직여 보세요. 오류 정정 레벨을 H로 높이면 일부 손상에도 잘 읽힙니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>이미지에 로고를 넣어도 되나요?</summary>
+      <div class="faq-body"><p>가능하지만 가운데를 너무 많이 가리면 인식률이 떨어집니다. 오류 정정 레벨 H를 선택하고, 로고가 전체 면적의 10%를 넘지 않게 넣는 것이 안전합니다.</p></div>
+    </details>
+
+    <p class="note">이 도구는 오픈소스 QR 생성 라이브러리(MIT)를 사이트에 포함해 브라우저에서 직접 생성합니다. 입력한 내용은 저장되거나 전송되지 않습니다.</p>
+  </article>
+
+  <div class="ad-slot" aria-hidden="true"><span>AD</span></div>
+
+  <section class="related">
+    <h2>함께 보면 좋은 도구</h2>
+    <div class="related-list">
+      <a href="symbols.html">특수문자 복사기</a>
+      <a href="char-counter.html">글자수 세기</a>
+      <a href="menu-roulette.html">메뉴 룰렛</a>
+      <a href="../index.html">전체 도구</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <a class="promo" href="https://cshop.naver.com/mydailyselect" target="_blank" rel="noopener sponsored">
+      <span class="promo-label">데일리셀렉트</span>
+      <span class="promo-text">생활에 필요한 물건, 매일 골라 담은 셀렉트샵</span>
+      <span class="promo-arrow" aria-hidden="true">↗</span>
+    </a>
+    <nav class="footer-nav" aria-label="사이트 정보">
+      <a href="../index.html">전체 도구</a>
+      <a href="../about.html">사이트 소개</a>
+      <a href="../privacy.html">개인정보처리방침</a>
+    </nav>
+    <p class="footer-note">이 사이트의 결과는 참고용이며, 법적·재무적 판단의 근거가 될 수 없습니다.</p>
+    <p class="copy">© 2026 계산기 허브</p>
+  </div>
+</footer>
+
+<script src="../assets/js/vendor/qrcode.js"></script>
+<script src="../assets/js/common.js"></script>
+<script>
+(function () {
+  var CH = window.CalcHub, $ = CH.$;
+  var canvas = $("#qrCanvas");
+  var ctx = canvas.getContext("2d");
+  var current = "";
+  var timer = null;
+  var lastOk = false;
+
+  // 한글을 UTF-8 바이트로 인코딩해 QR에 담기
+  if (window.qrcode && qrcode.stringToBytesFuncs && qrcode.stringToBytesFuncs["UTF-8"]) {
+    qrcode.stringToBytes = qrcode.stringToBytesFuncs["UTF-8"];
+  }
+
+  function utf8Len(s) {
+    return window.TextEncoder ? new TextEncoder().encode(s).length : s.length * 3;
+  }
+
+  function render() {
+    var text = $("#text").value;
+    var level = $("#level").value;
+    var targetPx = CH.num($("#size").value) || 600;
+
+    if (!text) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      canvas.width = 120; canvas.height = 120;
+      canvas.style.width = "160px";
+      $("#infoHint").textContent = "내용을 입력하면 QR코드가 만들어져요.";
+      $("#rBadge").textContent = "입력 대기";
+      $("#rBadge").className = "badge";
+      $("#rSub").textContent = "링크나 텍스트를 입력해 주세요.";
+      $("#resultText").textContent = "";
+      lastOk = false;
+      return;
+    }
+
+    try {
+      var qr = qrcode(0, level);
+      qr.addData(text, "Byte");
+      qr.make();
+
+      var count = qr.getModuleCount();
+      var margin = 4;
+      var scale = Math.max(2, Math.floor(targetPx / (count + margin * 2)));
+      var size = (count + margin * 2) * scale;
+
+      canvas.width = size;
+      canvas.height = size;
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, size, size);
+      ctx.fillStyle = "#000000";
+      for (var r = 0; r < count; r++) {
+        for (var c = 0; c < count; c++) {
+          if (qr.isDark(r, c)) {
+            ctx.fillRect((c + margin) * scale, (r + margin) * scale, scale, scale);
+          }
+        }
+      }
+      canvas.style.width = "100%";
+      canvas.style.maxWidth = "260px";
+      canvas.style.height = "auto";
+
+      current = text;
+      lastOk = true;
+      var version = (count - 17) / 4;
+      $("#infoHint").textContent = "QR 버전 " + version + " · " + count + "×" + count + " 모듈 · " + CH.comma(utf8Len(text)) + "바이트 · 오류정정 " + level;
+      $("#rBadge").textContent = "생성 완료";
+      $("#rBadge").className = "badge green";
+      $("#rSub").textContent = "스캔하면 " + (text.length > 28 ? text.slice(0, 28) + "…" : text) + " 로 이동합니다.";
+      $("#resultText").textContent = "QR코드 내용: " + text;
+    } catch (e) {
+      lastOk = false;
+      $("#rBadge").textContent = "생성 실패";
+      $("#rBadge").className = "badge red";
+      $("#rSub").textContent = "내용이 너무 길어 QR로 만들 수 없어요. 문장을 줄여 주세요.";
+      $("#infoHint").textContent = "QR 생성 오류: " + (e && e.message ? e.message : "내용이 너무 깁니다");
+      $("#resultText").textContent = "";
+    }
+  }
+
+  function debounce() {
+    clearTimeout(timer);
+    timer = setTimeout(render, 220);
+  }
+
+  $("#text").addEventListener("input", debounce);
+  $("#level").addEventListener("change", render);
+  $("#size").addEventListener("change", render);
+
+  $("#saveBtn").addEventListener("click", function () {
+    if (!lastOk) { CH.toast("먼저 내용을 입력해 주세요"); return; }
+    var name = "qr-code.png";
+    if (canvas.toBlob) {
+      canvas.toBlob(function (blob) {
+        if (!blob) { CH.toast("저장에 실패했어요"); return; }
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () {
+          URL.revokeObjectURL(a.href);
+          document.body.removeChild(a);
+        }, 1000);
+        CH.toast("PNG로 저장했어요");
+      }, "image/png");
+    } else {
+      var a2 = document.createElement("a");
+      a2.href = canvas.toDataURL("image/png");
+      a2.download = name;
+      a2.click();
+    }
+  });
+
+  $("#copyBtn").addEventListener("click", function () {
+    var text = $("#text").value;
+    if (!text) { CH.toast("복사할 내용이 없어요"); return; }
+    CH.copy(text).then(function (ok) { CH.toast(ok ? "내용을 복사했어요" : "복사에 실패했어요"); });
+  });
+
+  $("#shareBtn").addEventListener("click", function () {
+    CH.share({ title: "무료 QR코드 생성기", text: "링크를 넣으면 바로 QR코드를 만들어 드려요", url: window.location.href.split("?")[0] });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

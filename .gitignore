@@ -1,0 +1,10 @@
+# 로컬 미리보기 스크린샷은 저장소에 올리지 않습니다 (라이브 사이트를 가볍게 유지)
+previews/
+
+# OS/에디터
+.DS_Store
+Thumbs.db
+*.swp
+
+# dev check script
+_check.py

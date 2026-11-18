@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>로또 번호 생성기 &amp; 당첨금 실수령액 계산기 (2026)</title>
+<meta name="description" content="포함수·제외수를 정해 로또 6개 번호와 보너스 번호를 뽑고, 1~3등 당첨금에서 22%·33% 세금을 뺀 실수령액을 계산합니다. 무료·회원가입 없음.">
+<meta name="keywords" content="로또 번호 생성기, 로또 번호 추천, 로또 세금, 로또 실수령액, 로또 1등 세금 33%, 로또 자동">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://yoon0819.github.io/life-calc-hub/tools/lotto.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="계산기 허브">
+<meta property="og:title" content="로또 번호 생성기 &amp; 실수령액 계산">
+<meta property="og:description" content="포함수·제외수를 반영한 번호 생성과 당첨금 세후 실수령액 계산을 한 번에.">
+<meta property="og:url" content="https://yoon0819.github.io/life-calc-hub/tools/lotto.html">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#3182F6">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<!-- AdSense 승인 후 주석 해제: <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html" aria-label="계산기 허브 홈"><span class="brand-mark" aria-hidden="true">계</span><span class="brand-name">계산기 허브</span></a>
+    <a class="topbar-link" href="../index.html">전체 계산기</a>
+  </div>
+</header>
+
+<main id="main" class="app">
+  <nav class="crumb" aria-label="위치">
+    <a href="../index.html">홈</a><span>/</span><a href="../index.html#catTools">생활·업무 도구</a><span>/</span><span>로또 번호</span>
+  </nav>
+
+  <div class="page-head">
+    <h1>로또 번호 생성기</h1>
+    <p>원하는 번호는 넣고, 피하고 싶은 번호는 빼고. 당첨금 세후 금액도 함께 계산해요.</p>
+  </div>
+
+  <div class="card">
+    <h2 class="card-title">번호 조건</h2>
+    <p class="card-desc">비워 두면 1~45에서 완전 무작위로 뽑습니다.</p>
+
+    <div class="grid-2">
+      <div class="field">
+        <label for="include">포함할 번호</label>
+        <div class="input-wrap"><input class="input" id="include" type="text" inputmode="numeric" placeholder="예: 7, 21"><span class="unit">최대 5개</span></div>
+      </div>
+      <div class="field">
+        <label for="exclude">제외할 번호</label>
+        <div class="input-wrap"><input class="input" id="exclude" type="text" inputmode="numeric" placeholder="예: 13, 38"><span class="unit">1~45</span></div>
+      </div>
+    </div>
+    <p class="hint" id="condHint">쉼표나 띄어쓰기로 구분해 입력하세요. 포함 5개 + 제외 39개까지 가능해요.</p>
+
+    <button class="btn btn-primary" id="genBtn" type="button" style="width:100%;margin-top:6px">🎲 번호 뽑기</button>
+  </div>
+
+  <section class="result-card" aria-live="polite" aria-atomic="true">
+    <div class="result-head">
+      <span class="result-label">추첨 결과</span>
+      <span class="badge" id="genBadge">자동</span>
+    </div>
+    <div class="balls" id="balls"></div>
+    <p class="result-sub" id="genSub">번호 뽑기를 누르면 6개 번호와 보너스 번호가 나와요.</p>
+    <div id="resultText" hidden></div>
+  </section>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="copyBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
+      결과 복사
+    </button>
+    <button class="btn btn-ghost" id="shareBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg>
+      링크 공유
+    </button>
+  </div>
+
+  <form class="card" id="taxForm" onsubmit="return false">
+    <h2 class="card-title">당첨금 실수령액</h2>
+    <p class="card-desc">3억원 이하는 22%, 3억원 초과분은 33%의 세율이 적용됩니다.</p>
+
+    <div class="field">
+      <label for="prize">당첨금</label>
+      <div class="input-wrap"><input class="input" id="prize" name="prize" type="number" inputmode="numeric" min="0" step="1000000" value="2000000000"><span class="unit">원</span></div>
+    </div>
+    <div class="quick" id="prizeBtns">
+      <button type="button" data-v="1500000">3등 150만</button>
+      <button type="button" data-v="50000000">2등 5천만</button>
+      <button type="button" data-v="1000000000">1등 10억</button>
+      <button type="button" data-v="2000000000">1등 20억</button>
+    </div>
+  </form>
+
+  <section class="result-card" aria-live="polite" aria-atomic="true">
+    <div class="result-head">
+      <span class="result-label">세후 실수령액</span>
+      <span class="badge" id="taxBadge">22%</span>
+    </div>
+    <p class="result-value"><span id="netPrize">0</span><span class="won">원</span></p>
+    <p class="result-sub" id="taxSub">세금 0원 · 실효세율 0%</p>
+
+    <dl class="result-rows">
+      <div class="result-row"><dt>당첨금</dt><dd id="rPrize">0원</dd></div>
+      <div class="result-row minus"><dt>소득세·지방소득세</dt><dd id="rTax">0원</dd></div>
+      <div class="result-row total"><dt>실수령액</dt><dd id="rNet">0원</dd></div>
+    </dl>
+    <p class="hint">당첨금은 지급 시점에 세금을 원천징수한 뒤 지급됩니다.</p>
+    <div id="taxText" hidden></div>
+  </section>
+
+  <div class="ad-slot" aria-hidden="true"><span>AD</span></div>
+
+  <article class="article">
+    <h2>로또 당첨 확률은 얼마인가요</h2>
+    <p>로또 6/45는 1부터 45까지의 숫자 중 6개를 맞히는 게임입니다. 1등 확률은 전체 조합 수인 8,145,060분의 1로, 약 <strong>0.0000123%</strong>입니다. 벼락을 맞을 확률보다 낮다고 흔히 이야기합니다. 2등(5개+보너스)은 약 136만분의 1, 3등(5개)은 약 3만 5천분의 1입니다.</p>
+    <p>같은 번호를 여러 장 사는 것보다, 서로 다른 조합을 여러 장 사는 편이 1등 확률을 높이는 데는 유리합니다. 다만 어떤 조합이든 확률 자체는 동일하며, 특정 번호가 더 자주 나온다는 주장은 통계적으로 뒷받침되지 않습니다.</p>
+
+    <h2>번호를 뽑는 방식</h2>
+    <p>이 생성기는 1~45의 숫자 중에서 이미 나온 번호를 제외하며 무작위로 6개를 뽑고, 남은 숫자에서 보너스 번호 1개를 추가합니다. '포함할 번호'를 입력하면 그 번호는 반드시 들어가고, '제외할 번호'는 후보에서 빠집니다.</p>
+    <p>무작위성은 브라우저의 <strong>crypto.getRandomValues</strong>를 사용해 만들어집니다. 일반 난수 함수보다 예측이 어려워, 같은 조건에서도 매번 다른 조합이 나옵니다. 재미로 즐기는 용도이며, 당첨을 보장하지는 않습니다.</p>
+
+    <h2>당첨금에 붙는 세금</h2>
+    <p>로또 당첨금은 기타소득으로 분류되어 원천징수됩니다. 당첨금이 <strong>3억원 이하</strong>이면 22%(소득세 20% + 지방소득세 2%)가 적용되고, <strong>3억원을 초과</strong>하면 3억원까지는 22%, 3억원을 넘는 부분에는 33%(소득세 30% + 지방소득세 3%)가 적용됩니다.</p>
+    <p class="formula">3억 이하: 세금 = 당첨금 × 22%<br>3억 초과: 세금 = 3억 × 22% + (당첨금 − 3억) × 33%</p>
+    <p>예를 들어 20억원에 당첨되면 3억원에 대한 6,600만원과 나머지 17억원에 대한 5억 6,100만원을 합해 약 6억 2,700만원의 세금을 내고, 실수령액은 약 13억 7,300만원이 됩니다. 2등·3등처럼 3억원 이하인 경우에는 22%만 적용됩니다.</p>
+
+    <h2>당첨금을 받는 방법</h2>
+    <p>1등과 2등은 농협은행 본점이나 각 지점에서, 3등 이하는 판매점이나 농협은행 지점에서 받을 수 있습니다. 지급 기한은 추첨일로부터 1년이고, 기한이 지나면 당첨금은 복권기금으로 귀속됩니다.</p>
+    <p>당첨 사실을 알리지 않고 조용히 지내고 싶다면, 신분 확인과 세금 원천징수 절차가 필요하므로 본인 명의 계좌로 입금받는 것이 일반적입니다. 고액 당첨금은 일시금과 분할 수령 중 선택할 수 있는 경우가 있으니, 지급 창구에서 안내를 확인하세요.</p>
+
+    <h2>자주 묻는 질문</h2>
+    <details class="faq" open>
+      <summary>번호 생성 결과가 정말 무작위인가요?</summary>
+      <div class="faq-body"><p>브라우저의 암호학적 난수 생성기를 사용하므로 예측하기 어려운 조합이 나옵니다. 다만 이 결과가 당첨을 보장하지는 않으며, 확률은 어떤 번호를 고르든 같습니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>세금이 33%면 당첨금 전체에 적용되나요?</summary>
+      <div class="faq-body"><p>아니요. 3억원까지는 22%, 3억원을 초과하는 금액에만 33%가 적용됩니다. 그래서 실효세율은 22%에서 33% 사이의 값이 됩니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>당첨금을 나눠 받으면 세금이 줄어드나요?</summary>
+      <div class="faq-body"><p>분할 수령은 당첨금을 여러 해에 나눠 받는 방식으로, 해마다 3억원 이하 구간이 적용되어 세 부담이 달라질 수 있습니다. 다만 상품별로 조건이 다르므로 구매 전 약관을 확인해야 합니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>당첨금 지급 기한이 지나면 어떻게 되나요?</summary>
+      <div class="faq-body"><p>추첨일부터 1년이 지나면 당첨금 청구권이 소멸하고, 해당 금액은 복권기금으로 귀속됩니다. 당첨 사실을 확인했다면 기한을 꼭 확인하세요.</p></div>
+    </details>
+
+    <p class="note">이 도구는 재미를 위한 번호 생성과 세금 계산 참고용입니다. 실제 당첨금과 세액은 추첨 결과와 관계 법령에 따라 달라집니다. 도박 문제로 어려움을 겪고 있다면 한국도박문제예방치유원(1336)에 상담하세요.</p>
+  </article>
+
+  <div class="ad-slot" aria-hidden="true"><span>AD</span></div>
+
+  <section class="related">
+    <h2>함께 보면 좋은 도구</h2>
+    <div class="related-list">
+      <a href="menu-roulette.html">메뉴 룰렛</a>
+      <a href="savings-interest.html">예금·적금 이자</a>
+      <a href="symbols.html">특수문자 복사기</a>
+      <a href="../index.html">전체 도구</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <a class="promo" href="https://cshop.naver.com/mydailyselect" target="_blank" rel="noopener sponsored">
+      <span class="promo-label">데일리셀렉트</span>
+      <span class="promo-text">생활에 필요한 물건, 매일 골라 담은 셀렉트샵</span>
+      <span class="promo-arrow" aria-hidden="true">↗</span>
+    </a>
+    <nav class="footer-nav" aria-label="사이트 정보">
+      <a href="../index.html">전체 도구</a>
+      <a href="../about.html">사이트 소개</a>
+      <a href="../privacy.html">개인정보처리방침</a>
+    </nav>
+    <p class="footer-note">이 사이트의 결과는 참고용이며, 법적·재무적 판단의 근거가 될 수 없습니다.</p>
+    <p class="copy">© 2026 계산기 허브</p>
+  </div>
+</footer>
+
+<script src="../assets/js/common.js"></script>
+<script>
+(function () {
+  var CH = window.CalcHub, $ = CH.$;
+  var ballsEl = $("#balls");
+  var last = null;
+
+  function parseNumbers(str) {
+    return String(str || "").split(/[^0-9]+/).map(function (x) { return parseInt(x, 10); })
+      .filter(function (n) { return n >= 1 && n <= 45; });
+  }
+
+  function rand(max) {
+    if (window.crypto && window.crypto.getRandomValues) {
+      var a = new Uint32Array(1);
+      var limit = Math.floor(4294967296 / max) * max;
+      var v;
+      do { window.crypto.getRandomValues(a); v = a[0]; } while (v >= limit);
+      return v % max;
+    }
+    return Math.floor(Math.random() * max);
+  }
+
+  function pick(pool, count) {
+    var copy = pool.slice();
+    var outArr = [];
+    for (var i = 0; i < count && copy.length; i++) {
+      var idx = rand(copy.length);
+      outArr.push(copy[idx]);
+      copy.splice(idx, 1);
+    }
+    return outArr;
+  }
+
+  function drawBalls(nums, bonus) {
+    var html = "";
+    nums.forEach(function (n) {
+      html += "<span class='ball n" + ballColor(n) + "'>" + n + "</span>";
+    });
+    if (bonus) {
+      html += "<span class='ball-plus'>+</span><span class='ball n" + ballColor(bonus) + "'>" + bonus + "</span>";
+    }
+    ballsEl.innerHTML = html;
+  }
+
+  function ballColor(n) {
+    if (n <= 10) return 1;
+    if (n <= 20) return 2;
+    if (n <= 30) return 3;
+    if (n <= 40) return 4;
+    return 5;
+  }
+
+  function generate() {
+    var include = parseNumbers($("#include").value).filter(function (v, i, a) { return a.indexOf(v) === i; });
+    var exclude = parseNumbers($("#exclude").value);
+    if (include.length > 5) include = include.slice(0, 5);
+
+    var pool = [];
+    for (var i = 1; i <= 45; i++) {
+      if (exclude.indexOf(i) === -1 && include.indexOf(i) === -1) pool.push(i);
+    }
+    var need = 6 - include.length;
+    var picked = include.concat(pick(pool, need)).sort(function (a, b) { return a - b; });
+    var bonusPool = [];
+    for (var j = 1; j <= 45; j++) {
+      if (picked.indexOf(j) === -1 && exclude.indexOf(j) === -1) bonusPool.push(j);
+    }
+    var bonus = pick(bonusPool, 1)[0];
+
+    last = { numbers: picked, bonus: bonus };
+
+    drawBalls(picked, bonus);
+    $("#genBadge").textContent = include.length ? "포함 " + include.length + "개" : exclude.length ? "제외 " + exclude.length + "개" : "완전 자동";
+    $("#genSub").textContent = picked.join(", ") + " + 보너스 " + bonus + " · " + new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" });
+    $("#resultText").textContent = "로또 번호: " + picked.join(", ") + " / 보너스 " + bonus;
+
+    var conflict = include.filter(function (n) { return exclude.indexOf(n) !== -1; });
+    $("#condHint").textContent = conflict.length
+      ? "포함과 제외에 동시에 들어간 번호(" + conflict.join(", ") + ")는 포함으로 처리했어요."
+      : "쉼표나 띄어쓰기로 구분해 입력하세요. 포함 5개 + 제외 39개까지 가능해요.";
+  }
+
+  $("#genBtn").addEventListener("click", generate);
+
+  $("#copyBtn").addEventListener("click", function () {
+    CH.copy($("#resultText").textContent).then(function (ok) { CH.toast(ok ? "결과를 복사했어요" : "복사에 실패했어요"); });
+  });
+  $("#shareBtn").addEventListener("click", function () {
+    CH.share({ title: "로또 번호 생성기", text: $("#resultText").textContent, url: window.location.href.split("?")[0] });
+  });
+
+  /* ── 세금 계산 ── */
+  var taxForm = $("#taxForm");
+  function calcTax() {
+    var prize = CH.num($("#prize").value);
+    var tax, rate;
+    if (prize <= 0) {
+      $("#netPrize").textContent = "0";
+      $("#taxSub").textContent = "당첨금을 입력해 주세요.";
+      return;
+    }
+    if (prize <= 300000000) {
+      tax = prize * 0.22;
+      rate = 22;
+    } else {
+      tax = 300000000 * 0.22 + (prize - 300000000) * 0.33;
+      rate = tax / prize * 100;
+    }
+    var net = prize - tax;
+    $("#netPrize").textContent = CH.comma(net);
+    $("#rPrize").textContent = CH.won(prize);
+    $("#rTax").textContent = "-" + CH.won(tax);
+    $("#rNet").textContent = CH.won(net);
+    $("#taxBadge").textContent = prize <= 300000000 ? "22%" : "초과분 33%";
+    $("#taxSub").textContent = "세금 " + CH.won(tax) + " · 실효세율 " + rate.toFixed(2) + "%";
+    $("#taxText").textContent =
+      "로또 당첨금 실수령액\n· 당첨금: " + CH.won(prize) + "\n· 세금(22%/33%): " + CH.won(tax) +
+      "\n· 실수령액: " + CH.won(net) + "\n· 실효세율: " + rate.toFixed(2) + "%";
+  }
+  CH.live(taxForm, calcTax);
+  CH.$$("#prizeBtns button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      $("#prize").value = b.dataset.v;
+      calcTax();
+    });
+  });
+
+  generate();
+})();
+</script>
+</body>
+</html>
