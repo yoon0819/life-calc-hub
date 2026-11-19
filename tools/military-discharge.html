@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>군 전역일 계산기 — 육군·해군·공군·해병대·사회복무 복무율 계산</title>
+<title>군 전역일 계산기 — 육·해·공군·사회복무 복무율 (무료)</title>
 <meta name="description" content="입대일과 군별 복무기간을 고르면 전역일과 남은 복무일, 복무율(%)이 바로 계산됩니다. 육군 18개월·해군 20개월·공군 21개월·해병 18개월·사회복무 21개월 기준.">
 <meta name="keywords" content="전역일 계산기, 군대 전역일, 복무율 계산, 육군 18개월, 공군 21개월, 사회복무 21개월, 제대일">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://yoon0819.github.io/life-calc-hub/tools/military-discharge.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="계산기 허브">
-<meta property="og:title" content="군 전역일 계산기 — 복무율 %까지">
+<meta property="og:title" content="군 전역일 계산기 — 육·해·공군·사회복무 복무율 (무료)">
 <meta property="og:description" content="입대일과 군별 복무기간으로 전역일, 남은 날, 복무율을 계산합니다.">
 <meta property="og:url" content="https://yoon0819.github.io/life-calc-hub/tools/military-discharge.html">
 <meta property="og:locale" content="ko_KR">
@@ -26,6 +26,74 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-DLSNDYEE79');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://yoon0819.github.io/life-calc-hub/tools/military-discharge.html#app",
+      "name": "군 전역일 계산기",
+      "url": "https://yoon0819.github.io/life-calc-hub/tools/military-discharge.html",
+      "description": "입대일과 군별 복무기간을 고르면 전역일과 남은 복무일, 복무율(%)이 바로 계산됩니다. 육군 18개월·해군 20개월·공군 21개월·해병 18개월·사회복무 21개월 기준.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "inLanguage": "ko-KR",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "KRW"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "계산기 허브",
+        "url": "https://yoon0819.github.io/life-calc-hub/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://yoon0819.github.io/life-calc-hub/tools/military-discharge.html#faq",
+      "url": "https://yoon0819.github.io/life-calc-hub/tools/military-discharge.html",
+      "inLanguage": "ko-KR",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "전역일이 주말이나 공휴일이면 어떻게 되나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "전역일이 주말·공휴일이면 실제 전역 처리는 다음 평일로 밀리는 경우가 많습니다. 계산 결과의 날짜는 달력 기준이므로, 부대 행정반에서 확인한 실제 전역일을 기준으로 계획을 세우는 것이 좋습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "복무율은 입대일부터 세나요, 다음 날부터 세나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "이 계산기는 입대일을 1일째로 보고 오늘까지의 날수를 셉니다. 입대일 당일은 복무율 0%에 가깝게 표시되며, 다음 날부터 하루씩 올라갑니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "공군이 21개월로 가장 긴가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "2020년 6월 이후 입대자 기준으로 공군과 사회복무요원이 21개월로 가장 깁니다. 해군은 20개월, 육군·해병대·상근예비역은 18개월입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "입대일을 모르면 어떻게 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "병무청 '나의 병역이력'이나 입영통지서, 군 생활 기록에서 입대일을 확인할 수 있습니다. 입대일만 알면 복무기간을 더해 전역일을 계산할 수 있습니다."
+          }
+        }
+      ]
+    }
+  ]
+}
 </script>
 </head>
 <body>
@@ -157,6 +225,13 @@
       <summary>입대일을 모르면 어떻게 하나요?</summary>
       <div class="faq-body"><p>병무청 '나의 병역이력'이나 입영통지서, 군 생활 기록에서 입대일을 확인할 수 있습니다. 입대일만 알면 복무기간을 더해 전역일을 계산할 수 있습니다.</p></div>
     </details>
+
+    <h2>자주 하는 실수</h2>
+    <ul>
+      <li><strong>복무기간을 더한 날을 전역일로 보는 것</strong> — 입대일을 첫날로 세므로 하루를 빼야 합니다. 2026년 3월 10일 입대한 육군은 2027년 9월 9일이 전역일입니다.</li>
+      <li><strong>2020년 6월 이전 입대자에게 현행 기간을 적용하는 것</strong> — 그 이전 입대자는 당시 기준(육군 21개월 등)이 적용됩니다.</li>
+      <li><strong>계산값을 실제 전역일과 같다고 보는 것</strong> — 말년휴가·부대 일정에 따라 며칠에서 몇 주 차이가 날 수 있습니다.</li>
+    </ul>
 
     <p class="note">이 계산기는 병역법상 일반적인 복무기간을 기준으로 한 참고용 도구입니다. 실제 전역일은 병무청과 소속 부대의 안내를 우선 확인하세요.</p>
   </article>

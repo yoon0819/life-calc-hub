@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>로또 번호 생성기 &amp; 당첨금 실수령액 계산기 (2026)</title>
+<title>로또 번호 생성기 — 당첨금 실수령액 (무료)</title>
 <meta name="description" content="포함수·제외수를 정해 로또 6개 번호와 보너스 번호를 뽑고, 1~3등 당첨금에서 22%·33% 세금을 뺀 실수령액을 계산합니다. 무료·회원가입 없음.">
 <meta name="keywords" content="로또 번호 생성기, 로또 번호 추천, 로또 세금, 로또 실수령액, 로또 1등 세금 33%, 로또 자동">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://yoon0819.github.io/life-calc-hub/tools/lotto.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="계산기 허브">
-<meta property="og:title" content="로또 번호 생성기 &amp; 실수령액 계산">
+<meta property="og:title" content="로또 번호 생성기 — 당첨금 실수령액 (무료)">
 <meta property="og:description" content="포함수·제외수를 반영한 번호 생성과 당첨금 세후 실수령액 계산을 한 번에.">
 <meta property="og:url" content="https://yoon0819.github.io/life-calc-hub/tools/lotto.html">
 <meta property="og:locale" content="ko_KR">
@@ -26,6 +26,74 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-DLSNDYEE79');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://yoon0819.github.io/life-calc-hub/tools/lotto.html#app",
+      "name": "로또 번호 생성기",
+      "url": "https://yoon0819.github.io/life-calc-hub/tools/lotto.html",
+      "description": "포함수·제외수를 정해 로또 6개 번호와 보너스 번호를 뽑고, 1~3등 당첨금에서 22%·33% 세금을 뺀 실수령액을 계산합니다. 무료·회원가입 없음.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "inLanguage": "ko-KR",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "KRW"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "계산기 허브",
+        "url": "https://yoon0819.github.io/life-calc-hub/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://yoon0819.github.io/life-calc-hub/tools/lotto.html#faq",
+      "url": "https://yoon0819.github.io/life-calc-hub/tools/lotto.html",
+      "inLanguage": "ko-KR",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "번호 생성 결과가 정말 무작위인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "브라우저의 암호학적 난수 생성기를 사용하므로 예측하기 어려운 조합이 나옵니다. 다만 이 결과가 당첨을 보장하지는 않으며, 확률은 어떤 번호를 고르든 같습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "세금이 33%면 당첨금 전체에 적용되나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "아니요. 3억원까지는 22%, 3억원을 초과하는 금액에만 33%가 적용됩니다. 그래서 실효세율은 22%에서 33% 사이의 값이 됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "당첨금을 나눠 받으면 세금이 줄어드나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "분할 수령은 당첨금을 여러 해에 나눠 받는 방식으로, 해마다 3억원 이하 구간이 적용되어 세 부담이 달라질 수 있습니다. 다만 상품별로 조건이 다르므로 구매 전 약관을 확인해야 합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "당첨금 지급 기한이 지나면 어떻게 되나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "추첨일부터 1년이 지나면 당첨금 청구권이 소멸하고, 해당 금액은 복권기금으로 귀속됩니다. 당첨 사실을 확인했다면 기한을 꼭 확인하세요."
+          }
+        }
+      ]
+    }
+  ]
+}
 </script>
 </head>
 <body>
@@ -158,6 +226,13 @@
       <summary>당첨금 지급 기한이 지나면 어떻게 되나요?</summary>
       <div class="faq-body"><p>추첨일부터 1년이 지나면 당첨금 청구권이 소멸하고, 해당 금액은 복권기금으로 귀속됩니다. 당첨 사실을 확인했다면 기한을 꼭 확인하세요.</p></div>
     </details>
+
+    <h2>자주 하는 실수</h2>
+    <ul>
+      <li><strong>세금을 당첨금 전체에 33%로 계산하는 것</strong> — 5억원 당첨이면 3억원의 22%(6,600만원)와 나머지 2억원의 33%(6,600만원)를 더한 1억 3,200만원이 세금입니다.</li>
+      <li><strong>같은 번호를 여러 장 사는 것</strong> — 같은 조합을 여러 장 사도 당첨 확률은 그대로이고, 당첨되면 당첨금만 나눠 갖게 됩니다.</li>
+      <li><strong>지급 기한을 놓치는 것</strong> — 추첨일부터 1년이 지나면 청구권이 소멸해 복권기금으로 넘어갑니다.</li>
+    </ul>
 
     <p class="note">이 도구는 재미를 위한 번호 생성과 세금 계산 참고용입니다. 실제 당첨금과 세액은 추첨 결과와 관계 법령에 따라 달라집니다. 도박 문제로 어려움을 겪고 있다면 한국도박문제예방치유원(1336)에 상담하세요.</p>
   </article>

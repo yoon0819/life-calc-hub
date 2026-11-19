@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>BMI 계산기 — 비만도 판정과 기초대사량(BMR) 계산</title>
+<title>BMI 계산기 — 비만도 판정과 기초대사량 (무료)</title>
 <meta name="description" content="키와 체중을 넣으면 BMI와 아시아-태평양 기준 비만도 판정, 표준체중, 기초대사량(BMR), 하루 소비 열량이 바로 계산됩니다. 성별·나이·활동량 반영.">
 <meta name="keywords" content="BMI 계산기, 비만도 계산, 기초대사량, BMR 계산, 표준체중, 다이어트 칼로리, 아시아 태평양 비만 기준">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://yoon0819.github.io/life-calc-hub/tools/bmi.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="계산기 허브">
-<meta property="og:title" content="BMI 계산기 — 비만도·기초대사량">
+<meta property="og:title" content="BMI 계산기 — 비만도 판정과 기초대사량 (무료)">
 <meta property="og:description" content="BMI와 비만도 판정, 표준체중, 기초대사량, 하루 소비 열량을 계산합니다.">
 <meta property="og:url" content="https://yoon0819.github.io/life-calc-hub/tools/bmi.html">
 <meta property="og:locale" content="ko_KR">
@@ -26,6 +26,74 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-DLSNDYEE79');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://yoon0819.github.io/life-calc-hub/tools/bmi.html#app",
+      "name": "BMI·비만도·기초대사량 계산기",
+      "url": "https://yoon0819.github.io/life-calc-hub/tools/bmi.html",
+      "description": "키와 체중을 넣으면 BMI와 아시아-태평양 기준 비만도 판정, 표준체중, 기초대사량(BMR), 하루 소비 열량이 바로 계산됩니다. 성별·나이·활동량 반영.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "inLanguage": "ko-KR",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "KRW"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "계산기 허브",
+        "url": "https://yoon0819.github.io/life-calc-hub/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://yoon0819.github.io/life-calc-hub/tools/bmi.html#faq",
+      "url": "https://yoon0819.github.io/life-calc-hub/tools/bmi.html",
+      "inLanguage": "ko-KR",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "BMI 23이면 비만인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "아시아-태평양 기준으로 23~24.9는 '과체중(위험체중)'이고, 25 이상부터 비만입니다. WHO 기준(25 이상 비만)과 다르니 어느 기준으로 이야기하는지 확인하세요."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "표준체중과 정상 체중 범위는 무엇이 다른가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "표준체중은 BMI 22일 때의 체중으로 건강에 가장 좋은 목표치입니다. 정상 체중 범위는 BMI 18.5~22.9에 해당하는 체중 구간으로, 이 안에 있으면 정상으로 봅니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "기초대사량보다 적게 먹으면 살이 빠지나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "단기적으로는 빠지지만, 근손실과 대사 저하로 오래 유지되기 어렵습니다. 기초대사량 이하로 먹는 극단적 감량은 피하고, TDEE에서 300~500kcal 정도 줄이는 방식이 안전합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "운동을 많이 하면 BMI가 높게 나오나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "네. 근육은 지방보다 밀도가 높아 같은 부피로 무게가 더 나갑니다. 근력 운동을 많이 하는 사람은 BMI가 25를 넘어도 건강할 수 있으므로 체지방률과 함께 판단하세요."
+          }
+        }
+      ]
+    }
+  ]
+}
 </script>
 </head>
 <body>
@@ -176,6 +244,13 @@
       <summary>운동을 많이 하면 BMI가 높게 나오나요?</summary>
       <div class="faq-body"><p>네. 근육은 지방보다 밀도가 높아 같은 부피로 무게가 더 나갑니다. 근력 운동을 많이 하는 사람은 BMI가 25를 넘어도 건강할 수 있으므로 체지방률과 함께 판단하세요.</p></div>
     </details>
+
+    <h2>자주 하는 실수</h2>
+    <ul>
+      <li><strong>키를 cm 그대로 넣는 것</strong> — 공식의 키는 m 단위입니다. 175를 그대로 넣으면 BMI가 1만 배 가까이 작게 나옵니다.</li>
+      <li><strong>WHO 기준으로 판정을 읽는 것</strong> — 이 계산기는 아시아-태평양 기준(23 이상 과체중, 25 이상 비만)을 씁니다. WHO 기준(25 이상 비만)과 섞으면 판정이 한 단계 달라집니다.</li>
+      <li><strong>BMI 하나로 건강을 판단하는 것</strong> — 근육이 많은 사람은 과대평가되고 마른 비만은 잡히지 않습니다. 허리둘레(남 90cm·여 85cm)와 체지방률을 함께 보세요.</li>
+    </ul>
 
     <p class="note">이 계산기는 일반 성인을 위한 참고용 도구이며 의학적 진단이 아닙니다. 비만·저체중이 걱정된다면 병원에서 체성분 검사와 상담을 받으세요.</p>
   </article>
