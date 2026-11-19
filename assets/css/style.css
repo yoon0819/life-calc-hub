@@ -666,6 +666,11 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
   .result-card { padding: 28px 26px; }
 }
 
+/* 좁은 화면: 날짜 입력 두 칸(.grid-2)이 가로로 넘치지 않도록 한 줄로 */
+@media (max-width: 420px) {
+  .grid-2 { grid-template-columns: 1fr; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; scroll-behavior: auto !important; }
 }
