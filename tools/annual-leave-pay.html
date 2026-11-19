@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>2026 연차수당 계산기 — 통상임금·미사용 일수 (무료)</title>
+<meta name="description" content="통상시급과 미사용 연차일수로 연차수당을 계산합니다. 1년 미만 월 1일, 1년 이상 15일 발생일수도 확인하세요.">
+<meta name="keywords" content="연차수당 계산기, 연차수당 계산, 미사용 연차수당, 통상임금, 통상시급 209시간, 연차 발생일수, 2026 연차수당">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://yoon0819.github.io/life-calc-hub/tools/annual-leave-pay.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="계산기 허브">
+<meta property="og:title" content="2026 연차수당 계산기 — 통상임금·미사용 일수 (무료)">
+<meta property="og:description" content="통상시급과 미사용 연차일수만 넣으면 연차수당이 바로 계산됩니다. 연차 발생일수도 함께 확인하세요.">
+<meta property="og:url" content="https://yoon0819.github.io/life-calc-hub/tools/annual-leave-pay.html">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#3182F6">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<!-- AdSense 승인 후 주석 해제: <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+<!-- Google Analytics 4 (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DLSNDYEE79"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DLSNDYEE79');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://yoon0819.github.io/life-calc-hub/tools/annual-leave-pay.html#app",
+      "name": "연차수당 계산기",
+      "url": "https://yoon0819.github.io/life-calc-hub/tools/annual-leave-pay.html",
+      "description": "통상시급과 미사용 연차일수로 연차수당을 계산합니다. 1년 미만 월 1일, 1년 이상 15일 발생일수도 확인하세요.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "inLanguage": "ko-KR",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "KRW"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "계산기 허브",
+        "url": "https://yoon0819.github.io/life-calc-hub/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://yoon0819.github.io/life-calc-hub/tools/annual-leave-pay.html#faq",
+      "url": "https://yoon0819.github.io/life-calc-hub/tools/annual-leave-pay.html",
+      "inLanguage": "ko-KR",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "연차수당은 언제 지급되나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "미사용 연차의 사용청구권이 소멸한 다음 날에 지급 의무가 생기고, 보통 그달 임금 지급일에 함께 지급됩니다. 퇴직할 때는 남은 연차 전부가 미사용수당으로 정산되어 퇴직금과 함께 지급되는 경우가 많습니다. 취업규칙에 지급 시기를 따로 정했다면 그 기준을 따릅니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "월급을 30일로 나눠 계산하면 왜 안 되나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "연차수당은 실제 달력 일수가 아니라 소정근로시간에 대응하는 임금이기 때문입니다. 취업규칙에 다른 정함이 없다면 1일 통상임금 = 통상시급 × 1일 소정근로시간으로 계산하고, 월급제 근로자의 통상시급은 월 통상임금을 월 소정근로시간(주 40시간제는 209시간)으로 나눠 구합니다. 월급을 30으로 나누면 금액이 실제보다 적게 나오는 경우가 많습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "1년 미만 근무자의 연차는 어떻게 되나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1개월을 개근할 때마다 다음 달에 1일이 발생하고, 입사 후 1년 동안 최대 11일까지 생깁니다. 이 기간의 연차는 입사일로부터 1년 안에 사용해야 하고, 남으면 미사용수당으로 정산됩니다. 1년 이상 근무하면 다음 해에 15일이 새로 발생하는데, 첫해 11일과 중복해서 더해지는 것은 아닙니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "회사가 연차 사용을 재촉했다면 수당을 못 받나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "근로기준법 제61조의 사용촉진 절차를 회사가 제대로 이행했다면 미사용 연차에 대한 금전 보상 의무가 면제될 수 있습니다. 다만 근로자별로 남은 일수와 사용 기한을 서면(전자문서 포함)으로 알리고 사용 시기를 지정해 달라고 요청하는 등 법이 정한 절차를 갖춰야 하므로, 구두로 재촉한 정도로는 면제되지 않습니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html" aria-label="계산기 허브 홈">
+      <span class="brand-mark" aria-hidden="true">계</span><span class="brand-name">계산기 허브</span>
+    </a>
+    <a class="topbar-link" href="../index.html">전체 계산기</a>
+  </div>
+</header>
+
+<main id="main" class="app">
+  <nav class="crumb" aria-label="위치">
+    <a href="../index.html">홈</a><span>/</span><a href="../index.html#catMoney">급여·세금</a><span>/</span><span>연차수당</span>
+  </nav>
+
+  <div class="page-head">
+    <h1>연차수당 계산기</h1>
+    <p>통상시급과 남은 연차일수만 넣으면 받을 연차수당이 바로 계산돼요. 연차가 몇 일 생겼는지도 아래에서 확인할 수 있어요.</p>
+  </div>
+
+  <form class="card" id="calcForm" onsubmit="return false">
+    <h2 class="card-title">연차수당 계산</h2>
+    <p class="card-desc">취업규칙에 다른 정함이 없으면 통상임금 기준으로 계산해요.</p>
+
+    <div class="field">
+      <label for="wageMode">임금 입력 방식</label>
+      <div class="input-wrap">
+        <select class="input" id="wageMode" name="mode">
+          <option value="hourly">통상시급을 직접 입력</option>
+          <option value="monthly">월 통상임금에서 환산</option>
+        </select>
+      </div>
+      <p class="hint">월급제라면 기본급과 통상임금에 해당하는 고정수당을 더한 금액을 넣으세요.</p>
+    </div>
+
+    <div id="fieldsHourly">
+      <div class="field">
+        <label for="hourlyWage">통상시급</label>
+        <div class="input-wrap">
+          <input class="input" id="hourlyWage" name="hourly" type="number" inputmode="numeric" min="0" step="10" value="12000">
+          <span class="unit">원</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="fieldsMonthly" class="hidden">
+      <div class="grid-2">
+        <div class="field">
+          <label for="monthlyWage">월 통상임금</label>
+          <div class="input-wrap">
+            <input class="input" id="monthlyWage" name="monthly" type="number" inputmode="numeric" min="0" step="10000" value="2508000">
+            <span class="unit">원</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="monthHours">월 소정근로시간</label>
+          <div class="input-wrap">
+            <input class="input" id="monthHours" name="mhours" type="number" inputmode="numeric" min="1" max="400" step="1" value="209">
+            <span class="unit">시간</span>
+          </div>
+        </div>
+      </div>
+      <p class="hint">주 40시간·주 5일 근무자는 주휴 8시간을 포함해 209시간이 기준이에요.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="field">
+        <label for="dayHours">1일 소정근로시간</label>
+        <div class="input-wrap">
+          <input class="input" id="dayHours" name="dhours" type="number" inputmode="decimal" min="0.5" max="24" step="0.5" value="8">
+          <span class="unit">시간</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="leaveDays">미사용 연차일수</label>
+        <div class="input-wrap">
+          <input class="input" id="leaveDays" name="leave" type="number" inputmode="decimal" min="0" max="60" step="0.5" value="5">
+          <span class="unit">일</span>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <section class="result-card" aria-live="polite" aria-atomic="true">
+    <div class="result-head">
+      <span class="result-label">연차수당 (세전)</span>
+      <span class="badge green" id="rBadge">통상임금 기준</span>
+    </div>
+    <p class="result-value"><span id="rPay">480,000</span><span class="won">원</span></p>
+    <p class="result-sub" id="rSub">1일 통상임금 96,000원 × 5일</p>
+
+    <dl class="result-rows">
+      <div class="result-row"><dt>통상시급</dt><dd id="rHourly">12,000원</dd></div>
+      <div class="result-row"><dt>1일 통상임금</dt><dd id="rDaily">96,000원</dd></div>
+      <div class="result-row"><dt>미사용 연차일수</dt><dd id="rDays">5일</dd></div>
+      <div class="result-row total"><dt>연차수당 (세전)</dt><dd id="rTotal">480,000원</dd></div>
+      <div class="result-row"><dt>참고 · 하루 8시간 기준 시급 환산</dt><dd id="rRef">12,000원</dd></div>
+    </dl>
+    <div id="resultText" hidden></div>
+  </section>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="copyBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
+      결과 복사
+    </button>
+    <button class="btn btn-ghost" id="shareBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg>
+      링크 공유
+    </button>
+  </div>
+
+  <form class="card" id="leaveForm" onsubmit="return false">
+    <h2 class="card-title">연차 발생일수 계산</h2>
+    <p class="card-desc">입사일을 기준으로 지금까지 발생한 연차일수를 계산해요. 회계연도 기준으로 운영하는 회사는 결과가 다를 수 있어요.</p>
+
+    <div class="grid-2">
+      <div class="field">
+        <label for="startDate">입사일</label>
+        <div class="input-wrap"><input class="input" id="startDate" name="start" type="date" value="2020-03-02"></div>
+      </div>
+      <div class="field">
+        <label for="refDate">기준일</label>
+        <div class="input-wrap"><input class="input" id="refDate" name="ref" type="date" value="2026-11-20"></div>
+      </div>
+    </div>
+    <p class="hint">연차는 1년간 80% 이상 출근해야 15일이 발생해요. 결근이 많았다면 실제 부여일수는 줄어들 수 있습니다.</p>
+  </form>
+
+  <section class="result-card" aria-live="polite" aria-atomic="true">
+    <div class="result-head">
+      <span class="result-label">발생 연차일수</span>
+      <span class="badge" id="lBadge">1년 이상</span>
+    </div>
+    <p class="result-value"><span id="lDays">17</span><span class="won">일</span></p>
+    <p class="result-sub" id="lSub">근속 6년 8개월 · 기본 15일 + 가산 2일</p>
+
+    <dl class="result-rows">
+      <div class="result-row"><dt>근속기간</dt><dd id="lTenure">6년 8개월</dd></div>
+      <div class="result-row"><dt>기본 연차</dt><dd id="lBase">15일</dd></div>
+      <div class="result-row"><dt>가산 연차 (3년 이상, 2년마다 1일)</dt><dd id="lExtra">2일</dd></div>
+      <div class="result-row total"><dt>발생 연차일수</dt><dd id="lTotal">17일</dd></div>
+    </dl>
+    <div id="leaveText" hidden></div>
+  </section>
+
+  <div class="ad-slot" aria-hidden="true">
+    <!-- AdSense 광고 슬롯 (결과 하단). 승인 후 <ins class="adsbygoogle" ...> 로 교체하세요. -->
+    <span>AD</span>
+  </div>
+
+  <article class="article">
+    <h2>연차수당은 어떤 돈인가요?</h2>
+    <p>연차유급휴가는 근로기준법 제60조에 따라 회사가 근로자에게 주어야 하는 유급 휴가입니다. 그런데 일이 바빠서, 또는 회사가 사용을 미뤄서 연차를 다 쓰지 못하는 경우가 많습니다. 이렇게 쓰지 못하고 사라진 연차에 대해 돈으로 보상하는 것이 <strong>연차수당(연차유급휴가 미사용수당)</strong>입니다.</p>
+    <p>금액은 근로기준법 제60조 제5항에 따라 취업규칙 등에서 정한 통상임금 또는 평균임금으로 계산합니다. 별도의 정함이 없으면 통상임금이 기준입니다. 통상임금은 근로기준법 시행령 제6조에 정의된, 정기적이고 일률적으로 지급하기로 정한 임금을 말합니다.</p>
+    <p class="formula">1일 통상임금 = 통상시급 × 1일 소정근로시간<br>연차수당 = 미사용 연차일수 × 1일 통상임금<br>통상시급 = 월 통상임금 ÷ 월 소정근로시간 (주 40시간제 209시간)</p>
+
+    <h2>통상시급은 이렇게 구합니다</h2>
+    <p>월급제 근로자의 통상시급은 월 통상임금을 월 소정근로시간으로 나눠 구합니다. 주 40시간 근무에 주 5일제라면 유급 주휴 8시간이 포함된 209시간이 기준입니다. 209시간은 (1주 소정근로 40시간 + 주휴 8시간) × 1년 평균 주 수 4.345주로 계산된 값입니다.</p>
+    <p>여기서 중요한 점은 <strong>실제 근무시간이 아니라 소정근로시간</strong>을 쓴다는 것입니다. 그 달에 연장근로를 많이 했다고 연차수당이 늘어나지는 않고, 반대로 조퇴를 했다고 줄지도 않습니다. 단시간 근로자는 1일 소정근로시간이 8시간보다 짧으므로 그 시간을 넣어야 합니다.</p>
+
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">근속연수별 연차 발생일수</caption>
+        <thead><tr><th>근속</th><th class="num">발생 연차</th><th>근거</th></tr></thead>
+        <tbody>
+          <tr><td>1년 미만</td><td class="num">1개월 개근 시 1일 (최대 11일)</td><td>근로기준법 제60조제2항</td></tr>
+          <tr><td>1년</td><td class="num">15일</td><td>제60조제1항 (출근율 80% 이상)</td></tr>
+          <tr><td>2년</td><td class="num">15일</td><td>가산 없음</td></tr>
+          <tr><td>3년</td><td class="num">16일</td><td>제60조제4항</td></tr>
+          <tr><td>5년</td><td class="num">17일</td><td>2년마다 1일 가산</td></tr>
+          <tr><td>21년 이상</td><td class="num">25일 (한도)</td><td>가산 포함 총 25일 한도</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>계산 예시로 확인해 보세요</h2>
+    <ul>
+      <li><strong>통상시급 12,000원, 1일 8시간, 미사용 5일</strong> — 1일 통상임금 96,000원, 연차수당 480,000원입니다.</li>
+      <li><strong>월 통상임금 2,508,000원, 209시간, 1일 8시간, 미사용 7.5일</strong> — 통상시급 12,000원, 1일 96,000원, 연차수당 720,000원입니다.</li>
+      <li><strong>최저임금 시급 10,320원, 1일 4시간(단시간), 미사용 3일</strong> — 1일 통상임금 41,280원, 연차수당 123,840원입니다.</li>
+    </ul>
+
+    <h2>자주 하는 실수</h2>
+    <ul>
+      <li><strong>월급을 30으로 나누는 경우</strong> — 통상시급은 월 통상임금 ÷ 209시간(주 40시간제)으로 구합니다. 30일로 나누면 1일 통상임금이 실제보다 적어질 수 있습니다.</li>
+      <li><strong>연차수당에는 세금이 없다고 생각하는 경우</strong> — 연차수당은 근로소득으로 과세됩니다. 급여에 합산되어 소득세·4대보험이 적용되므로 세후 금액은 계산 결과보다 적습니다.</li>
+      <li><strong>입사 1년 미만 연차를 15일에 더하는 경우</strong> — 첫해에 발생한 최대 11일은 그 해에 사용하고, 1년이 지나면 별도로 15일이 새로 발생합니다. 합산해서 26일이 되는 것이 아닙니다.</li>
+      <li><strong>사용촉진을 구두 안내로 끝냈다고 보는 경우</strong> — 근로기준법 제61조의 절차(서면 통지, 사용 시기 지정 요청 등)를 갖추지 않으면 미사용수당 지급 의무가 남습니다.</li>
+      <li><strong>퇴사할 때 연차를 정산하지 않는 경우</strong> — 퇴직 시 남은 연차는 미사용수당으로 정산되어야 합니다. 퇴직금과는 별개 항목입니다.</li>
+    </ul>
+
+    <h2>자주 묻는 질문</h2>
+    <details class="faq" open>
+      <summary>연차수당은 언제 지급되나요?</summary>
+      <div class="faq-body"><p>미사용 연차의 사용청구권이 소멸한 다음 날에 지급 의무가 생기고, 보통 그달 임금 지급일에 함께 지급됩니다. 퇴직할 때는 남은 연차 전부가 미사용수당으로 정산되어 퇴직금과 함께 지급되는 경우가 많습니다. 취업규칙에 지급 시기를 따로 정했다면 그 기준을 따릅니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>월급을 30일로 나눠 계산하면 왜 안 되나요?</summary>
+      <div class="faq-body"><p>연차수당은 실제 달력 일수가 아니라 소정근로시간에 대응하는 임금이기 때문입니다. 취업규칙에 다른 정함이 없다면 1일 통상임금 = 통상시급 × 1일 소정근로시간으로 계산하고, 월급제 근로자의 통상시급은 월 통상임금을 월 소정근로시간(주 40시간제는 209시간)으로 나눠 구합니다. 월급을 30으로 나누면 금액이 실제보다 적게 나오는 경우가 많습니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>1년 미만 근무자의 연차는 어떻게 되나요?</summary>
+      <div class="faq-body"><p>1개월을 개근할 때마다 다음 달에 1일이 발생하고, 입사 후 1년 동안 최대 11일까지 생깁니다. 이 기간의 연차는 입사일로부터 1년 안에 사용해야 하고, 남으면 미사용수당으로 정산됩니다. 1년 이상 근무하면 다음 해에 15일이 새로 발생하는데, 첫해 11일과 중복해서 더해지는 것은 아닙니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>회사가 연차 사용을 재촉했다면 수당을 못 받나요?</summary>
+      <div class="faq-body"><p>근로기준법 제61조의 사용촉진 절차를 회사가 제대로 이행했다면 미사용 연차에 대한 금전 보상 의무가 면제될 수 있습니다. 다만 근로자별로 남은 일수와 사용 기한을 서면(전자문서 포함)으로 알리고 사용 시기를 지정해 달라고 요청하는 등 법이 정한 절차를 갖춰야 하므로, 구두로 재촉한 정도로는 면제되지 않습니다.</p></div>
+    </details>
+
+    <h2>출처</h2>
+    <ul>
+      <li><a href="https://www.law.go.kr/법령/근로기준법" target="_blank" rel="noopener">국가법령정보센터 「근로기준법」</a> — 제60조(연차 유급휴가), 제61조(연차 유급휴가의 사용 촉진)</li>
+      <li><a href="https://www.moel.go.kr/common/downloadFile.do?bbs_id=17&bbs_seq=20250201348&file_ext=pdf&file_seq=20250202056" target="_blank" rel="noopener">「근로기준법 시행령」(2025. 2. 23. 시행)</a> — 제6조 통상임금 산정 방법, 제33조 휴가수당 지급일</li>
+      <li><a href="https://1350.moel.go.kr/rtmview.do?id=1000322406" target="_blank" rel="noopener">고용노동부 1350 상담 (2026. 4. 28.)</a> — 월 통상임금 250만 원 예시: 209시간으로 나눠 통상시급 11,961.7원, 1일 8시간 95,694원</li>
+      <li><a href="https://1350.moel.go.kr/rtmview.do?id=1000064320" target="_blank" rel="noopener">고용노동부 1350 상담 (2025. 12. 18. / 2026. 1. 7.)</a> — 미사용수당은 1일 소정근로시간 × 통상시급, 주 40시간제는 월급 ÷ 209</li>
+    </ul>
+    <p class="note">이 계산기는 2026년 기준 법령과 고용노동부 안내로 만든 참고용 도구이며 법적 효력이 없습니다. 실제 지급액은 취업규칙, 통상임금 범위, 출근율, 사용촉진 여부에 따라 달라지므로 회사 급여 담당자나 관할 노동청에 확인하세요.</p>
+  </article>
+
+  <div class="ad-slot" aria-hidden="true">
+    <!-- AdSense 광고 슬롯 (본문 하단). 승인 후 <ins class="adsbygoogle" ...> 로 교체하세요. -->
+    <span>AD</span>
+  </div>
+
+  <section class="related">
+    <h2>함께 보면 좋은 계산기</h2>
+    <div class="related-list">
+      <a href="severance-pay.html">퇴직금 계산기</a>
+      <a href="unemployment-benefit.html">실업급여 계산기</a>
+      <a href="retirement-income-tax.html">퇴직소득세 계산기</a>
+      <a href="part-time-pay.html">알바 주휴수당</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <a class="promo" href="https://cshop.naver.com/mydailyselect" target="_blank" rel="noopener sponsored">
+      <span class="promo-label">데일리셀렉트</span>
+      <span class="promo-text">생활에 필요한 물건, 매일 골라 담은 셀렉트샵</span>
+      <span class="promo-arrow" aria-hidden="true">↗</span>
+    </a>
+    <nav class="footer-nav" aria-label="사이트 정보">
+      <a href="../index.html">전체 계산기</a>
+      <a href="../about.html">사이트 소개</a>
+      <a href="../privacy.html">개인정보처리방침</a>
+    </nav>
+    <p class="footer-note">이 사이트의 계산 결과는 참고용이며, 법적·재무적 판단의 근거가 될 수 없습니다.</p>
+    <p class="copy">© 2026 계산기 허브</p>
+  </div>
+</footer>
+
+<script src="../assets/js/common.js"></script>
+<script>
+/* 연차수당 계산
+   - 1일 통상임금 = 통상시급 × 1일 소정근로시간 (근로기준법 시행령 제6조③)
+   - 통상시급 = 월 통상임금 ÷ 월 소정근로시간 (주 40시간제 209시간 = (40+8)×4.345)
+   - 연차수당 = 미사용 연차일수 × 1일 통상임금 (근로기준법 제60조⑤)
+   - 발생일수: 1년 미만 1개월 개근 시 1일(최대 11일, 제60조②),
+     1년 이상 15일(제60조①), 3년 이상 최초 1년 초과 근속 매 2년마다 1일 가산, 총 25일 한도(제60조④) */
+(function () {
+  var CH = window.CalcHub;
+  var $ = CH.$;
+  var form = $("#calcForm");
+  var leaveForm = $("#leaveForm");
+
+  var out = {
+    pay: $("#rPay"), sub: $("#rSub"), badge: $("#rBadge"),
+    hourly: $("#rHourly"), daily: $("#rDaily"), days: $("#rDays"),
+    total: $("#rTotal"), ref: $("#rRef"), raw: $("#resultText")
+  };
+  var lo = {
+    days: $("#lDays"), sub: $("#lSub"), badge: $("#lBadge"),
+    tenure: $("#lTenure"), base: $("#lBase"), extra: $("#lExtra"),
+    total: $("#lTotal"), raw: $("#leaveText")
+  };
+
+  function toggleFields() {
+    var mode = $("#wageMode").value;
+    $("#fieldsHourly").classList.toggle("hidden", mode !== "hourly");
+    $("#fieldsMonthly").classList.toggle("hidden", mode !== "monthly");
+  }
+
+  function calc() {
+    var mode = $("#wageMode").value;
+    var hourly;
+    if (mode === "monthly") {
+      var monthly = CH.num($("#monthlyWage").value);
+      var mhours = CH.num($("#monthHours").value) || 209;
+      hourly = monthly / mhours;
+    } else {
+      hourly = CH.num($("#hourlyWage").value);
+    }
+    var dh = CH.num($("#dayHours").value) || 8;
+    var leave = CH.num($("#leaveDays").value);
+    if (leave < 0) leave = 0;
+
+    var daily = hourly * dh;
+    var pay = daily * leave;
+
+    out.hourly.textContent = CH.won(hourly);
+    out.daily.textContent = CH.won(daily);
+    out.days.textContent = leave + "일";
+    out.total.textContent = CH.won(pay);
+    out.pay.textContent = CH.comma(pay);
+    out.ref.textContent = daily ? CH.won(daily / 8) : "0원";
+    out.sub.textContent = "1일 통상임금 " + CH.won(daily) + " × " + leave + "일";
+
+    if (!hourly || !leave) {
+      out.badge.textContent = "입력 대기";
+      out.badge.className = "badge";
+      out.sub.textContent = "통상시급과 미사용 연차일수를 입력해 주세요.";
+    } else {
+      out.badge.textContent = "통상임금 기준";
+      out.badge.className = "badge green";
+    }
+
+    out.raw.textContent =
+      "연차수당 계산 결과 (세전)\n" +
+      "· 통상시급: " + CH.won(hourly) + "\n" +
+      "· 1일 소정근로시간: " + dh + "시간\n" +
+      "· 1일 통상임금: " + CH.won(daily) + "\n" +
+      "· 미사용 연차일수: " + leave + "일\n" +
+      "· 연차수당: " + CH.won(pay);
+  }
+
+  function calcLeave() {
+    var start = CH.parseYmd($("#startDate").value);
+    var ref = CH.parseYmd($("#refDate").value);
+    if (!start || !ref || ref < start) {
+      lo.days.textContent = "0";
+      lo.sub.textContent = "입사일과 기준일을 확인해 주세요.";
+      lo.badge.textContent = "입력 대기";
+      lo.badge.className = "badge";
+      lo.tenure.textContent = "-";
+      lo.base.textContent = "-";
+      lo.extra.textContent = "-";
+      lo.total.textContent = "-";
+      lo.raw.textContent = "";
+      return;
+    }
+
+    var months = (ref.getFullYear() - start.getFullYear()) * 12 + (ref.getMonth() - start.getMonth());
+    if (ref.getDate() < start.getDate()) months -= 1;
+    if (months < 0) months = 0;
+    var years = Math.floor(months / 12);
+    var rest = months % 12;
+
+    var base, extra, total, badge, sub;
+    if (years < 1) {
+      base = Math.min(11, months);
+      extra = 0;
+      total = base;
+      badge = "1년 미만";
+      sub = "1개월 개근 시 1일 · 최대 11일";
+    } else {
+      base = 15;
+      extra = Math.min(10, Math.floor((years - 1) / 2));
+      total = Math.min(25, base + extra);
+      extra = total - base;
+      badge = "1년 이상";
+      sub = "근속 " + years + "년" + (rest ? " " + rest + "개월" : "") + " · 기본 15일 + 가산 " + extra + "일";
+    }
+
+    lo.tenure.textContent = (years > 0 ? years + "년 " : "") + (rest > 0 ? rest + "개월" : (years > 0 ? "0개월" : months + "개월"));
+    lo.base.textContent = base + "일";
+    lo.extra.textContent = extra + "일";
+    lo.total.textContent = total + "일";
+    lo.days.textContent = total;
+    lo.sub.textContent = sub;
+    lo.badge.textContent = badge;
+    lo.badge.className = years < 1 ? "badge" : "badge green";
+
+    lo.raw.textContent =
+      "연차 발생일수 계산 결과\n" +
+      "· 입사일: " + CH.ymd(start) + " / 기준일: " + CH.ymd(ref) + "\n" +
+      "· 근속기간: " + years + "년 " + rest + "개월\n" +
+      "· 기본 연차: " + base + "일\n" +
+      "· 가산 연차: " + extra + "일\n" +
+      "· 발생 연차일수: " + total + "일";
+  }
+
+  $("#wageMode").addEventListener("change", function () {
+    toggleFields();
+    calc();
+  });
+  toggleFields();
+  CH.live(form, calc);
+  CH.live(leaveForm, calcLeave);
+
+  $("#copyBtn").addEventListener("click", function () {
+    CH.copy(out.raw.textContent).then(function (ok) {
+      CH.toast(ok ? "결과를 복사했어요" : "복사에 실패했어요");
+    });
+  });
+
+  $("#shareBtn").addEventListener("click", function () {
+    CH.share({ title: "연차수당 계산기", text: "연차수당 " + CH.won(CH.num(out.pay.textContent)) + " 계산해 봤어요", url: CH.buildShareUrl(form) });
+  });
+})();
+</script>
+</body>
+</html>

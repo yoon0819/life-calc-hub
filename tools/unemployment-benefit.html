@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>2026 실업급여 계산기 — 1일 수급액·수급일수 (무료)</title>
+<meta name="description" content="2026년 실업급여 1일 수급액·수급일수·총액을 계산합니다. 상한 68,100원, 하한 66,048원 반영.">
+<meta name="keywords" content="실업급여 계산기, 구직급여 계산, 2026 실업급여, 실업급여 상한액, 실업급여 하한액, 소정급여일수, 1일 구직급여">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://yoon0819.github.io/life-calc-hub/tools/unemployment-benefit.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="계산기 허브">
+<meta property="og:title" content="2026 실업급여 계산기 — 1일 수급액·수급일수 (무료)">
+<meta property="og:description" content="이직 전 평균임금과 가입기간만 넣으면 1일 구직급여와 소정급여일수, 총 예상 수급액이 바로 계산됩니다.">
+<meta property="og:url" content="https://yoon0819.github.io/life-calc-hub/tools/unemployment-benefit.html">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#3182F6">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<!-- AdSense 승인 후 주석 해제: <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+<!-- Google Analytics 4 (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DLSNDYEE79"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DLSNDYEE79');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://yoon0819.github.io/life-calc-hub/tools/unemployment-benefit.html#app",
+      "name": "실업급여 계산기",
+      "url": "https://yoon0819.github.io/life-calc-hub/tools/unemployment-benefit.html",
+      "description": "2026년 실업급여 1일 수급액·수급일수·총액을 계산합니다. 상한 68,100원, 하한 66,048원 반영.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "inLanguage": "ko-KR",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "KRW"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "계산기 허브",
+        "url": "https://yoon0819.github.io/life-calc-hub/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://yoon0819.github.io/life-calc-hub/tools/unemployment-benefit.html#faq",
+      "url": "https://yoon0819.github.io/life-calc-hub/tools/unemployment-benefit.html",
+      "inLanguage": "ko-KR",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "자발적으로 그만두면 실업급여를 아예 못 받나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "원칙적으로는 받을 수 없습니다. 다만 임금체불, 최저임금 미달, 사업장 도산·휴폐업, 직장 내 괴롭힘이나 성희롱, 통근 곤란, 간병, 임신·출산·육아, 병역 등 고용보험법 시행규칙 별표2에서 정한 정당한 이직 사유가 있으면 자발적 퇴사여도 수급자격이 인정될 수 있습니다. 사유와 증빙이 중요하므로 관할 고용센터에 먼저 상담하세요."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "1일 구직급여가 상한액과 하한액 사이에 거의 몰려 있는 이유는 뭔가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "2026년은 상한이 68,100원, 하한(1일 8시간 기준)이 66,048원이라 폭이 2,052원뿐입니다. 하한이 2026년 최저임금 10,320원의 80%로 오르면서 기존 상한액(66,000원)을 넘어섰기 때문에 상한액도 함께 인상됐습니다. 그래서 대부분의 신청자는 평균임금이 높든 낮든 이 좁은 구간 안에서 금액이 정해집니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "소정급여일수는 어떤 기간을 기준으로 세나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "고용보험 피보험기간을 기준으로 하고, 최종 이직 사업장뿐 아니라 이전 사업장의 기간도 합산합니다. 다만 이전 자격 상실일부터 3년이 지난 기간은 합산되지 않고, 이미 구직급여를 받은 이력이 있는 기간도 제외됩니다. 180일 이상이어야 하는 피보험단위기간(보수 지급의 기초가 된 날)과는 계산 방식이 다릅니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "계산된 총액을 한 번에 받을 수 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "아닙니다. 수급자격 인정 후 7일의 대기기간이 있고, 이후 1~4주 단위로 실업인정을 받은 날에 대해서만 지급됩니다. 이직일 다음 날부터 1년 안에 소정급여일수를 다 쓰지 못하면 남은 일수는 소멸하므로, 총액은 재취업하지 않고 끝까지 수급했을 때의 최대치로 보면 됩니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html" aria-label="계산기 허브 홈">
+      <span class="brand-mark" aria-hidden="true">계</span><span class="brand-name">계산기 허브</span>
+    </a>
+    <a class="topbar-link" href="../index.html">전체 계산기</a>
+  </div>
+</header>
+
+<main id="main" class="app">
+  <nav class="crumb" aria-label="위치">
+    <a href="../index.html">홈</a><span>/</span><a href="../index.html#catMoney">급여·세금</a><span>/</span><span>실업급여</span>
+  </nav>
+
+  <div class="page-head">
+    <h1>실업급여 계산기</h1>
+    <p>이직 전 평균임금과 고용보험 가입기간만 넣으면 1일 구직급여와 받을 수 있는 일수, 총 예상 금액을 바로 확인할 수 있어요.</p>
+  </div>
+
+  <form class="card" id="calcForm" onsubmit="return false">
+    <h2 class="card-title">이직 정보 입력</h2>
+    <p class="card-desc">2026년 1월 1일 이후 이직자 기준이에요. 상한 68,100원, 하한 66,048원(1일 8시간).</p>
+
+    <div class="field">
+      <label for="basis">평균임금 입력 방식</label>
+      <div class="input-wrap">
+        <select class="input" id="basis" name="basis">
+          <option value="total">이직 전 3개월 임금 총액으로 계산</option>
+          <option value="daily">1일 평균임금을 직접 입력</option>
+        </select>
+      </div>
+      <p class="hint">평균임금은 이직 전 3개월 임금총액을 그 기간의 총일수로 나눈 금액이에요.</p>
+    </div>
+
+    <div id="fieldsTotal">
+      <div class="grid-2">
+        <div class="field">
+          <label for="total">3개월 임금 총액 (세전)</label>
+          <div class="input-wrap">
+            <input class="input" id="total" name="total" type="number" inputmode="numeric" min="0" step="10000" value="9000000">
+            <span class="unit">원</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="days">3개월 총일수</label>
+          <div class="input-wrap">
+            <input class="input" id="days" name="days" type="number" inputmode="numeric" min="1" max="92" step="1" value="92">
+            <span class="unit">일</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fieldsDaily" class="hidden">
+      <div class="field">
+        <label for="daily">1일 평균임금</label>
+        <div class="input-wrap">
+          <input class="input" id="daily" name="daily" type="number" inputmode="numeric" min="0" step="1000" value="97826">
+          <span class="unit">원</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="field">
+        <label for="hours">1일 소정근로시간</label>
+        <div class="input-wrap">
+          <input class="input" id="hours" name="hours" type="number" inputmode="numeric" min="1" max="8" step="1" value="8">
+          <span class="unit">시간</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="age">이직 당시 만 나이</label>
+        <div class="input-wrap">
+          <input class="input" id="age" name="age" type="number" inputmode="numeric" min="15" max="99" step="1" value="34">
+          <span class="unit">세</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="period">고용보험 가입기간</label>
+      <div class="input-wrap">
+        <select class="input" id="period" name="period">
+          <option value="0">1년 미만</option>
+          <option value="1">1년 이상 ~ 3년 미만</option>
+          <option value="2">3년 이상 ~ 5년 미만</option>
+          <option value="3" selected>5년 이상 ~ 10년 미만</option>
+          <option value="4">10년 이상</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="disabled">장애인 여부</label>
+      <div class="input-wrap">
+        <select class="input" id="disabled" name="disabled">
+          <option value="n">해당 없음</option>
+          <option value="y">장애인 등록자 (50세 이상과 같은 표 적용)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="reason">이직 사유</label>
+      <div class="input-wrap">
+        <select class="input" id="reason" name="reason">
+          <option value="involuntary">권고사직·계약만료·정리해고 등 (비자발적)</option>
+          <option value="voluntary">자발적 퇴사</option>
+        </select>
+      </div>
+      <p class="hint">자발적 퇴사는 원칙적으로 수급할 수 없고, 법에서 정한 정당한 사유가 있을 때만 인정됩니다.</p>
+    </div>
+  </form>
+
+  <section class="result-card" aria-live="polite" aria-atomic="true">
+    <div class="result-head">
+      <span class="result-label">1일 구직급여액 (예상)</span>
+      <span class="badge" id="rBadge">하한 적용</span>
+    </div>
+    <p class="result-value"><span id="rDaily">66,048</span><span class="won">원</span></p>
+    <p class="result-sub" id="rSub">소정급여일수 210일 · 총 예상 13,870,080원</p>
+
+    <dl class="result-rows">
+      <div class="result-row"><dt>급여기초임금일액 (평균임금)</dt><dd id="rBase">97,826원</dd></div>
+      <div class="result-row"><dt>적용 구간</dt><dd id="rBand">하한액 적용</dd></div>
+      <div class="result-row"><dt>1일 구직급여액</dt><dd id="rDailyRow">66,048원</dd></div>
+      <div class="result-row"><dt>소정급여일수</dt><dd id="rDays">210일</dd></div>
+      <div class="result-row total"><dt>총 예상 수급액</dt><dd id="rTotal">13,870,080원</dd></div>
+      <div class="result-row"><dt>예상 수급기간</dt><dd id="rMonths">약 7.0개월</dd></div>
+    </dl>
+    <div id="resultText" hidden></div>
+  </section>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="copyBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
+      결과 복사
+    </button>
+    <button class="btn btn-ghost" id="shareBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg>
+      링크 공유
+    </button>
+  </div>
+
+  <div class="ad-slot" aria-hidden="true">
+    <!-- AdSense 광고 슬롯 (결과 하단). 승인 후 <ins class="adsbygoogle" ...> 로 교체하세요. -->
+    <span>AD</span>
+  </div>
+
+  <article class="article">
+    <h2>실업급여(구직급여)는 어떻게 정해지나요?</h2>
+    <p>실업급여 중에서도 일자리를 잃은 사람이 재취업 활동을 하는 동안 받는 돈을 구직급여라고 합니다. 금액은 내가 받던 임금에서 정해지지만 무한정 늘어나거나 줄지 않고, 법에서 정한 <strong>상한액과 하한액</strong> 사이로 조정됩니다. 2026년은 상한이 1일 68,100원, 하한이 1일 66,048원(1일 8시간 기준)이라 폭이 2,052원밖에 되지 않습니다.</p>
+    <p>계산 순서는 이렇습니다. 먼저 이직 전 3개월 임금총액을 그 기간의 총일수로 나눠 <strong>평균임금(급여기초임금일액)</strong>을 구합니다. 평균임금이 통상임금보다 적으면 통상임금을 기초로 합니다. 그 금액의 <strong>60%</strong>가 1일 구직급여액이 되고, 상한액을 넘으면 68,100원으로, 하한액보다 적으면 하한액으로 맞춥니다. 여기에 소정급여일수를 곱한 금액이 총 수급액입니다.</p>
+    <p class="formula">1일 구직급여 = min(평균임금, 113,500원) × 60%<br>→ 68,100원 초과 시 68,100원 / 66,048원 미만 시 66,048원<br>총 수급액 = 1일 구직급여 × 소정급여일수</p>
+
+    <h2>2026년 구직급여 기준값</h2>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">2026년 구직급여 상한액·하한액</caption>
+        <thead><tr><th>항목</th><th class="num">2026년 (2026.1.1. 이후 이직)</th><th>2025년 이직자</th></tr></thead>
+        <tbody>
+          <tr><td>급여기초임금일액 상한</td><td class="num">113,500원</td><td>110,000원</td></tr>
+          <tr><td>1일 구직급여 상한액</td><td class="num">68,100원</td><td>66,000원</td></tr>
+          <tr><td>1일 구직급여 하한액 (8시간)</td><td class="num">66,048원</td><td>64,192원</td></tr>
+          <tr><td>최저임금 (하한 계산 기준)</td><td class="num">시급 10,320원</td><td>시급 10,030원</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>하한액은 2026년 최저임금 10,320원에 1일 소정근로시간을 곱한 금액의 80%입니다. 1일 8시간이면 10,320원 × 8시간 × 80% = 66,048원이고, 1일 5시간 근무자라면 41,280원이 됩니다. 아르바이트처럼 소정근로시간이 짧았던 분은 하한액도 그만큼 낮아진다는 점을 기억하세요.</p>
+
+    <h2>소정급여일수는 가입기간과 나이로 정해집니다</h2>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">고용보험법 별표1 소정급여일수</caption>
+        <thead><tr><th>피보험기간</th><th class="num">50세 미만</th><th class="num">50세 이상·장애인</th></tr></thead>
+        <tbody>
+          <tr><td>1년 미만</td><td class="num">120일</td><td class="num">120일</td></tr>
+          <tr><td>1년 이상 ~ 3년 미만</td><td class="num">150일</td><td class="num">180일</td></tr>
+          <tr><td>3년 이상 ~ 5년 미만</td><td class="num">180일</td><td class="num">210일</td></tr>
+          <tr><td>5년 이상 ~ 10년 미만</td><td class="num">210일</td><td class="num">240일</td></tr>
+          <tr><td>10년 이상</td><td class="num">240일</td><td class="num">270일</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>나이는 마지막 근무일 기준 만 나이로 봅니다. 49세에 퇴사하면 50세 미만 표가, 50세 생일이 지난 뒤 퇴사하면 50세 이상 표가 적용돼 같은 가입기간이라도 30일이 차이 납니다. 수급기간은 이직일 다음 날부터 1년이고, 그 안에 소정급여일수를 다 쓰지 못하면 남은 일수는 사라집니다.</p>
+
+    <h2>계산 예시로 확인해 보세요</h2>
+    <ul>
+      <li><strong>3개월 총액 900만 원, 92일, 8시간, 34세, 가입 7년</strong> — 평균임금 97,826원의 60%는 58,696원이라 하한액 66,048원이 적용됩니다. 소정급여일수는 210일, 총 13,870,080원입니다.</li>
+      <li><strong>1일 평균임금 15만 원, 8시간, 52세, 가입 12년</strong> — 기초일액이 상한 113,500원을 넘어 1일 68,100원, 소정급여일수 270일로 총 18,387,000원입니다.</li>
+      <li><strong>1일 평균임금 8만 2천 원, 1일 5시간, 29세, 가입 2년</strong> — 하한액 41,280원보다 60% 금액(49,200원)이 크므로 1일 49,200원, 150일로 총 7,380,000원입니다.</li>
+    </ul>
+
+    <h2>자주 하는 실수</h2>
+    <ul>
+      <li><strong>퇴직금과 실업급여를 같은 돈으로 착각하는 경우</strong> — 퇴직금은 회사가 주는 돈, 실업급여는 고용보험에서 주는 돈입니다. 퇴직금을 받았다고 실업급여가 줄지 않습니다.</li>
+      <li><strong>3개월 임금총액에 퇴직금·퇴직소득을 넣는 경우</strong> — 평균임금에는 퇴직금, 휴업수당, 임시로 지급된 상여 등은 들어가지 않습니다. 기본급과 통상적인 수당, 초과근로수당을 넣으세요.</li>
+      <li><strong>권고사직을 자발적 퇴사로 적는 경우</strong> — 회사가 이직확인서에 적는 상실 사유가 판단 기준입니다. 실제로는 권고사직인데 사직서를 먼저 썼다면 다툼이 생길 수 있으니, 퇴사 전에 사유를 분명히 해 두세요.</li>
+      <li><strong>가입기간을 마지막 회사만 세는 경우</strong> — 3년 이내 공백이면 이전 회사 기간도 합산됩니다. 합산되면 소정급여일수가 한 단계 올라갈 수 있습니다.</li>
+      <li><strong>180일 요건과 소정급여일수를 혼동하는 경우</strong> — 수급 자격은 이직 전 18개월간 피보험단위기간 180일 이상이어야 하고, 소정급여일수는 그와 별개로 가입기간·나이로 정해집니다.</li>
+    </ul>
+
+    <h2>자주 묻는 질문</h2>
+    <details class="faq" open>
+      <summary>자발적으로 그만두면 실업급여를 아예 못 받나요?</summary>
+      <div class="faq-body"><p>원칙적으로는 받을 수 없습니다. 다만 임금체불, 최저임금 미달, 사업장 도산·휴폐업, 직장 내 괴롭힘이나 성희롱, 통근 곤란, 간병, 임신·출산·육아, 병역 등 고용보험법 시행규칙 별표2에서 정한 정당한 이직 사유가 있으면 자발적 퇴사여도 수급자격이 인정될 수 있습니다. 사유와 증빙이 중요하므로 관할 고용센터에 먼저 상담하세요.</p></div>
+    </details>
+    <details class="faq">
+      <summary>1일 구직급여가 상한액과 하한액 사이에 거의 몰려 있는 이유는 뭔가요?</summary>
+      <div class="faq-body"><p>2026년은 상한이 68,100원, 하한(1일 8시간 기준)이 66,048원이라 폭이 2,052원뿐입니다. 하한이 2026년 최저임금 10,320원의 80%로 오르면서 기존 상한액(66,000원)을 넘어섰기 때문에 상한액도 함께 인상됐습니다. 그래서 대부분의 신청자는 평균임금이 높든 낮든 이 좁은 구간 안에서 금액이 정해집니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>소정급여일수는 어떤 기간을 기준으로 세나요?</summary>
+      <div class="faq-body"><p>고용보험 피보험기간을 기준으로 하고, 최종 이직 사업장뿐 아니라 이전 사업장의 기간도 합산합니다. 다만 이전 자격 상실일부터 3년이 지난 기간은 합산되지 않고, 이미 구직급여를 받은 이력이 있는 기간도 제외됩니다. 180일 이상이어야 하는 피보험단위기간(보수 지급의 기초가 된 날)과는 계산 방식이 다릅니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>계산된 총액을 한 번에 받을 수 있나요?</summary>
+      <div class="faq-body"><p>아닙니다. 수급자격 인정 후 7일의 대기기간이 있고, 이후 1~4주 단위로 실업인정을 받은 날에 대해서만 지급됩니다. 이직일 다음 날부터 1년 안에 소정급여일수를 다 쓰지 못하면 남은 일수는 소멸하므로, 총액은 재취업하지 않고 끝까지 수급했을 때의 최대치로 보면 됩니다.</p></div>
+    </details>
+
+    <h2>출처</h2>
+    <ul>
+      <li><a href="https://www.moel.go.kr/common/downloadFile.do?bbs_id=23&bbs_seq=20260200945&file_ext=pdf&file_seq=20260201644" target="_blank" rel="noopener">고용노동부 「고용보험 안내」(2026년 2월)</a> — 2026년 1일 상한 68,100원, 하한 66,048원, 소정급여일수 표</li>
+      <li><a href="https://easylaw.go.kr/CSP/CnpClsMain.laf?ccfNo=2&cciNo=3&cnpClsNo=2&csmSeq=722" target="_blank" rel="noopener">찾기쉬운 생활법령정보 「구직급여 수급액」</a> — 고용보험법 제45조·제46조, 기초일액 상한 113,500원 (2026.10.15 기준)</li>
+      <li><a href="https://www.law.go.kr/LSW/admRulInfoP.do?admRulSeq=2100000262710" target="_blank" rel="noopener">「2026년 적용 최저임금 고시」(고용노동부고시 제2025-47호)</a> — 시급 10,320원</li>
+      <li><a href="https://www.work24.go.kr/cm/c/f/1100/selecSystInfo.do?systClId=SC00000254&systId=SI00000411" target="_blank" rel="noopener">고용24 「실업급여(상용직)」 제도안내</a> — 수급 요건과 신청 절차</li>
+      <li><a href="https://www.law.go.kr/법령/고용보험법" target="_blank" rel="noopener">국가법령정보센터 「고용보험법」</a> — 제50조 및 별표1(소정급여일수), 「고용보험법 시행령」 제68조</li>
+    </ul>
+    <p class="note">이 계산기는 2026년 1월 1일 이후 이직자 기준의 공개된 고시·법령 값으로 만든 참고용 도구이며 법적 효력이 없습니다. 실제 수급 자격과 금액은 이직확인서와 고용센터 심사로 정해지므로, 신청 전에 고용24(1350) 상담으로 확인하세요. 기준일: 2026년 2월 고용노동부 안내, 2026년 11월 확인.</p>
+  </article>
+
+  <div class="ad-slot" aria-hidden="true">
+    <!-- AdSense 광고 슬롯 (본문 하단). 승인 후 <ins class="adsbygoogle" ...> 로 교체하세요. -->
+    <span>AD</span>
+  </div>
+
+  <section class="related">
+    <h2>함께 보면 좋은 계산기</h2>
+    <div class="related-list">
+      <a href="annual-leave-pay.html">연차수당 계산기</a>
+      <a href="retirement-income-tax.html">퇴직소득세 계산기</a>
+      <a href="severance-pay.html">퇴직금 계산기</a>
+      <a href="salary-net.html">연봉 실수령액</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <a class="promo" href="https://cshop.naver.com/mydailyselect" target="_blank" rel="noopener sponsored">
+      <span class="promo-label">데일리셀렉트</span>
+      <span class="promo-text">생활에 필요한 물건, 매일 골라 담은 셀렉트샵</span>
+      <span class="promo-arrow" aria-hidden="true">↗</span>
+    </a>
+    <nav class="footer-nav" aria-label="사이트 정보">
+      <a href="../index.html">전체 계산기</a>
+      <a href="../about.html">사이트 소개</a>
+      <a href="../privacy.html">개인정보처리방침</a>
+    </nav>
+    <p class="footer-note">이 사이트의 계산 결과는 참고용이며, 법적·재무적 판단의 근거가 될 수 없습니다.</p>
+    <p class="copy">© 2026 계산기 허브</p>
+  </div>
+</footer>
+
+<script src="../assets/js/common.js"></script>
+<script>
+/* 2026년 구직급여 계산
+   - 상한: 기초일액 113,500원 → 1일 68,100원 (고용보험법 제45조⑤·제46조①1, 시행령 제68조①, 2025.12.23 개정)
+   - 하한: 2026년 최저임금 10,320원 × 1일 소정근로시간 × 80% (제45조④·제46조①2)
+     · 8시간 66,048원, 5시간 41,280원 (고용노동부 「고용보험 안내」2026.2)
+   - 60%: 기초일액(평균임금) × 60% (제46조①1)
+   - 소정급여일수: 고용보험법 제50조·별표1 (50세 미만 120/150/180/210/240,
+     50세 이상·장애인 120/180/210/240/270) */
+(function () {
+  var CH = window.CalcHub;
+  var $ = CH.$;
+  var form = $("#calcForm");
+  var MIN_WAGE = 10320;      // 2026년 적용 최저임금 (고시 제2025-47호)
+  var BASE_CAP = 113500;     // 급여기초임금일액 상한
+  var MAX_DAILY = 68100;     // 1일 구직급여 상한
+  var UNDER50 = [120, 150, 180, 210, 240];
+  var OVER50 = [120, 180, 210, 240, 270];
+
+  var out = {
+    daily: $("#rDaily"), sub: $("#rSub"), badge: $("#rBadge"),
+    base: $("#rBase"), band: $("#rBand"), dailyRow: $("#rDailyRow"),
+    days: $("#rDays"), total: $("#rTotal"), months: $("#rMonths"), raw: $("#resultText")
+  };
+
+  function toggleFields() {
+    var mode = $("#basis").value;
+    $("#fieldsTotal").classList.toggle("hidden", mode !== "total");
+    $("#fieldsDaily").classList.toggle("hidden", mode !== "daily");
+  }
+
+  function calc() {
+    var mode = $("#basis").value;
+    var avg = 0;
+    if (mode === "total") {
+      var total = CH.num($("#total").value);
+      var d = CH.num($("#days").value);
+      if (d <= 0) d = 92;
+      avg = total > 0 ? total / d : 0;
+    } else {
+      avg = CH.num($("#daily").value);
+    }
+
+    var hours = CH.num($("#hours").value);
+    if (!hours || hours < 1) hours = 1;
+    if (hours > 8) hours = 8;
+
+    var idx = parseInt($("#period").value, 10) || 0;
+    var age = CH.num($("#age").value);
+    var over50 = age >= 50 || $("#disabled").value === "y";
+    var voluntary = $("#reason").value === "voluntary";
+
+    var floorDaily = MIN_WAGE * hours * 0.8;
+    var cappedBase = Math.min(avg, BASE_CAP);
+    var amount = cappedBase * 0.6;
+    var band = "평균임금 60% 적용";
+
+    if (avg > 0 && avg < MIN_WAGE * hours) {
+      band = "최저기초일액 적용 (하한)";
+      amount = MIN_WAGE * hours * 0.8;
+    } else if (amount < floorDaily) {
+      band = "하한액 적용";
+      amount = floorDaily;
+    } else if (avg > BASE_CAP) {
+      band = "상한액 적용";
+      amount = MAX_DAILY;
+    }
+    if (amount > MAX_DAILY) {
+      amount = MAX_DAILY;
+      band = "상한액 적용";
+    }
+    amount = Math.floor(amount);
+
+    var days = (over50 ? OVER50 : UNDER50)[idx];
+    var totalPay = amount * days;
+    var months = days / 30.4;
+
+    out.base.textContent = CH.won(Math.round(avg));
+    out.band.textContent = band;
+    out.dailyRow.textContent = CH.won(amount);
+    out.days.textContent = days + "일";
+    out.total.textContent = CH.won(totalPay);
+    out.months.textContent = "약 " + months.toFixed(1) + "개월";
+    out.daily.textContent = CH.comma(amount);
+    out.sub.textContent = "소정급여일수 " + days + "일 · 총 예상 " + CH.won(totalPay);
+
+    if (voluntary) {
+      out.badge.textContent = "자발적 퇴사 · 원칙적으로 수급 불가";
+      out.badge.className = "badge red";
+      out.sub.textContent = "정당한 이직 사유가 아니면 수급자격이 인정되지 않아요 · 참고 금액 " + CH.won(totalPay);
+    } else if (band.indexOf("상한") !== -1) {
+      out.badge.textContent = "상한액 적용";
+      out.badge.className = "badge";
+    } else if (band.indexOf("하한") !== -1) {
+      out.badge.textContent = "하한액 적용";
+      out.badge.className = "badge green";
+    } else {
+      out.badge.textContent = "평균임금 60%";
+      out.badge.className = "badge green";
+    }
+
+    out.raw.textContent =
+      "실업급여(구직급여) 계산 결과 (2026년 기준)\n" +
+      "· 1일 평균임금: " + CH.won(Math.round(avg)) + "\n" +
+      "· 적용 구간: " + band + "\n" +
+      "· 1일 소정근로시간: " + hours + "시간\n" +
+      "· 1일 구직급여: " + CH.won(amount) + "\n" +
+      "· 소정급여일수: " + days + "일 (" + (over50 ? "50세 이상·장애인" : "50세 미만") + ")\n" +
+      "· 총 예상 수급액: " + CH.won(totalPay) + "\n" +
+      "· 이직 사유: " + (voluntary ? "자발적 퇴사(원칙적으로 수급 불가)" : "비자발적 이직") + "\n" +
+      "· 고용보험 가입기간: " + $("#period").selectedOptions[0].textContent;
+  }
+
+  $("#basis").addEventListener("change", function () {
+    toggleFields();
+    calc();
+  });
+  toggleFields();
+  CH.live(form, calc);
+
+  $("#copyBtn").addEventListener("click", function () {
+    CH.copy(out.raw.textContent).then(function (ok) {
+      CH.toast(ok ? "결과를 복사했어요" : "복사에 실패했어요");
+    });
+  });
+
+  $("#shareBtn").addEventListener("click", function () {
+    CH.share({ title: "실업급여 계산기", text: "1일 구직급여 " + CH.won(CH.num(out.daily.textContent)) + " 계산해 봤어요", url: CH.buildShareUrl(form) });
+  });
+})();
+</script>
+</body>
+</html>

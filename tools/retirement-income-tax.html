@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>2026 퇴직소득세 계산기 — 근속연수 공제·실수령 (무료)</title>
+<meta name="description" content="근속연수와 퇴직급여로 퇴직소득세·지방소득세·실수령액을 계산합니다. 근속연수공제, 환산급여공제 2026년 기준.">
+<meta name="keywords" content="퇴직소득세 계산기, 퇴직금 세금, 근속연수공제, 환산급여공제, 퇴직소득세율, 지방소득세, 2026 퇴직소득세">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://yoon0819.github.io/life-calc-hub/tools/retirement-income-tax.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="계산기 허브">
+<meta property="og:title" content="2026 퇴직소득세 계산기 — 근속연수 공제·실수령 (무료)">
+<meta property="og:description" content="근속연수와 퇴직급여만 넣으면 퇴직소득세와 지방소득세, 실수령액이 바로 계산됩니다.">
+<meta property="og:url" content="https://yoon0819.github.io/life-calc-hub/tools/retirement-income-tax.html">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#3182F6">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<!-- AdSense 승인 후 주석 해제: <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+<!-- Google Analytics 4 (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DLSNDYEE79"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DLSNDYEE79');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://yoon0819.github.io/life-calc-hub/tools/retirement-income-tax.html#app",
+      "name": "퇴직소득세 계산기",
+      "url": "https://yoon0819.github.io/life-calc-hub/tools/retirement-income-tax.html",
+      "description": "근속연수와 퇴직급여로 퇴직소득세·지방소득세·실수령액을 계산합니다. 근속연수공제, 환산급여공제 2026년 기준.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "inLanguage": "ko-KR",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "KRW"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "계산기 허브",
+        "url": "https://yoon0819.github.io/life-calc-hub/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://yoon0819.github.io/life-calc-hub/tools/retirement-income-tax.html#faq",
+      "url": "https://yoon0819.github.io/life-calc-hub/tools/retirement-income-tax.html",
+      "inLanguage": "ko-KR",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "퇴직소득세는 누가 내나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "퇴직금을 지급하는 회사가 근로자에게 지급할 때 원천징수해서 다음 달 10일까지 납부합니다. 근로자가 따로 신고하지 않아도 되고, 퇴직금 명세서에 퇴직소득세와 지방소득세가 표시됩니다. 다만 퇴직 후 다른 소득과 합산해 종합소득세로 신고하는 대상은 아닙니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "IRP로 옮기면 세금을 안 내도 되나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "IRP(개인형 퇴직연금) 계좌로 퇴직금을 이체하면 퇴직소득세를 내지 않고 과세이연됩니다. 세금이 사라지는 것이 아니라 나중에 연금으로 받을 때 연금소득세(연령에 따라 3.3~5.5%)로 과세되는 구조입니다. 중간에 사정이 생겨 중도 인출하면 과세이연된 세금이 다시 부과됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "근속연수는 어떻게 계산하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "근로를 시작한 날(또는 퇴직금 중간정산일 다음 날)부터 퇴직한 날까지입니다. 총 근속월수를 12로 나누고, 1년 미만의 기간이 있으면 1년으로 봅니다. 그래서 10년 1개월 근무했다면 근속연수는 11년이 되어 근속연수공제가 늘어납니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "왜 세율이 6%인데 세금이 퇴직금의 6%가 아닌가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "퇴직소득세는 퇴직금 전체에 바로 세율을 매기지 않습니다. 근속연수공제를 뺀 금액을 1년치로 환산한 뒤 그 환산급여에서 다시 공제하고, 남은 과세표준에 세율을 적용합니다. 이렇게 나온 세액을 다시 12로 나눠 근속연수를 곱하는 구조라서 실제 부담률은 훨씬 낮아집니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html" aria-label="계산기 허브 홈">
+      <span class="brand-mark" aria-hidden="true">계</span><span class="brand-name">계산기 허브</span>
+    </a>
+    <a class="topbar-link" href="../index.html">전체 계산기</a>
+  </div>
+</header>
+
+<main id="main" class="app">
+  <nav class="crumb" aria-label="위치">
+    <a href="../index.html">홈</a><span>/</span><a href="../index.html#catMoney">급여·세금</a><span>/</span><span>퇴직소득세</span>
+  </nav>
+
+  <div class="page-head">
+    <h1>퇴직소득세 계산기</h1>
+    <p>근속연수와 퇴직급여만 넣으면 퇴직소득세와 지방소득세를 뺀 실수령액까지 바로 계산돼요.</p>
+  </div>
+
+  <form class="card" id="calcForm" onsubmit="return false">
+    <h2 class="card-title">퇴직 정보 입력</h2>
+    <p class="card-desc">2023년 1월 1일 이후 퇴직분부터 적용되는 근속연수공제 기준이에요.</p>
+
+    <div class="grid-2">
+      <div class="field">
+        <label for="years">근속연수</label>
+        <div class="input-wrap">
+          <input class="input" id="years" name="years" type="number" inputmode="numeric" min="1" max="60" step="1" value="10">
+          <span class="unit">년</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="severance">퇴직급여액</label>
+        <div class="input-wrap">
+          <input class="input" id="severance" name="pay" type="number" inputmode="numeric" min="0" step="1000000" value="50000000">
+          <span class="unit">원</span>
+        </div>
+      </div>
+    </div>
+    <p class="hint">1년 미만 기간은 1년으로 보고, 근무월수를 12로 나눠 올림한 연수를 넣으세요. 예: 10년 1개월 → 11년</p>
+
+    <div class="field">
+      <label for="nontaxable">비과세 소득 <span class="opt">(선택)</span></label>
+      <div class="input-wrap">
+        <input class="input" id="nontaxable" name="non" type="number" inputmode="numeric" min="0" step="100000" value="0">
+        <span class="unit">원</span>
+      </div>
+      <p class="hint">장해보상금, 사망보상금 등 비과세 퇴직소득이 있으면 넣으세요. 모르면 0으로 두면 됩니다.</p>
+    </div>
+  </form>
+
+  <section class="result-card" aria-live="polite" aria-atomic="true">
+    <div class="result-head">
+      <span class="result-label">퇴직소득세 (지방소득세 제외)</span>
+      <span class="badge" id="rBadge">6% 구간</span>
+    </div>
+    <p class="result-value"><span id="rTax">680,000</span><span class="won">원</span></p>
+    <p class="result-sub" id="rSub">지방소득세 68,000원 포함 총 748,000원</p>
+
+    <dl class="result-rows">
+      <div class="result-row"><dt>퇴직소득금액</dt><dd id="rIncome">50,000,000원</dd></div>
+      <div class="result-row minus"><dt>근속연수공제</dt><dd id="rSvcDed">-15,000,000원</dd></div>
+      <div class="result-row"><dt>환산급여</dt><dd id="rConv">42,000,000원</dd></div>
+      <div class="result-row minus"><dt>환산급여공제</dt><dd id="rConvDed">-28,400,000원</dd></div>
+      <div class="result-row"><dt>과세표준</dt><dd id="rTaxBase">13,600,000원</dd></div>
+      <div class="result-row"><dt>환산산출세액</dt><dd id="rConvTax">816,000원</dd></div>
+      <div class="result-row"><dt>퇴직소득세</dt><dd id="rTaxRow">680,000원</dd></div>
+      <div class="result-row"><dt>지방소득세 (10%)</dt><dd id="rLocal">68,000원</dd></div>
+      <div class="result-row"><dt>세금 합계</dt><dd id="rTaxSum">748,000원</dd></div>
+      <div class="result-row total"><dt>실수령액 (예상)</dt><dd id="rNet">49,252,000원</dd></div>
+    </dl>
+    <div id="resultText" hidden></div>
+  </section>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="copyBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>
+      결과 복사
+    </button>
+    <button class="btn btn-ghost" id="shareBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg>
+      링크 공유
+    </button>
+  </div>
+
+  <div class="ad-slot" aria-hidden="true">
+    <!-- AdSense 광고 슬롯 (결과 하단). 승인 후 <ins class="adsbygoogle" ...> 로 교체하세요. -->
+    <span>AD</span>
+  </div>
+
+  <article class="article">
+    <h2>퇴직소득세는 어떻게 계산하나요?</h2>
+    <p>퇴직금을 받으면 근로소득이 아니라 <strong>퇴직소득</strong>으로 분류되어 세금이 매겨집니다. 퇴직소득세의 특징은 오래 일할수록, 퇴직금이 적을수록 세 부담이 크게 낮아진다는 점입니다. 퇴직금 전체에 세율을 바로 곱하지 않고, 근속연수로 나눠 1년치로 환산한 뒤 세율을 매기고 다시 근속연수를 곱해 되돌리는 구조이기 때문입니다.</p>
+    <p>국세청이 안내하는 순서는 다음과 같습니다. ① 퇴직급여에서 비과세 소득을 뺀 퇴직소득금액을 구하고 ② 근속연수공제를 뺀 뒤 ③ 남은 금액을 근속연수로 나눠 12를 곱해 환산급여를 구합니다. ④ 환산급여에서 환산급여공제를 빼 과세표준을 만들고 ⑤ 기본세율을 적용해 환산산출세액을 구한 다음 ⑥ 12로 나누고 근속연수를 곱해 퇴직소득세를 정합니다. 여기에 지방소득세 10%가 더해집니다.</p>
+    <p class="formula">환산급여 = (퇴직소득금액 − 근속연수공제) ÷ 근속연수 × 12<br>과세표준 = 환산급여 − 환산급여공제<br>퇴직소득세 = (과세표준 × 세율 − 누진공제) ÷ 12 × 근속연수<br>지방소득세 = 퇴직소득세 × 10%</p>
+
+    <h2>근속연수공제와 환산급여공제 표</h2>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">근속연수공제 (2023년 1월 1일 이후 퇴직)</caption>
+        <thead><tr><th>근속연수</th><th>공제액</th></tr></thead>
+        <tbody>
+          <tr><td>5년 이하</td><td>100만원 × 근속연수</td></tr>
+          <tr><td>5년 초과 ~ 10년 이하</td><td>500만원 + 200만원 × (근속연수 − 5)</td></tr>
+          <tr><td>10년 초과 ~ 20년 이하</td><td>1,500만원 + 250만원 × (근속연수 − 10)</td></tr>
+          <tr><td>20년 초과</td><td>4,000만원 + 300만원 × (근속연수 − 20)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">환산급여공제</caption>
+        <thead><tr><th>환산급여</th><th>공제액</th></tr></thead>
+        <tbody>
+          <tr><td>800만원 이하</td><td>환산급여 전액</td></tr>
+          <tr><td>800만원 초과 ~ 7,000만원 이하</td><td>800만원 + 초과분의 60%</td></tr>
+          <tr><td>7,000만원 초과 ~ 1억원 이하</td><td>4,520만원 + 초과분의 55%</td></tr>
+          <tr><td>1억원 초과 ~ 3억원 이하</td><td>6,170만원 + 초과분의 45%</td></tr>
+          <tr><td>3억원 초과</td><td>1억 5,170만원 + 초과분의 35%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">기본세율</caption>
+        <thead><tr><th>과세표준</th><th class="num">세율</th><th class="num">누진공제</th></tr></thead>
+        <tbody>
+          <tr><td>1,400만원 이하</td><td class="num">6%</td><td class="num">-</td></tr>
+          <tr><td>5,000만원 이하</td><td class="num">15%</td><td class="num">126만원</td></tr>
+          <tr><td>8,800만원 이하</td><td class="num">24%</td><td class="num">576만원</td></tr>
+          <tr><td>1억 5,000만원 이하</td><td class="num">35%</td><td class="num">1,544만원</td></tr>
+          <tr><td>3억원 이하</td><td class="num">38%</td><td class="num">1,994만원</td></tr>
+          <tr><td>5억원 이하</td><td class="num">40%</td><td class="num">2,594만원</td></tr>
+          <tr><td>10억원 이하</td><td class="num">42%</td><td class="num">3,594만원</td></tr>
+          <tr><td>10억원 초과</td><td class="num">45%</td><td class="num">6,594만원</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>계산 예시로 확인해 보세요</h2>
+    <ul>
+      <li><strong>근속 20년, 퇴직급여 1억원</strong> — 근속연수공제 4,000만원, 환산급여 3,600만원, 환산급여공제 2,480만원, 과세표준 1,120만원에 6%를 적용해 퇴직소득세 1,120,000원, 지방소득세 112,000원입니다. 국세청 안내 사례와 같은 금액입니다.</li>
+      <li><strong>근속 10년, 퇴직급여 5,000만원</strong> — 근속연수공제 1,500만원, 환산급여 4,200만원, 환산급여공제 2,840만원, 과세표준 1,360만원에 6%를 적용해 퇴직소득세 680,000원, 지방소득세 68,000원입니다.</li>
+      <li><strong>근속 3년, 퇴직급여 1,500만원</strong> — 근속연수공제 300만원, 환산급여 4,800만원, 환산급여공제 3,200만원, 과세표준 1,600만원은 15% 구간이라 퇴직소득세 285,000원, 지방소득세 28,500원입니다.</li>
+    </ul>
+
+    <h2>자주 하는 실수</h2>
+    <ul>
+      <li><strong>퇴직금 전액에 세율을 곱하는 경우</strong> — 퇴직소득세는 환산급여에 세율을 매기고 다시 근속연수로 되돌립니다. 퇴직금의 6%가 세금이라고 생각하면 실제보다 훨씬 크게 계산됩니다.</li>
+      <li><strong>근속연수를 개월수 그대로 넣는 경우</strong> — 근속연수는 근무월수를 12로 나눈 값이고, 1년 미만 기간은 1년으로 봅니다. 10년 1개월이면 11년으로 넣어야 공제가 맞습니다.</li>
+      <li><strong>중간정산을 잊는 경우</strong> — 퇴직금 중간정산을 받았다면 근속연수와 퇴직급여 모두 정산일 다음 날부터 다시 계산합니다. 정산 전 기간까지 합쳐 넣으면 세금이 달라집니다.</li>
+      <li><strong>지방소득세를 빼먹는 경우</strong> — 퇴직소득세의 10%가 지방소득세로 함께 원천징수됩니다. 실수령액은 두 세금을 모두 뺀 금액입니다.</li>
+      <li><strong>IRP 이체를 세금 면제로 오해하는 경우</strong> — IRP로 옮기면 당장 내지 않을 뿐(과세이연), 나중에 연금으로 받을 때 연금소득세로 과세됩니다.</li>
+    </ul>
+
+    <h2>자주 묻는 질문</h2>
+    <details class="faq" open>
+      <summary>퇴직소득세는 누가 내나요?</summary>
+      <div class="faq-body"><p>퇴직금을 지급하는 회사가 근로자에게 지급할 때 원천징수해서 다음 달 10일까지 납부합니다. 근로자가 따로 신고하지 않아도 되고, 퇴직금 명세서에 퇴직소득세와 지방소득세가 표시됩니다. 다만 퇴직 후 다른 소득과 합산해 종합소득세로 신고하는 대상은 아닙니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>IRP로 옮기면 세금을 안 내도 되나요?</summary>
+      <div class="faq-body"><p>IRP(개인형 퇴직연금) 계좌로 퇴직금을 이체하면 퇴직소득세를 내지 않고 과세이연됩니다. 세금이 사라지는 것이 아니라 나중에 연금으로 받을 때 연금소득세(연령에 따라 3.3~5.5%)로 과세되는 구조입니다. 중간에 사정이 생겨 중도 인출하면 과세이연된 세금이 다시 부과됩니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>근속연수는 어떻게 계산하나요?</summary>
+      <div class="faq-body"><p>근로를 시작한 날(또는 퇴직금 중간정산일 다음 날)부터 퇴직한 날까지입니다. 총 근속월수를 12로 나누고, 1년 미만의 기간이 있으면 1년으로 봅니다. 그래서 10년 1개월 근무했다면 근속연수는 11년이 되어 근속연수공제가 늘어납니다.</p></div>
+    </details>
+    <details class="faq">
+      <summary>왜 세율이 6%인데 세금이 퇴직금의 6%가 아닌가요?</summary>
+      <div class="faq-body"><p>퇴직소득세는 퇴직금 전체에 바로 세율을 매기지 않습니다. 근속연수공제를 뺀 금액을 1년치로 환산한 뒤 그 환산급여에서 다시 공제하고, 남은 과세표준에 세율을 적용합니다. 이렇게 나온 세액을 다시 12로 나눠 근속연수를 곱하는 구조라서 실제 부담률은 훨씬 낮아집니다.</p></div>
+    </details>
+
+    <h2>출처</h2>
+    <ul>
+      <li><a href="https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7880&mi=6448" target="_blank" rel="noopener">국세청 「퇴직소득세 계산방법 및 계산사례」</a> — 계산 순서, 근속연수공제·환산급여공제·기본세율 표, 근속 20년·퇴직급여 1억원 사례</li>
+      <li><a href="https://law.go.kr/LSW/lsLinkProc.do?joNo=004800&lsNm=%EC%86%8C%EB%93%9D%EC%84%B8%EB%B2%95&mode=11" target="_blank" rel="noopener">국가법령정보센터 「소득세법」 제48조(퇴직소득공제)</a> — 2026년 1월 1일 시행본, 근속연수공제·환산급여공제</li>
+      <li><a href="https://law.go.kr/lsLinkCommonInfo.do?lspttninfSeq=126571" target="_blank" rel="noopener">「소득세법 시행령」 제105조(근속연수)</a> — 근속연수 계산 방법 (2026. 10. 1. 시행)</li>
+      <li><a href="https://www.hometax.go.kr" target="_blank" rel="noopener">홈택스 모의계산 「퇴직소득 세액계산」</a> — 국세청 공식 계산 프로그램</li>
+    </ul>
+    <p class="note">이 계산기는 2026년 기준 소득세법과 국세청 안내로 만든 참고용 도구이며 법적 효력이 없습니다. 실제 세액은 회사의 원천징수 방식, 비과세 소득, 중간정산 이력, 연금계좌 이체 여부에 따라 달라질 수 있으므로 원천징수영수증과 홈택스 모의계산으로 확인하세요.</p>
+  </article>
+
+  <div class="ad-slot" aria-hidden="true">
+    <!-- AdSense 광고 슬롯 (본문 하단). 승인 후 <ins class="adsbygoogle" ...> 로 교체하세요. -->
+    <span>AD</span>
+  </div>
+
+  <section class="related">
+    <h2>함께 보면 좋은 계산기</h2>
+    <div class="related-list">
+      <a href="severance-pay.html">퇴직금 계산기</a>
+      <a href="annual-leave-pay.html">연차수당 계산기</a>
+      <a href="unemployment-benefit.html">실업급여 계산기</a>
+      <a href="salary-net.html">연봉 실수령액</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <a class="promo" href="https://cshop.naver.com/mydailyselect" target="_blank" rel="noopener sponsored">
+      <span class="promo-label">데일리셀렉트</span>
+      <span class="promo-text">생활에 필요한 물건, 매일 골라 담은 셀렉트샵</span>
+      <span class="promo-arrow" aria-hidden="true">↗</span>
+    </a>
+    <nav class="footer-nav" aria-label="사이트 정보">
+      <a href="../index.html">전체 계산기</a>
+      <a href="../about.html">사이트 소개</a>
+      <a href="../privacy.html">개인정보처리방침</a>
+    </nav>
+    <p class="footer-note">이 사이트의 계산 결과는 참고용이며, 법적·재무적 판단의 근거가 될 수 없습니다.</p>
+    <p class="copy">© 2026 계산기 허브</p>
+  </div>
+</footer>
+
+<script src="../assets/js/common.js"></script>
+<script>
+/* 퇴직소득세 계산 (소득세법 제48조·제55조, 국세청 퇴직소득세 계산방법)
+   - 근속연수공제(2023.1.1. 이후 퇴직분): 5년 이하 100만원×연수 /
+     5~10년 500만원+200만원×(연수-5) / 10~20년 1,500만원+250만원×(연수-10) /
+     20년 초과 4,000만원+300만원×(연수-20)
+   - 환산급여 = (퇴직소득금액 - 근속연수공제) ÷ 근속연수 × 12
+   - 환산급여공제: 800만원 이하 전액 / 7,000만원 이하 800만원+60% /
+     1억원 이하 4,520만원+55% / 3억원 이하 6,170만원+45% / 3억원 초과 1억5,170만원+35%
+   - 기본세율(소득세법 제55조①): 6/15/24/35/38/40/42/45%, 누진공제 적용
+   - 퇴직소득세 = 환산산출세액 ÷ 12 × 근속연수, 지방소득세 = 퇴직소득세 × 10%
+   - 원 단위 미만은 절사 */
+(function () {
+  var CH = window.CalcHub;
+  var $ = CH.$;
+  var form = $("#calcForm");
+
+  var BRACKETS = [
+    { up: 14000000, rate: 0.06, prog: 0 },
+    { up: 50000000, rate: 0.15, prog: 1260000 },
+    { up: 88000000, rate: 0.24, prog: 5760000 },
+    { up: 150000000, rate: 0.35, prog: 15440000 },
+    { up: 300000000, rate: 0.38, prog: 19940000 },
+    { up: 500000000, rate: 0.40, prog: 25940000 },
+    { up: 1000000000, rate: 0.42, prog: 35940000 },
+    { up: Infinity, rate: 0.45, prog: 65940000 }
+  ];
+
+  var out = {
+    tax: $("#rTax"), sub: $("#rSub"), badge: $("#rBadge"),
+    income: $("#rIncome"), svcDed: $("#rSvcDed"), conv: $("#rConv"),
+    convDed: $("#rConvDed"), taxBase: $("#rTaxBase"), convTax: $("#rConvTax"),
+    taxRow: $("#rTaxRow"), local: $("#rLocal"), taxSum: $("#rTaxSum"),
+    net: $("#rNet"), raw: $("#resultText")
+  };
+
+  function serviceDeduction(y) {
+    if (y <= 5) return y * 1000000;
+    if (y <= 10) return 5000000 + (y - 5) * 2000000;
+    if (y <= 20) return 15000000 + (y - 10) * 2500000;
+    return 40000000 + (y - 20) * 3000000;
+  }
+
+  function conversionDeduction(c) {
+    if (c <= 8000000) return c;
+    if (c <= 70000000) return 8000000 + (c - 8000000) * 0.6;
+    if (c <= 100000000) return 45200000 + (c - 70000000) * 0.55;
+    if (c <= 300000000) return 61700000 + (c - 100000000) * 0.45;
+    return 151700000 + (c - 300000000) * 0.35;
+  }
+
+  function bracket(base) {
+    for (var i = 0; i < BRACKETS.length; i++) {
+      if (base <= BRACKETS[i].up) return BRACKETS[i];
+    }
+    return BRACKETS[BRACKETS.length - 1];
+  }
+
+  function calc() {
+    var years = CH.num($("#years").value);
+    if (years < 1) years = 1;
+    var pay = CH.num($("#severance").value);
+    var non = CH.num($("#nontaxable").value);
+    if (non < 0) non = 0;
+
+    var income = Math.max(0, pay - non);
+    var svcDed = Math.min(serviceDeduction(years), income);
+    var convBase = Math.max(0, income - svcDed);
+    var conv = convBase / years * 12;
+    var convDed = Math.min(conversionDeduction(conv), conv);
+    var taxBase = Math.max(0, conv - convDed);
+    var b = bracket(taxBase);
+    var convTax = Math.max(0, taxBase * b.rate - b.prog);
+    var tax = Math.floor(convTax / 12 * years);
+    var local = Math.floor(tax * 0.1);
+    var taxSum = tax + local;
+    var net = pay - taxSum;
+
+    out.income.textContent = CH.won(income);
+    out.svcDed.textContent = "-" + CH.won(svcDed);
+    out.conv.textContent = CH.won(conv);
+    out.convDed.textContent = "-" + CH.won(convDed);
+    out.taxBase.textContent = CH.won(taxBase);
+    out.convTax.textContent = CH.won(convTax);
+    out.taxRow.textContent = CH.won(tax);
+    out.local.textContent = CH.won(local);
+    out.taxSum.textContent = CH.won(taxSum);
+    out.net.textContent = CH.won(net);
+    out.tax.textContent = CH.comma(tax);
+    out.sub.textContent = "지방소득세 " + CH.won(local) + " 포함 총 " + CH.won(taxSum);
+
+    if (!pay) {
+      out.badge.textContent = "입력 대기";
+      out.badge.className = "badge";
+      out.sub.textContent = "퇴직급여액을 입력해 주세요.";
+    } else if (tax === 0) {
+      out.badge.textContent = "세금 없음";
+      out.badge.className = "badge green";
+      out.sub.textContent = "공제 한도 안이라 퇴직소득세가 발생하지 않아요";
+    } else {
+      out.badge.textContent = Math.round(b.rate * 100) + "% 구간";
+      out.badge.className = "badge green";
+    }
+
+    out.raw.textContent =
+      "퇴직소득세 계산 결과 (근속 " + years + "년)\n" +
+      "· 퇴직급여액: " + CH.won(pay) + " / 비과세: " + CH.won(non) + "\n" +
+      "· 퇴직소득금액: " + CH.won(income) + "\n" +
+      "· 근속연수공제: " + CH.won(svcDed) + "\n" +
+      "· 환산급여: " + CH.won(conv) + "\n" +
+      "· 환산급여공제: " + CH.won(convDed) + "\n" +
+      "· 과세표준: " + CH.won(taxBase) + "\n" +
+      "· 퇴직소득세: " + CH.won(tax) + "\n" +
+      "· 지방소득세: " + CH.won(local) + "\n" +
+      "· 세금 합계: " + CH.won(taxSum) + "\n" +
+      "· 실수령액(예상): " + CH.won(net);
+  }
+
+  CH.live(form, calc);
+
+  $("#copyBtn").addEventListener("click", function () {
+    CH.copy(out.raw.textContent).then(function (ok) {
+      CH.toast(ok ? "결과를 복사했어요" : "복사에 실패했어요");
+    });
+  });
+
+  $("#shareBtn").addEventListener("click", function () {
+    CH.share({ title: "퇴직소득세 계산기", text: "퇴직소득세 " + CH.won(CH.num(out.tax.textContent)) + " 계산해 봤어요", url: CH.buildShareUrl(form) });
+  });
+})();
+</script>
+</body>
+</html>

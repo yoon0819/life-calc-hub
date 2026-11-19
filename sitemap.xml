@@ -19,6 +19,24 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://yoon0819.github.io/life-calc-hub/tools/unemployment-benefit.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://yoon0819.github.io/life-calc-hub/tools/annual-leave-pay.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://yoon0819.github.io/life-calc-hub/tools/retirement-income-tax.html</loc>
+    <lastmod>2026-11-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://yoon0819.github.io/life-calc-hub/tools/salary-net.html</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>monthly</changefreq>
